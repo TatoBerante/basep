@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh"
-   content="0; url=login.php">
-  <title>Redirect</title>
+  <title>HM Login</title>
 </head>
 <body>
-  
+  <h1>HM Login</h1>
 </body>
 </html>
