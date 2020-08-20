@@ -12,7 +12,7 @@
   <title><?php echo $appname;?></title>
 </head>
 <body class='login-body'>
-  <h1 class='login-header'><img src="v/img/logo.png" alt="logo" class='logo'></h1>
+  <h1 class='login-header'><img src="v/img/logo.png" alt="logo" class='login-logo'></h1>
   <form action="c/login-validate.php" method="post">
     <div class='login-line'>
       <input class='login-input' type="text" name="user" id="user" placeholder='USUARIO'>
