@@ -16,6 +16,8 @@ else {
   $res = mysqli_query($mysqli, $qry);
   
   if (mysqli_num_rows ($res) > 0) {
+    session_start();
+    $_SESSION['uid'] = "1T";
     header ('location: ../v/default.php');
   }
   else {

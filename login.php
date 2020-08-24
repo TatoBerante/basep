@@ -13,12 +13,12 @@
 </head>
 <body class='login-body'>
   <h1 class='login-header'><img src="v/img/logo.png" alt="logo" class='login-logo'></h1>
-  <form action="c/login-validate.php" method="post">
+  <form action="c/login-validate.php" method="post" autocomplete="off">
     <div class='login-line'>
-      <input class='login-input' type="text" name="user" id="user" placeholder='USUARIO'>
+      <input class='login-input' type="text" name="user" id="user" placeholder='USUARIO' autocomplete="off">
     </div>
     <div class='login-line'>
-      <input class='login-input' type="password" name="key" id="key" placeholder='CLAVE'>
+      <input class='login-input' type="password" name="key" id="key" placeholder='CLAVE' autocomplete="off">
     </div>
     <div class='login-line'>
       <input class='login-input login-submit' type="submit" value="INGRESAR">
