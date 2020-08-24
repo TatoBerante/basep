@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <?php
+  // App data for logo, favicon and title.
   include "includes/_system-data.php";
   ?>
   <meta charset="UTF-8">
