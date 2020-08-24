@@ -43,3 +43,14 @@
   background-color: #b30000;
   font-weight: bold;
 }
+
+/* Default page styles */
+.default-logo {
+  width: 3rem;
+  padding: 0;
+  margin: 0;
+}
+.default-line {
+  display: flex;
+  align-items: center;
+}
