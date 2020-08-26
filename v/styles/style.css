@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+:root {
+  --accent-main-color: #660066;
+  --light-main-color: #ebebeb;
+  --dark-main-color: #333;
+  --borders-color: #666;
+  --error-color: #b30000;
+}
 * {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
@@ -7,8 +15,8 @@
 
 /*  Login styles */
 .login-body {
-  background-color: #ebebeb;
-  color: #333;
+  background-color: var(--light-main-color);
+  color: var(--dark-main-color);
 }
 .login-header {
   text-align: center;
@@ -20,7 +28,7 @@
   text-align: center;
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid #666;
+  border: 1px solid var(--borders-color);
   margin: 1rem auto;
   width: min(50%, 500px);
 }
@@ -28,19 +36,19 @@
   text-align: center;
 }
 .login-submit {
-  border: 1px solid #660066;
-  color: #fff;
-  background-color: #660066;
+  border: 1px solid var(--accent-main-color);
+  color: var(--light-main-color);
+  background-color: var(--accent-main-color);
   font-weight: bold;
   margin-top: 2rem;
 }
 .error-msg {
   margin: 2rem 0;
   text-align: center;
-  border: 1px solid #b30000;
+  border: 1px solid var(--error-color);
   padding: 1rem;
   color: #fff;
-  background-color: #b30000;
+  background-color: var(--error-color);
   font-weight: bold;
 }
 
