@@ -1,4 +1,4 @@
 <?php
-$appname = "APPI";
+$appname = "APP";
 $logo = "v/img/logo.png";
 ?>
