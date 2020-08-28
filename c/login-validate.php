@@ -1,9 +1,7 @@
 <?php
-$bduser = "root";
-$bdpass = "Hijo09";
-$bd = "basep";
-$mysqli = mysqli_connect("localhost", $bduser, $bdpass, $bd);
-if (mysqli_connect_errno($mysqli)) {
+require_once ('funcs/conn.php');
+$mysqli = mysqli_conn();
+if (!$mysqli) {
   header ('location: ../login.php?error-login=2');
 }
 else {
@@ -13,7 +11,7 @@ else {
   
   $qry = "SELECT usuario_id, usuario_nombre, usuario_apellido, usuario_hry FROM usuarios WHERE usuario_nick = '".$usr."' AND usuario_key = '".$key."'";
   $res = mysqli_query($mysqli, $qry);
-  
+  echo $qry;
   if (mysqli_num_rows ($res) > 0) {
 
     $row = mysqli_fetch_assoc ($res);
