@@ -10,7 +10,7 @@ else {
   <head>
     <?php
     // App data for logo, favicon and title.
-    include "includes/_system-data.php";
+    include "../core/config.php";
     require_once ('../c/funcs/common.php');
     ?>
     <meta charset="UTF-8">
@@ -21,7 +21,19 @@ else {
     <title><?php echo $appname;?></title>
   </head>
   <body class='default-body'>
-    <h1 class='default-line'><a href='default.php?page=home'><img src='img/logo.png' class='default-logo'></a> <?php echo $appname;?></h1>
+    <div class='main-header'>
+      <h1 class='default-line default-header'>
+        <a href='default.php?page=home'>
+          <img src='img/logo.png' class='default-logo'>
+        </a>
+        <span class='app-default-title'><?php echo $appname;?></span>
+      </h1>
+      <span class="menu-bottom">
+        <a href=''>
+          <img src='img/burger-icon.png' class='burger-icon'>
+        </a>
+      </span>
+    </div>
     <h3>In session: <?php echo $_SESSION['basep']['usr']." | <a href='default.php?page=404.php'>test 404</a> | <a href='../c/logout.php'>logout</a>"; ?></h3>
     <?php
     if (isset ($_REQUEST['page'])) {
