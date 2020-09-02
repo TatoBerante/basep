@@ -2,6 +2,7 @@
 
 :root {
   --accent-main-color: #660066;
+  --accent-secondary-color: #800080;
   --light-main-color: #ebebeb;
   --dark-main-color: #333;
   --borders-color: #666;
@@ -53,6 +54,7 @@
 }
 
 /* Default page styles */
+
 .default-logo, .burger-icon {
   width: 3rem;
   padding: 0;
@@ -66,18 +68,57 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--accent-main-color);
-  padding: 0;
+  /*border-bottom: 1px solid var(--borders-color);*/
+  padding: 0.5rem 0;
   margin: 0.3rem 0 0 0;
 }
 .default-header {
   padding: 0;
   margin: 0;
 }
+.header-devider {
+  border-bottom: 1px solid var(--borders-color);
+}
 .default-body {
   max-width: 1200px;
   margin: 0 auto;
+  background-color: #333;
+}
+.main-container {
+  background-color: var(--light-main-color);
+  padding: 0 1rem;
+  min-height: 95vh;
+  border-radius: 0.5rem;
 }
 .app-default-title {
   margin-left: 0.5rem;
+}
+.popmenu {
+  background-color: var(--accent-main-color);
+  color: var(--light-main-color);
+  display: none;
+  border-radius: 0.5rem;
+}
+.main-menu {
+  list-style-type: none;
+  border: 0;
+  margin: 0;
+  padding: 0.5rem 0;
+  text-align: right;
+}
+.main-menu li {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}
+.main-menu li:hover {
+  background-color: var(--accent-secondary-color);
+}
+.main-menu a {
+  color: var(--light-main-color);
+  text-decoration: none;
+}
+.insession {
+  font-weight: bold;
+  text-align: right;
+  padding: 1rem 1rem 0.5rem 0;
 }

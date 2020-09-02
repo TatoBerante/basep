@@ -21,29 +21,59 @@ else {
     <title><?php echo $appname;?></title>
   </head>
   <body class='default-body'>
-    <div class='main-header'>
-      <h1 class='default-line default-header'>
-        <a href='default.php?page=home'>
-          <img src='img/logo.png' class='default-logo'>
-        </a>
-        <span class='app-default-title'><?php echo $appname;?></span>
-      </h1>
-      <span class="menu-bottom">
-        <a href=''>
-          <img src='img/burger-icon.png' class='burger-icon'>
-        </a>
-      </span>
+    <div class='main-container' id='mainheader'>
+      <div class='main-header'>
+        <h1 class='default-line default-header'>
+          <a href='default.php?page=home'>
+            <img src='img/logo.png' class='default-logo'>
+          </a>
+          <span class='app-default-title'><?php echo $appname;?></span>
+        </h1>
+        <span class="menu-bottom">
+          <a href='javascript:void(0);' onclick="popMenu()">
+            <img src='img/burger-icon.png' class='burger-icon' id="burgericon">
+          </a>
+        </span>
+      </div>
+      <div class='header-devider' id='headerdevider'></div>
+      <div class="popmenu" id="popmenu">
+        <div class='insession'>
+          en sesión: <?php echo $_SESSION['basep']['usr'];?>
+        </div>
+        <ul class='main-menu'>
+          <a href='default.php?page=home'><li>home</li></a>
+          <a href='default.php?page=404.php'><li>test 404</li></a>
+          <a href='../c/logout.php'><li>logout</li></a>
+        </ul>
+      </div>
+      <?php
+      if (isset ($_REQUEST['page'])) {
+        if (file_exists ('includes/'.$_REQUEST['page'].'.php')) include ('includes/'.$_REQUEST['page'].'.php');
+        else include ('includes/404.php');
+      }
+      else {
+        include ('includes/home.php');
+      }
+      ?>
+      <script>
+        function popMenu() {
+          var divmenu = document.getElementById("popmenu");
+          var burgericon = document.getElementById("burgericon");
+          var mainheader = document.getElementById("mainheader");
+          var headerdevider = document.getElementById("headerdevider");
+          if(divmenu.style.display == "block") {
+            divmenu.style.display = "none";
+            burgericon.src = 'img/burger-icon.png';
+            headerdevider.style.display = "block";
+          }
+          else {
+            divmenu .style.display = "block";
+            burgericon.src = 'img/burger-x.png';
+            headerdevider.style.display = "none";
+          }
+        }
+      </script>
     </div>
-    <h3>In session: <?php echo $_SESSION['basep']['usr']." | <a href='default.php?page=404.php'>test 404</a> | <a href='../c/logout.php'>logout</a>"; ?></h3>
-    <?php
-    if (isset ($_REQUEST['page'])) {
-      if (file_exists ('includes/'.$_REQUEST['page'].'.php')) include ('includes/'.$_REQUEST['page'].'.php');
-      else include ('includes/404.php');
-    }
-    else {
-      include ('includes/home.php');
-    }
-    ?>
   </body>
 <?php
 }
