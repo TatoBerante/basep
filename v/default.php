@@ -42,7 +42,8 @@ else {
         </div>
         <ul class='main-menu'>
           <a href='default.php?page=home'><li>home</li></a>
-          <a href='default.php?page=404.php'><li>test 404</li></a>
+          <a href='default.php?page=newusr'><li>nuevo usuario</li></a>
+          <a href='default.php?page=404'><li>test 404</li></a>
           <a href='../c/logout.php'><li>logout</li></a>
         </ul>
       </div>
@@ -56,22 +57,9 @@ else {
       }
       ?>
       <script>
-        function popMenu() {
-          var divmenu = document.getElementById("popmenu");
-          var burgericon = document.getElementById("burgericon");
-          var mainheader = document.getElementById("mainheader");
-          var headerdevider = document.getElementById("headerdevider");
-          if(divmenu.style.display == "block") {
-            divmenu.style.display = "none";
-            burgericon.src = 'img/burger-icon.png';
-            headerdevider.style.display = "block";
-          }
-          else {
-            divmenu .style.display = "block";
-            burgericon.src = 'img/burger-x.png';
-            headerdevider.style.display = "none";
-          }
-        }
+      <?php
+      include "../c/js/popmenu.js";
+      ?>
       </script>
     </div>
   </body>

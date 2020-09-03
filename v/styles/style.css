@@ -7,6 +7,9 @@
   --dark-main-color: #333;
   --borders-color: #666;
   --error-color: #b30000;
+  --ok-light: #99ff99;
+  --ok-dark: #008000;
+  --error-light: #ff9999;
 }
 * {
   font-family: 'Roboto', sans-serif;
@@ -47,6 +50,7 @@
   margin: 2rem 0;
   text-align: center;
   border: 1px solid var(--error-color);
+  border-radius: 0.5rem;
   padding: 1rem;
   color: #fff;
   background-color: var(--error-color);
@@ -68,7 +72,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /*border-bottom: 1px solid var(--borders-color);*/
+
   padding: 0.5rem 0;
   margin: 0.3rem 0 0 0;
 }
@@ -121,4 +125,43 @@
   font-weight: bold;
   text-align: right;
   padding: 1rem 1rem 0.5rem 0;
+}
+
+/* Form style */
+
+.formcontainer {
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-columns: 8rem 1fr 3fr;
+  align-items: center;
+}
+.formerror {
+  color: var(--error-color);
+  background-color: var(--error-light);
+  border: 1px solid var(--error-color);
+  font-weight: bold;
+  padding: 0.4rem;
+  border-radius: 0.3rem;
+}
+.formsugg {
+  background-color: var(--ok-light);
+  color: var(--ok-dark);
+  border: 1px solid var(--ok-dark);
+  font-weight: bold;
+  padding: 0.4rem;
+  border-radius: 0.3rem;
+}
+.submitbutton {
+  text-align: center;
+}
+.buttons {
+  border: 1px solid var(--accent-main-color);
+  color: var(--light-main-color);
+  background-color: var(--accent-main-color);
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--borders-color);
+  margin: 2rem auto;
+  width: min(50%, 500px);
 }
