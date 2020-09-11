@@ -11,7 +11,7 @@ else {
   
   $qry = "SELECT usuario_id, usuario_nombre, usuario_apellido, usuario_hry FROM usuarios WHERE usuario_nick = '".$usr."' AND usuario_key = '".$key."'";
   $res = mysqli_query($mysqli, $qry);
-  echo $qry;
+  //echo $qry;
   if (mysqli_num_rows ($res) > 0) {
 
     $row = mysqli_fetch_assoc ($res);

@@ -35,6 +35,7 @@
   border: 1px solid var(--borders-color);
   margin: 1rem auto;
   width: min(50%, 500px);
+  filter: none;
 }
 .login-line {
   text-align: center;
@@ -128,7 +129,9 @@
 }
 
 /* Form style */
-
+.input-text {
+  padding: 0.5rem;
+}
 .formcontainer {
   display: grid;
   grid-gap: 0.5rem;
@@ -151,6 +154,16 @@
   padding: 0.4rem;
   border-radius: 0.3rem;
 }
+.sccss-msg {
+  margin: 2rem 0;
+  text-align: center;
+  border: 1px solid var(--ok-dark);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: #fff;
+  background-color: var(--ok-dark);
+  font-weight: bold;
+}
 .submitbutton {
   text-align: center;
 }
@@ -164,4 +177,5 @@
   border: 1px solid var(--borders-color);
   margin: 2rem auto;
   width: min(50%, 500px);
+  cursor: pointer;
 }
