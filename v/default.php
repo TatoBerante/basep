@@ -41,10 +41,9 @@ else {
           en sesión: <?php echo $_SESSION['basep']['usr'];?>
         </div>
         <ul class='main-menu'>
-          <a href='default.php?page=home'><li>home</li></a>
-          <a href='default.php?page=newusr'><li>nuevo usuario</li></a>
-          <a href='default.php?page=404'><li>test 404</li></a>
-          <a href='../c/logout.php'><li>logout</li></a>
+          <?php
+          include "includes/menu.php";
+          ?>
         </ul>
       </div>
       <?php

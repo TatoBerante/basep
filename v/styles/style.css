@@ -131,11 +131,13 @@
 /* Form style */
 .input-text {
   padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--borders-color);
 }
 .formcontainer {
   display: grid;
   grid-gap: 0.5rem;
-  grid-template-columns: 8rem 1fr 3fr;
+  grid-template-columns: 1fr 1fr 3fr;
   align-items: center;
 }
 .formerror {
@@ -172,10 +174,21 @@
   color: var(--light-main-color);
   background-color: var(--accent-main-color);
   font-weight: bold;
-  padding: 1rem;
+  padding: 0.6rem;
   border-radius: 0.5rem;
   border: 1px solid var(--borders-color);
   margin: 2rem auto;
+  width: min(50%, 500px);
+  cursor: pointer;
+}
+.buttons-inline {
+  border: 1px solid var(--accent-main-color);
+  color: var(--light-main-color);
+  background-color: var(--accent-main-color);
+  font-weight: bold;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  border: 0;
   width: min(50%, 500px);
   cursor: pointer;
 }
