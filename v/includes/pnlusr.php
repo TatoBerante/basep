@@ -26,11 +26,29 @@ if (isset ($_REQUEST['sent'])) {
   require_once ('../c/funcs/utilities.php');
   //echo "<p>$clue</p>";
   $resultados = searchUsuarios ($clue);
-  if (count ($resultados) < 1) echo "<p>SIn resultados</p>";
+  if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
+    ?>
+    <div class='simple-line'>Mostrando <?php echo count($resultados);?> resultados:</div>
+    <div class="tablagen">
+    <?php
     foreach ($resultados as $resultado) {
-      echo "<p>".$resultado['usuario_apellido']." ".$resultado['usuario_nombre']." (".$resultado['usuario_nick'].")</p>";
+      echo "<div class='fila'>
+              <div class='col'>".
+              $resultado['usuario_apellido']." ".$resultado['usuario_nombre']."
+              </div>
+              <div class='col'>".
+              $resultado['usuario_nick']."
+              </div>
+              <div class='col goright'>
+              <a href='' class='accion'>EDITAR</a>
+              <a href='' class='accion'>ACTIVIDAD</a>
+              </div>
+            </div>";
     }
+    ?>
+    </div>
+    <?php
   }
 }
 ?>

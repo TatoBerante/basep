@@ -5,11 +5,13 @@
   --accent-secondary-color: #800080;
   --light-main-color: #ebebeb;
   --dark-main-color: #333;
-  --borders-color: #666;
+  
+  --borders-color: #999;
   --error-color: #b30000;
   --ok-light: #99ff99;
   --ok-dark: #008000;
   --error-light: #ff9999;
+  --table-guide: #ccc;
 }
 * {
   font-family: 'Roboto', sans-serif;
@@ -24,6 +26,7 @@
 }
 .login-header {
   text-align: center;
+  margin-top: 3rem;
 }
 .login-logo {
   width: 20vh;
@@ -191,4 +194,37 @@
   border: 0;
   width: min(50%, 500px);
   cursor: pointer;
+}
+.tablagen{
+  display: table;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+.fila{
+  display: table-row;
+}
+.col{
+  display: table-cell;
+  padding: 0.5rem;
+  background: var(--light-main-color);
+  border-top: 1px solid var(--borders-color);
+  border-bottom: 1px solid var(--borders-color);
+}
+.fila:hover .col{
+  background-color: var(--table-guide);
+}
+.goright {
+  text-align: right;
+}
+.accion {
+  text-decoration: none;
+  background-color: var(--accent-main-color);
+  color: var(--light-main-color);
+  padding: 0.3rem 0.5rem;
+  margin-left: 0.3rem;
+  border-radius: 0.5rem;
+}
+.simple-line {
+  margin-top: 1rem;
 }
