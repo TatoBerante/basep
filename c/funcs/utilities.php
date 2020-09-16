@@ -31,21 +31,18 @@ function searchUsuarios ($clue) {
 	}
 }
 
-function lista_transportistas () {
-  
-}
-
-function transportista_by_id ($id) {
-  include "DBconnect.php";
-	$q = "SELECT CONCAT(apellido, ' ' ,nombre) as transportista FROM transportistas WHERE id_transportista = ".$id;
-	$resultado = mysqli_query($conn , $q);
-	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($conn).") ".mysqli_error($conn)."</p><pre>".$q."</pre>";
+function user_by_id ($id) {
+  include "conn.php";
+	$mysqli = mysqli_conn();
+	$q = "SELECT * FROM usuarios WHERE usuario_id=".$id;
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
-		$fila = mysqli_fetch_assoc($resultado);
-		$transportista = $fila['transportista'];
+		$usuario = mysqli_fetch_assoc($resultado);
+		//$transportista = $fila['transportista'];
 		mysqli_free_result($resultado);
-		mysqli_close($conn);
-		return $transportista;
+		mysqli_close($mysqli);
+		return $usuario;
 	}
 }
 ?>

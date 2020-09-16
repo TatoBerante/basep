@@ -15,14 +15,7 @@ else {
   </div>
 </form>
 <?php
-// ../c/pnlusr-srch.php
 if (isset ($_REQUEST['sent'])) {
-  //El formulario fue enviado
-  /*
-  echo "<pre>";
-  print_r($_REQUEST);
-  echo "</pre>";
-  */
   require_once ('../c/funcs/utilities.php');
   //echo "<p>$clue</p>";
   $resultados = searchUsuarios ($clue);
@@ -41,7 +34,7 @@ if (isset ($_REQUEST['sent'])) {
               $resultado['usuario_nick']."
               </div>
               <div class='col goright'>
-              <a href='' class='accion'>EDITAR</a>
+              <a href='default.php?page=appusr&actflag=mod&idusr=".$resultado['usuario_id']."' class='accion'>EDITAR</a>
               <a href='' class='accion'>ACTIVIDAD</a>
               </div>
             </div>";

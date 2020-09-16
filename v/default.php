@@ -12,6 +12,7 @@ else {
     // App data for logo, favicon and title.
     include "../core/config.php";
     require_once ('../c/funcs/common.php');
+    require_once ('../c/funcs/utilities.php');
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
