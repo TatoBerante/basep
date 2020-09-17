@@ -28,7 +28,8 @@ if (!ctype_alnum ($ns_key) || strlen ($ns_key) < 8) {
 }
 
 if ($errores > 0) {
-  header ('location:../v/default.php?page=appusr&actflag=new&nombreusr='.$ns_nom.'&apellidousr='.$ns_ape.'&nickusr='.$ns_nck.'&keyusr='.$ns_key.'&errform=1'.$errret);
+  if ($_REQUEST['flag'] == 'n') header ('location:../v/default.php?page=appusr&actflag=new&nombreusr='.$ns_nom.'&apellidousr='.$ns_ape.'&nickusr='.$ns_nck.'&keyusr='.$ns_key.'&errform=1'.$errret);
+  else header ('location:../v/default.php?page=appusr&actflag=mod&idusr='.$_REQUEST['flag'].'&errform=1'.$errret);
 }
 else {
   require_once ('funcs/conn.php');
@@ -38,13 +39,11 @@ else {
   }
   else {
     $flag = $_REQUEST['flag'];
-    if (is_int ($flag)) { // id_usuario: es mod
+    if (ctype_digit ($flag)) { // id_usuario: es mod
       // Verificar si el nick seleccionado no existe en otro usuario
-      //$qc = "SELECT usuario_id FROM usuarios WHERE nick = '".$ns_nck."' AND usuario_id != ".$flag;
       $qc = "SELECT usuario_id FROM usuarios WHERE nick = ? AND usuario_id != ?";
       mysqli_stmt_bind_param($qc, "si", $ns_nck, $flag);
       mysqli_stmt_execute($qc);
-      // $rc = mysqli_query($mysqli , $qc);
       $rc = mysqli_stmt_get_result($qc);
       if (mysqli_num_rows ($rc) > 0) { // El nick enviado ya existe en BD
         header ('location:../v/default.php?page=appusr&actflag=mod&idusr='.$_REQUEST['flag'].'&errform=3');
@@ -53,13 +52,12 @@ else {
         $sql = "UPDATE usuarios SET
                 usuario_nombre = ?,
                 usuario_apellido = ?,
-                nick_usuario = ?,
-                key_usuario = ?
+                usuario_nick = ?,
+                usuario_key = ?
                 WHERE usuario_id = ?";
         $stmt = mysqli_stmt_init ($mysqli);
         if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
         else {
-          //$idu = $_SESSION['iris']['id_user_iris'];
           mysqli_stmt_bind_param ($stmt, "ssssi", $ns_nom, $ns_ape, $ns_nck, $ns_key, $flag);
           mysqli_stmt_execute ($stmt);
           mysqli_stmt_close($stmt);
@@ -96,9 +94,8 @@ else {
         }
       }
     }
-    else {
-      // error flag
-      header ('location:../v/default.php?page=appusr&actflag=new&nombreusr='.$ns_nom.'&apellidousr='.$ns_ape.'&nickusr='.$ns_nck.'&keyusr='.$ns_key.'&errform=1'.$errret);
+    else { // error flag
+      header ('location:../v/default.php?page=appusr&actflag=new&nombreusr='.$ns_nom.'&apellidousr='.$ns_ape.'&nickusr='.$ns_nck.'&keyusr='.$ns_key.'&errform=1'.$errret.'&test=x');
     }
   }
 }

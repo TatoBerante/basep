@@ -18,7 +18,7 @@ else {
 if (isset ($_REQUEST['sent'])) {
   require_once ('../c/funcs/utilities.php');
   //echo "<p>$clue</p>";
-  $resultados = searchUsuarios ($clue);
+  $resultados = search_usuarios ($clue);
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
     ?>

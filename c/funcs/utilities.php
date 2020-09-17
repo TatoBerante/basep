@@ -14,7 +14,7 @@ function logThis ($desc) {
 	}
 }
 
-function searchUsuarios ($clue) {
+function search_usuarios ($clue) {
 	include "conn.php";
 	$mysqli = mysqli_conn();
   $usuarios = array();
