@@ -201,7 +201,7 @@ h2 {
 }
 .tablagen{
   display: table;
-  margin-top: 1rem;
+  margin: 1rem 0 2rem 0;
   border-collapse: collapse;
   width: 100%;
 }
@@ -220,6 +220,13 @@ h2 {
 }
 .goright {
   text-align: right;
+}
+.gocenter {
+  text-align: center;
+}
+.next {
+  margin: 20rem 0.5rem;
+  max-width: 20rem;
 }
 .accion {
   text-decoration: none;

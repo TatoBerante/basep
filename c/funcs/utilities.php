@@ -31,6 +31,24 @@ function search_usuarios ($clue) {
 	}
 }
 
+function search_clientes ($clue, $start=0) {
+	include "conn.php";
+	$mysqli = mysqli_conn();
+	$clientes = array();
+	$q = "SELECT * FROM clientes WHERE cliente LIKE '%".$clue."%' ORDER BY cliente";
+	if ($clue == '') $q .= " LIMIT ".$start.", 15";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$clientes[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $clientes;
+	}
+}
+
 function user_by_id ($id) {
   include "conn.php";
 	$mysqli = mysqli_conn();
