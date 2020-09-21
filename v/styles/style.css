@@ -63,6 +63,9 @@
 
 /* Default page styles */
 
+h2 {
+  margin: 2rem 0;
+}
 .default-logo, .burger-icon {
   width: 3rem;
   padding: 0;
@@ -173,6 +176,7 @@
   text-align: center;
 }
 .buttons {
+  text-decoration: none;
   border: 1px solid var(--accent-main-color);
   color: var(--light-main-color);
   background-color: var(--accent-main-color);

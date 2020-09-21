@@ -41,10 +41,10 @@ else {
     $flag = $_REQUEST['flag'];
     if (ctype_digit ($flag)) { // id_usuario: es mod
       // Verificar si el nick seleccionado no existe en otro usuario
-      $qc = "SELECT usuario_id FROM usuarios WHERE nick = ? AND usuario_id != ?";
-      mysqli_stmt_bind_param($qc, "si", $ns_nck, $flag);
-      mysqli_stmt_execute($qc);
-      $rc = mysqli_stmt_get_result($qc);
+      $qc = "SELECT usuario_id FROM usuarios WHERE usuario_nick = '".$ns_nck."' AND usuario_id != ".$flag;
+      $rc = mysqli_query($mysqli, $qc);
+      //$rc = mysqli_stmt_get_result($qc);
+      //echo $qc;
       if (mysqli_num_rows ($rc) > 0) { // El nick enviado ya existe en BD
         header ('location:../v/default.php?page=appusr&actflag=mod&idusr='.$_REQUEST['flag'].'&errform=3');
       }

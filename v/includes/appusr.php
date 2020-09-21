@@ -6,12 +6,14 @@ if (isset ($_REQUEST['actflag'])) {
     $goahead = true;
     $h2 = "Nuevo";
     $flag = "n";
+    $submit_value = "REGISTRAR";
   }
   else if ($_REQUEST['actflag'] == 'mod') {
     // mod
     $goahead = true;
     $h2 = "Editar";
     $flag = $_REQUEST['idusr'];
+    $submit_value = "EDITAR";
   }
   else {
     // falta flag
@@ -66,7 +68,7 @@ if (isset ($_REQUEST['actflag'])) {
 
       </div>
       <div class="submitbutton">
-        <input type="submit" value="REGISTRAR" class='buttons'>
+        <input type="submit" value="<?=$submit_value;?>" class='buttons'>
       </div>
     </form>
     <?php
