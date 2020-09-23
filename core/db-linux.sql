@@ -97,6 +97,38 @@ ALTER TABLE `usuarios`
   MODIFY `usuario_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
+--
+-- Table structure for table `medicos`
+--
+
+CREATE TABLE `medicos` (
+  `id_medico_sys` int UNSIGNED NOT NULL,
+  `id_medico` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `medico` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `medicos`
+--
+ALTER TABLE `medicos`
+  ADD PRIMARY KEY (`id_medico_sys`),
+  ADD UNIQUE KEY `id_medico` (`id_medico`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `medicos`
+--
+ALTER TABLE `medicos`
+  MODIFY `id_medico_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -32,6 +32,7 @@ $clientes = updateClientes();
 $profesionales = updateProfesionales();
 $vendedores = updateVendedores();
 $cirugias = updateCirugias();
+$productos = updateProductos();
 
 if ($clientes < 1) echo "<p><span style='color:red;'>✘</span> No se agregaron clientes.</p>";
 else {
@@ -42,6 +43,11 @@ if ($profesionales < 1) echo "<p><span style='color:red;'>✘</span> No se agreg
 else {
   if ($profesionales == 1) echo "<p><span style='color:green;'>✔</span> Se agregó ".$profesionales." profesional.</p>";
   else echo "<p><span style='color:green;'>✔</span> Se agregaron ".$profesionales." profesionales.</p>";
+}
+if ($productos < 1) echo "<p><span style='color:red;'>✘</span> No se agregaron productos.</p>";
+else {
+  if ($productos == 1) echo "<p><span style='color:green;'>✔</span> Se agregó ".$productos." producto.</p>";
+  else echo "<p><span style='color:green;'>✔</span> Se agregaron ".$productos." productos.</p>";
 }
 if ($vendedores < 1) echo "<p><span style='color:red;'>✘</span> No se agregaron vendedores.</p>";
 else {
