@@ -129,6 +129,72 @@ ALTER TABLE `medicos`
   MODIFY `id_medico_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
+--
+-- Table structure for table `productos`
+--
+
+CREATE TABLE `productos` (
+  `id_producto_sys` int UNSIGNED NOT NULL,
+  `empresa` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_producto` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `productos`
+--
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`id_producto_sys`),
+  ADD UNIQUE KEY `empresa` (`empresa`,`id_producto`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `productos`
+--
+ALTER TABLE `productos`
+  MODIFY `id_producto_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+--
+-- Table structure for table `vendedores`
+--
+
+CREATE TABLE `vendedores` (
+  `id_vendedor_sys` int UNSIGNED NOT NULL,
+  `id_vendedor` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vendedor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `vendedores`
+--
+ALTER TABLE `vendedores`
+  ADD PRIMARY KEY (`id_vendedor_sys`),
+  ADD UNIQUE KEY `id_vendedor` (`id_vendedor`,`vendedor`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `vendedores`
+--
+ALTER TABLE `vendedores`
+  MODIFY `id_vendedor_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

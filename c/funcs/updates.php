@@ -100,7 +100,48 @@ function updateProfesionales () {
   return $new;
 }
 function updateVendedores () {
-  return rand (0, 3);
+  $mysqli = mysqli_conn();
+  $txt_file = file_get_contents('../update-source/Vendedores.csv');
+  $rows = explode("\n", $txt_file);
+  array_shift($rows); // Quita el primer valor del array (evita fila de nombres)
+  $errors = 0;
+  $new = 0;
+  foreach($rows as $row => $data) {
+    if ($row > 0) { // Evita la segunda línea (+-----+-----+)
+      //get row data
+      $row_data = explode('|', $data);
+      if (count($row_data) > 1) {
+        $id_vendedor = trim ($row_data[0]);
+        $vendedor = trim ($row_data[1]);
+
+        $sql = "INSERT INTO vendedores (id_vendedor, vendedor)
+                  VALUES (?, ?)";
+        $stmt = mysqli_stmt_init ($mysqli);
+        if (!mysqli_stmt_prepare ($stmt, $sql)) {
+            // error report:
+            echo "<p>";
+            print_r (mysqli_stmt_error($stmt));
+            echo " Cliente (mysqli_stmt_prepare): ".$cliente."</p>*****";
+            $errors++;
+        }
+        else {
+          mysqli_stmt_bind_param ($stmt, "ss", $id_vendedor, $vendedor);
+          if (mysqli_stmt_execute ($stmt)) {
+            $new++;
+            mysqli_stmt_close($stmt);
+          }
+          else {
+            // error report (fallo por cliente ya registrado previamente):
+            // echo "<p>Data:  ".$empresa." / ".$id_producro." / ".$descripcion.": ".mysqli_stmt_error($stmt)."</p>";
+            $errors++;
+            
+          }
+        }
+      }
+    }
+  }
+  mysqli_close($mysqli);
+  return $new;
 }
 function updateCirugias () {
   return rand (0, 500);
