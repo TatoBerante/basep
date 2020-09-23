@@ -97,7 +97,7 @@ h2 {
 }
 .main-container {
   background-color: var(--light-main-color);
-  padding: 0 1rem;
+  padding: 0 1rem 2rem 1rem;
   min-height: 95vh;
   border-radius: 0.5rem;
 }
