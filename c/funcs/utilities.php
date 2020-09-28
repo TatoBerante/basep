@@ -63,4 +63,27 @@ function user_by_id ($id) {
 		return $usuario;
 	}
 }
+
+function search_cx ($medico='', $mes, $ano) {
+	include "conn.php";
+	$mysqli = mysqli_conn();
+	$desde = $ano."-".$mes."-01";
+	$hasta = $ano."-".$mes."-31";
+  $cirugias = array();
+	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico FROM cirugias cx
+				INNER JOIN medicos med ON cx.cod_medico = med.id_medico
+				WHERE med.medico LIKE '%".$medico."%'
+				AND cx.fecha_cx BETWEEN '".$desde."' AND '".$hasta."'
+				ORDER BY fecha_cx";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$cirugias[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $cirugias;
+	}
+}
 ?>

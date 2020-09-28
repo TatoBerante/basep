@@ -18,7 +18,9 @@
   box-sizing: border-box;
   text-transform: uppercase;
 }
-
+html {
+  font-size: 87%;
+}
 /*  Login styles */
 .login-body {
   background-color: var(--light-main-color);
@@ -140,6 +142,10 @@ h2 {
   border-radius: 0.5rem;
   border: 1px solid var(--borders-color);
 }
+select {
+  appearance: none;
+  text-transform: uppercase;
+}
 .formcontainer {
   display: grid;
   grid-gap: 0.5rem;
@@ -214,6 +220,7 @@ h2 {
   background: var(--light-main-color);
   border-top: 1px solid var(--borders-color);
   border-bottom: 1px solid var(--borders-color);
+  vertical-align: middle;
 }
 .fila:hover .col{
   background-color: var(--table-guide);
@@ -228,6 +235,9 @@ h2 {
   margin: 20rem 0.5rem;
   max-width: 20rem;
 }
+.left-margin {
+  margin-left: 1rem;
+}
 .accion {
   text-decoration: none;
   background-color: var(--accent-main-color);
@@ -238,4 +248,33 @@ h2 {
 }
 .simple-line {
   margin-top: 1rem;
+}
+.pnlcx-btn {
+  max-width: 7rem;
+  margin-left: 1rem;
+}
+
+/* Tablas */
+.results {
+  margin-top: 2rem;
+  min-width:100%;
+  border-collapse: collapse;
+  border: 1px solid var(--dark-main-color);
+  font-size: 1rem;
+}
+.results th, .results td {
+  border: 1px solid var(--borders-color);
+  padding: 0.5rem;
+}
+.results th {
+  border: 1px solid var(--dark-main-color);
+  color: var(--light-main-color);
+  background-color: var(--dark-main-color);
+}
+.rowguide:hover {
+  background-color: var(--table-guide);
+}
+.acciones {
+  display: flex;
+  justify-content: space-around;
 }

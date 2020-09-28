@@ -191,7 +191,7 @@ function updateProductos () {
 function updateCirugias () {
   // Comercial_filtro_fechasPV+Recibo2
   $mysqli = mysqli_conn();
-  $txt_file = file_get_contents('../update-source/Comercial_filtro_fechasPV+Recibo2.csv');
+  $txt_file = file_get_contents('../update-source/Comercial_filtro_fechasPV+Recibo.csv');
   $rows = explode("\n", $txt_file);
   array_shift($rows); // Quita el primer valor del array (evita fila de nombres)
   $errors = 0;
