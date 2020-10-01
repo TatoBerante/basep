@@ -2,39 +2,133 @@
 require_once ('../c/funcs/common.php');
 if (isset ($_REQUEST['sent'])) {
   $clue = sanitizeThis ($_REQUEST['srchcx']);
+  $vendcx = sanitizeThis ($_REQUEST['vendcx']);
+  $instcx = sanitizeThis ($_REQUEST['instcx']);
+  $acr = sanitizeThis ($_REQUEST['acr']);
+  $fin = sanitizeThis ($_REQUEST['fin']);
 }
 else {
   $clue = "";
+  $vendcx = "";
+  $instcx = "";
+  $acr = "";
+  $fin = "";
 }
 ?>
 <h2>Panel de cirugías</h2>
 <form action="default.php?page=pnlcx" method="post">
-  <div class="">
+  <div class="form-line">
     Profesional: <input type="text" name="srchcx" id="srchcx" autofocus autocomplete="off" class="input-text" value="<?php echo $clue;?>">
-    <span class='left-margin'>Periodo:</span> <select name='mes' id='mes' class='input-text'>
-        <option value="01"<?php if ($_REQUEST['mes'] == '1') echo " selected"?>>Enero</option>
-        <option value="02"<?php if ($_REQUEST['mes'] == '2') echo " selected"?>>Febrero</option>
-        <option value="03"<?php if ($_REQUEST['mes'] == '3') echo " selected"?>>Marzo</option>
-        <option value="04"<?php if ($_REQUEST['mes'] == '4') echo " selected"?>>Abril</option>
-        <option value="05"<?php if ($_REQUEST['mes'] == '5') echo " selected"?>>Mayo</option>
-        <option value="06"<?php if ($_REQUEST['mes'] == '6') echo " selected"?>>Junio</option>
-        <option value="07"<?php if ($_REQUEST['mes'] == '7') echo " selected"?>>Julio</option>
-        <option value="08"<?php if ($_REQUEST['mes'] == '8') echo " selected"?>>Agosto</option>
-        <option value="09"<?php if ($_REQUEST['mes'] == '9') echo " selected"?>>Septiembre</option>
-        <option value="10"<?php if ($_REQUEST['mes'] == '10') echo " selected"?>>Octubre</option>
-        <option value="11"<?php if ($_REQUEST['mes'] == '11') echo " selected"?>>Noviembre</option>
-        <option value="12"<?php if ($_REQUEST['mes'] == '12') echo " selected"?>>Diciembre</option>
+    <span class='left-margin'>Institución:</span> <input type="text" name="instcx" id="instcx" autocomplete="off" class="input-text" value="<?php echo $instcx;?>">
+    <span class='left-margin'>Vendedor:</span> <input type="text" name="vendcx" id="vendcx" autocomplete="off" class="input-text" value="<?php echo $vendcx;?>">
+  </div>
+  <div class="form-line">
+    Periodo CX desde: <select name='mescxd' id='mescxd' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['mescxd'] == 'NC') echo " selected"?>>NC</option>
+      <option value="01"<?php if ($_REQUEST['mescxd'] == '1') echo " selected"?>>Enero</option>
+      <option value="02"<?php if ($_REQUEST['mescxd'] == '2') echo " selected"?>>Febrero</option>
+      <option value="03"<?php if ($_REQUEST['mescxd'] == '3') echo " selected"?>>Marzo</option>
+      <option value="04"<?php if ($_REQUEST['mescxd'] == '4') echo " selected"?>>Abril</option>
+      <option value="05"<?php if ($_REQUEST['mescxd'] == '5') echo " selected"?>>Mayo</option>
+      <option value="06"<?php if ($_REQUEST['mescxd'] == '6') echo " selected"?>>Junio</option>
+      <option value="07"<?php if ($_REQUEST['mescxd'] == '7') echo " selected"?>>Julio</option>
+      <option value="08"<?php if ($_REQUEST['mescxd'] == '8') echo " selected"?>>Agosto</option>
+      <option value="09"<?php if ($_REQUEST['mescxd'] == '9') echo " selected"?>>Septiembre</option>
+      <option value="10"<?php if ($_REQUEST['mescxd'] == '10') echo " selected"?>>Octubre</option>
+      <option value="11"<?php if ($_REQUEST['mescxd'] == '11') echo " selected"?>>Noviembre</option>
+      <option value="12"<?php if ($_REQUEST['mescxd'] == '12') echo " selected"?>>Diciembre</option>
     </select>
-    <select name='ano' id="ano" class='input-text'>
+    <select name='anocxd' id="anocxd" class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['anocxd'] == 'NC') echo " selected"?>>NC</option>
     <?php
     for ($ap=date('Y'); $ap>(date('Y')-2); $ap--) {
       echo "<option value='".$ap."'";
-      if ($_REQUEST['ano'] == $ap) echo " selected";
+      if ($_REQUEST['anocxd'] == $ap) echo " selected";
       echo ">".$ap."</option>";
     }
     ?>
     </select>
-
+    <span class='left-margin'>hasta: </span><select name='mescxh' id='mescxh' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['mescxh'] == 'NC') echo " selected"?>>NC</option>
+      <option value="01"<?php if ($_REQUEST['mescxh'] == '1') echo " selected"?>>Enero</option>
+      <option value="02"<?php if ($_REQUEST['mescxh'] == '2') echo " selected"?>>Febrero</option>
+      <option value="03"<?php if ($_REQUEST['mescxh'] == '3') echo " selected"?>>Marzo</option>
+      <option value="04"<?php if ($_REQUEST['mescxh'] == '4') echo " selected"?>>Abril</option>
+      <option value="05"<?php if ($_REQUEST['mescxh'] == '5') echo " selected"?>>Mayo</option>
+      <option value="06"<?php if ($_REQUEST['mescxh'] == '6') echo " selected"?>>Junio</option>
+      <option value="07"<?php if ($_REQUEST['mescxh'] == '7') echo " selected"?>>Julio</option>
+      <option value="08"<?php if ($_REQUEST['mescxh'] == '8') echo " selected"?>>Agosto</option>
+      <option value="09"<?php if ($_REQUEST['mescxh'] == '9') echo " selected"?>>Septiembre</option>
+      <option value="10"<?php if ($_REQUEST['mescxh'] == '10') echo " selected"?>>Octubre</option>
+      <option value="11"<?php if ($_REQUEST['mescxh'] == '11') echo " selected"?>>Noviembre</option>
+      <option value="12"<?php if ($_REQUEST['mescxh'] == '12') echo " selected"?>>Diciembre</option>
+    </select>
+    <select name='anocxh' id="anocxh" class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['anocxh'] == 'NC') echo " selected"?>>NC</option>
+    <?php
+    for ($ap=date('Y'); $ap>(date('Y')-2); $ap--) {
+      echo "<option value='".$ap."'";
+      if ($_REQUEST['anocxh'] == $ap) echo " selected";
+      echo ">".$ap."</option>";
+    }
+    ?>
+    </select>
+  </div>
+  <div class="form-line">
+    Periodo LQ desde: <select name='meslqd' id='meslqd' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['meslqd'] == 'NC') echo " selected"?>>NC</option>
+      <option value="01"<?php if ($_REQUEST['meslqd'] == '1') echo " selected"?>>Enero</option>
+      <option value="02"<?php if ($_REQUEST['meslqd'] == '2') echo " selected"?>>Febrero</option>
+      <option value="03"<?php if ($_REQUEST['meslqd'] == '3') echo " selected"?>>Marzo</option>
+      <option value="04"<?php if ($_REQUEST['meslqd'] == '4') echo " selected"?>>Abril</option>
+      <option value="05"<?php if ($_REQUEST['meslqd'] == '5') echo " selected"?>>Mayo</option>
+      <option value="06"<?php if ($_REQUEST['meslqd'] == '6') echo " selected"?>>Junio</option>
+      <option value="07"<?php if ($_REQUEST['meslqd'] == '7') echo " selected"?>>Julio</option>
+      <option value="08"<?php if ($_REQUEST['meslqd'] == '8') echo " selected"?>>Agosto</option>
+      <option value="09"<?php if ($_REQUEST['meslqd'] == '9') echo " selected"?>>Septiembre</option>
+      <option value="10"<?php if ($_REQUEST['meslqd'] == '10') echo " selected"?>>Octubre</option>
+      <option value="11"<?php if ($_REQUEST['meslqd'] == '11') echo " selected"?>>Noviembre</option>
+      <option value="12"<?php if ($_REQUEST['meslqd'] == '12') echo " selected"?>>Diciembre</option>
+    </select>
+    <select name='anolqd' id="anolqd" class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['anolqd'] == 'NC') echo " selected"?>>NC</option>
+    <?php
+    for ($ap=date('Y'); $ap>(date('Y')-2); $ap--) {
+      echo "<option value='".$ap."'";
+      if ($_REQUEST['anolqd'] == $ap) echo " selected";
+      echo ">".$ap."</option>";
+    }
+    ?>
+    </select>
+    <span class='left-margin'>hasta: </span><select name='meslqh' id='meslqh' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['meslqh'] == 'NC') echo " selected"?>>NC</option>
+      <option value="01"<?php if ($_REQUEST['meslqh'] == '1') echo " selected"?>>Enero</option>
+      <option value="02"<?php if ($_REQUEST['meslqh'] == '2') echo " selected"?>>Febrero</option>
+      <option value="03"<?php if ($_REQUEST['meslqh'] == '3') echo " selected"?>>Marzo</option>
+      <option value="04"<?php if ($_REQUEST['meslqh'] == '4') echo " selected"?>>Abril</option>
+      <option value="05"<?php if ($_REQUEST['meslqh'] == '5') echo " selected"?>>Mayo</option>
+      <option value="06"<?php if ($_REQUEST['meslqh'] == '6') echo " selected"?>>Junio</option>
+      <option value="07"<?php if ($_REQUEST['meslqh'] == '7') echo " selected"?>>Julio</option>
+      <option value="08"<?php if ($_REQUEST['meslqh'] == '8') echo " selected"?>>Agosto</option>
+      <option value="09"<?php if ($_REQUEST['meslqh'] == '9') echo " selected"?>>Septiembre</option>
+      <option value="10"<?php if ($_REQUEST['meslqh'] == '10') echo " selected"?>>Octubre</option>
+      <option value="11"<?php if ($_REQUEST['meslqh'] == '11') echo " selected"?>>Noviembre</option>
+      <option value="12"<?php if ($_REQUEST['meslqh'] == '12') echo " selected"?>>Diciembre</option>
+    </select>
+    <select name='anolqh' id="anolqh" class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['anolqh'] == 'NC') echo " selected"?>>NC</option>
+    <?php
+    for ($ap=date('Y'); $ap>(date('Y')-2); $ap--) {
+      echo "<option value='".$ap."'";
+      if ($_REQUEST['anolqh'] == $ap) echo " selected";
+      echo ">".$ap."</option>";
+    }
+    ?>
+    </select>
+  </div>
+  <div class="form-line">
+    Acreedor: <input type="text" name="acr" id="acr" autocomplete="off" class="input-text" value="<?php echo $acr;?>">
+    <span class='left-margin'>Financiador:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>">
     <span class='left-margin'>Mostrar:</span> <select name="estado" id="estado" class='input-text'>
       <option value="0"<?php if ($_REQUEST['estado'] == '0') echo " selected"?>>TODAS</option>
       <option value="1"<?php if ($_REQUEST['estado'] == '1') echo " selected"?>>PENDIENTES</option>
@@ -47,50 +141,78 @@ else {
 <?php
 if (isset ($_REQUEST['sent'])) {
   require_once ('../c/funcs/utilities.php');
-  $resultados = search_cx ($clue, $_REQUEST['mes'], $_REQUEST['ano']);
+  $resultados = search_cx (
+                  $clue,
+                  $vendcx,
+                  $instcx,
+                  $acr,
+                  $fin,
+                  $_REQUEST['mescxd'],
+                  $_REQUEST['anocxd'],
+                  $_REQUEST['mescxh'],
+                  $_REQUEST['anocxh'],
+                  $_REQUEST['meslqd'],
+                  $_REQUEST['anolqd'],
+                  $_REQUEST['meslqh'],
+                  $_REQUEST['anolqh']
+                );
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
     ?>
     <div class='simple-line'>Mostrando <?php echo count($resultados);?> resultados:</div>
-    <table class='results'>
-      <tr>
-        <th>profesional</th>
-        <th>fecha cx</th>
-        <th>paciente</th>
-        <th>vendedor</th>
-        <th>producto</th>
-        <th>acciones</th>
-      </tr>
     <?php
+    $idcxold = 'x';
+    $first_record = true;
+    $total = 0;
     foreach ($resultados as $resultado) {
-      ?>
-      <tr class='rowguide'>
-        <td><?=$resultado['medico'];?></td>
-        <td><?=$resultado['fecha_cx_h'];?></td>
-        <td><?=$resultado['nombre_paciente'];?></td>
-        <td><?=$resultado['nombre_vendedor'];?></td>
-        <td><?=$resultado['producto'];?></td>
-        <td>
-          <div class="acciones">
-            <a href='' class='accion'>accion1</a>
-            <a href='' class='accion'>accion2</a>
-          </div>
-        </td>
-      </tr>
-      <?php
+      if ($resultado['nro_cirugia'] != $idcxold) {
+        if (!$first_record) {
+          echo "<tr>
+                  <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
+                </tr>
+              </table>";
+          $total = 0;
+        }
+        //Print new header
+        echo "<table class='results cx'>
+                <tr>
+                  <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
+                  <th rowspan='2'>liquidar <input type='checkbox' id='chkb_".$resultado['recno']."' class='chkb'></th>
+                </tr>
+                <tr>
+                  <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
+                </tr>
+                <tr>
+                  <td class='subh'>PRODUCTOS</td>
+                  <td class='subh gocenter'>CANTIDAD</td>
+                  <td class='subh gocenter'>VALOR</td>
+                  <td class='subh gocenter'>SUBTOTAL</td>
+                </tr>
+                <tr>
+                  <td>RECNO: ".$resultado['recno']." | ".$resultado['producto']."</td>
+                  <td class='cell-cantidad'>".$resultado['cantidad']."</td>
+                  <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
+                  <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
+                </tr>";
+        $idcxold = $resultado['nro_cirugia'];
+        $total += $resultado['subtotal'];
+      }
+      else {
+        echo "<tr>
+                <td>RECNO: ".$resultado['recno']." | ".$resultado['producto']."</td>
+                <td class='cell-cantidad'>".$resultado['cantidad']."</td>
+                <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
+                <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
+              </tr>";
+        $idcxold = $resultado['nro_cirugia'];
+        $total += $resultado['subtotal'];
+      }
+      $first_record = false;
     }
-    ?>
-    </table>
-    <?php
+    echo "<tr>
+            <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
+          </tr>
+        </table>";
   }
-  /*
-  if ($clue == '') {
-    $siguiente = $start + 15;
-    $anterior = $start - 15;
-    echo "<div class='gocenter'>";
-    if ($start > 0) echo "<a href='default.php?page=pnlcli&sent=1&start=".$anterior."' class='buttons next'>anterior</a>";
-    echo "<a href='default.php?page=pnlcli&sent=1&start=".$siguiente."' class='buttons next'>siguiente</a></div>";
-  }
-  */
 }
 ?>

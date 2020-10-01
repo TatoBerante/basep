@@ -57,24 +57,44 @@ function user_by_id ($id) {
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
 		$usuario = mysqli_fetch_assoc($resultado);
-		//$transportista = $fila['transportista'];
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
 		return $usuario;
 	}
 }
 
-function search_cx ($medico='', $mes, $ano) {
+function search_cx ($medico = '',
+										$vendedor = '',
+										$institucion = '',
+										$acreedor = '',
+										$financiador = '',
+										$mescxd,
+										$anocxd,
+										$mescxh,
+										$anocxh,
+										$meslqd,
+										$anolqd,
+										$meslqh,
+										$anolqh) {
 	include "conn.php";
 	$mysqli = mysqli_conn();
-	$desde = $ano."-".$mes."-01";
-	$hasta = $ano."-".$mes."-31";
-  $cirugias = array();
-	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico FROM cirugias cx
+	$cirugias = array();
+
+	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal
+				FROM cirugias cx
 				INNER JOIN medicos med ON cx.cod_medico = med.id_medico
-				WHERE med.medico LIKE '%".$medico."%'
-				AND cx.fecha_cx BETWEEN '".$desde."' AND '".$hasta."'
-				ORDER BY fecha_cx";
+				WHERE 1";
+	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
+	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
+	// if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
+	// if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
+	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
+		$cxd = $anocxd."-".$mescxd."-01";
+		$cxh = $anocxh."-".$mescxh."-31";
+		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
+	}
+	$q .= " ORDER BY fecha_cx";
+
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {

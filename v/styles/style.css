@@ -5,6 +5,7 @@
   --accent-secondary-color: #800080;
   --light-main-color: #ebebeb;
   --dark-main-color: #333;
+  --dark-secondary-color: #666;
   
   --borders-color: #999;
   --error-color: #b30000;
@@ -146,6 +147,9 @@ select {
   appearance: none;
   text-transform: uppercase;
 }
+.chkb {
+  background-color: var(--light-main-color);
+}
 .formcontainer {
   display: grid;
   grid-gap: 0.5rem;
@@ -178,18 +182,21 @@ select {
   background-color: var(--ok-dark);
   font-weight: bold;
 }
+.form-line {
+  margin: 1rem 0;
+}
 .submitbutton {
   text-align: center;
 }
 .buttons {
   text-decoration: none;
-  border: 1px solid var(--accent-main-color);
+  /*border: 1px solid var(--accent-main-color);*/
   color: var(--light-main-color);
   background-color: var(--accent-main-color);
   font-weight: bold;
   padding: 0.6rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--borders-color);
+  /*border: 1px solid var(--light-main-color);*/
   margin: 2rem auto;
   width: min(50%, 500px);
   cursor: pointer;
@@ -228,6 +235,9 @@ select {
 .goright {
   text-align: right;
 }
+.goleft {
+  text-align: left;
+}
 .gocenter {
   text-align: center;
 }
@@ -256,6 +266,7 @@ select {
 
 /* Tablas */
 .results {
+  border-radius: 1rem;
   margin-top: 2rem;
   min-width:100%;
   border-collapse: collapse;
@@ -271,10 +282,32 @@ select {
   color: var(--light-main-color);
   background-color: var(--dark-main-color);
 }
+.results tr:hover {
+  background-color: var(--table-guide);
+}
 .rowguide:hover {
   background-color: var(--table-guide);
 }
 .acciones {
   display: flex;
   justify-content: space-around;
+}
+.cell-cantidad {
+  text-align:center;
+  width: 3rem;
+}
+.cell-cash {
+  text-align: right;
+  width: 8rem;
+}
+.subh {
+  background-color: var(--dark-secondary-color);
+  color: var(--light-main-color);
+  font-weight: bolder;
+}
+.cx {
+  margin-bottom: 5rem;
+}
+.total {
+  margin-left: 1rem;
 }
