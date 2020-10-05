@@ -20,7 +20,7 @@
   text-transform: uppercase;
 }
 html {
-  font-size: 87%;
+  font-size: 86%;
 }
 /*  Login styles */
 .login-body {
@@ -149,6 +149,21 @@ select {
 }
 .chkb {
   background-color: var(--light-main-color);
+}
+input[type="checkbox"] {
+  display:none;
+}
+input[type="checkbox"] + label span {
+  display:inline-block;
+  width:19px;
+  height:19px;
+  margin:-1px 4px 0 0;
+  vertical-align:middle;
+  background:url(../img/check_radio_sheet3.png) left top no-repeat;
+  cursor:pointer;
+}
+input[type="checkbox"]:checked + label span {
+  background:url(../img/check_radio_sheet3.png) -19px top no-repeat;
 }
 .formcontainer {
   display: grid;

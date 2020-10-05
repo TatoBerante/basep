@@ -177,7 +177,13 @@ if (isset ($_REQUEST['sent'])) {
         echo "<table class='results cx'>
                 <tr>
                   <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
-                  <th rowspan='2'>liquidar <input type='checkbox' id='chkb_".$resultado['recno']."' class='chkb'></th>
+                  <th rowspan='2'>
+                    <input type='checkbox' id='chkb_".$resultado['recno']."' name='chkb_".$resultado['recno']."'>
+                    <label for='chkb_".$resultado['recno']."'>
+                      <span></span>
+                      Liquidar
+                    </label> 
+                    </th>
                 </tr>
                 <tr>
                   <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
