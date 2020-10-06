@@ -141,12 +141,14 @@ else {
 <?php
 if (isset ($_REQUEST['sent'])) {
   require_once ('../c/funcs/utilities.php');
+  $filterstring = $clue."!?".$vendcx."!?".$instcx."!?".$acr."!?".$fin."!?".$_REQUEST['estado']."!?".$_REQUEST['mescxd']."!?".$_REQUEST['anocxd']."!?".$_REQUEST['mescxh']."!?".$_REQUEST['anocxh']."!?".$_REQUEST['meslqd']."!?".$_REQUEST['anolqd']."!?".$_REQUEST['meslqh']."!?".$_REQUEST['anolqh'];
   $resultados = search_cx (
                   $clue,
                   $vendcx,
                   $instcx,
                   $acr,
                   $fin,
+                  $_REQUEST['estado'],
                   $_REQUEST['mescxd'],
                   $_REQUEST['anocxd'],
                   $_REQUEST['mescxh'],
@@ -158,8 +160,16 @@ if (isset ($_REQUEST['sent'])) {
                 );
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
+    $cantcx = 0;
     ?>
-    <div class='simple-line'>Mostrando <?php echo count($resultados);?> resultados:</div>
+    <form action='default.php?page=pnllq' method='post' id='checkform'>
+    <br>
+    <div class='mostrandores'>
+      <span>Mostrando <span id='cantcx'></span> resultados:</span>
+        <?php
+        if (isset ($_REQUEST['errchk'])) echo "<span class='error-text'>No se indicaron cirugías para liquidar</span>";
+        ?>
+    </div>
     <?php
     $idcxold = 'x';
     $first_record = true;
@@ -174,12 +184,13 @@ if (isset ($_REQUEST['sent'])) {
           $total = 0;
         }
         //Print new header
+        $cantcx++;
         echo "<table class='results cx'>
                 <tr>
                   <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
                   <th rowspan='2'>
-                    <input type='checkbox' id='chkb_".$resultado['recno']."' name='chkb_".$resultado['recno']."'>
-                    <label for='chkb_".$resultado['recno']."'>
+                    <input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
+                    <label for='chkb_".$resultado['nro_cirugia']."'>
                       <span></span>
                       Liquidar
                     </label> 
@@ -220,5 +231,12 @@ if (isset ($_REQUEST['sent'])) {
           </tr>
         </table>";
   }
+  echo "<input type='hidden' name='filters' value='".$filterstring."'>
+  <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>LIQUIDAR INDICADOS</a></div></form>";
+  ?>
+  <script>
+    document.getElementById("cantcx").innerHTML = <?=$cantcx;?>
+  </script>
+  <?php
 }
 ?>

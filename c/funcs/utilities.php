@@ -15,7 +15,7 @@ function logThis ($desc) {
 }
 
 function search_usuarios ($clue) {
-	include "conn.php";
+	require_once "conn.php";
 	$mysqli = mysqli_conn();
   $usuarios = array();
 	$q = "SELECT * FROM usuarios WHERE usuario_apellido LIKE '%".$clue."%' ORDER BY usuario_apellido, usuario_nombre";
@@ -50,7 +50,7 @@ function search_clientes ($clue, $start=0) {
 }
 
 function user_by_id ($id) {
-  include "conn.php";
+  require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$q = "SELECT * FROM usuarios WHERE usuario_id=".$id;
 	$resultado = mysqli_query($mysqli , $q);
@@ -68,6 +68,7 @@ function search_cx ($medico = '',
 										$institucion = '',
 										$acreedor = '',
 										$financiador = '',
+										$estado,
 										$mescxd,
 										$anocxd,
 										$mescxh,
@@ -76,7 +77,7 @@ function search_cx ($medico = '',
 										$anolqd,
 										$meslqh,
 										$anolqh) {
-	include "conn.php";
+	require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$cirugias = array();
 
@@ -94,7 +95,7 @@ function search_cx ($medico = '',
 		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
 	}
 	$q .= " ORDER BY fecha_cx";
-
+	
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
@@ -104,6 +105,30 @@ function search_cx ($medico = '',
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
 		return $cirugias;
+	}
+}
+function data_cx ($nro_cx) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$q = "SELECT SUM(precio_venta*cantidad) as total FROM cirugias WHERE nro_cirugia='".$nro_cx."'";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$data = mysqli_fetch_assoc($resultado);
+		$total = $data['total'];
+		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico FROM cirugias cx LEFT JOIN medicos med ON cx.cod_medico = med.id_medico WHERE cx.nro_cirugia='".$nro_cx."' LIMIT 1 ";
+		$resultado = mysqli_query($mysqli , $q);
+		if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+		else {
+			$data = mysqli_fetch_assoc($resultado);
+			$cx['paciente'] = $data['nombre_paciente'];
+			$cx['fecha_cx'] = $data['fecha_cx_h'];
+			$cx['medico'] = $data['medico'];
+			$cx['monto'] = $total;
+			mysqli_free_result($resultado);
+			mysqli_close($mysqli);
+			return $cx;
+		}
 	}
 }
 ?>

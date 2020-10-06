@@ -94,7 +94,7 @@ h2 {
   border-bottom: 1px solid var(--borders-color);
 }
 .default-body {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   background-color: #333;
 }
@@ -136,7 +136,19 @@ h2 {
   text-align: right;
   padding: 1rem 1rem 0.5rem 0;
 }
-
+.mostrandores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2rem;
+}
+.error-text {
+  background-color: var(--error-color);
+  color: var(--light-main-color);
+  font-weight: bolder;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
 /* Form style */
 .input-text {
   padding: 0.5rem;
@@ -164,6 +176,9 @@ input[type="checkbox"] + label span {
 }
 input[type="checkbox"]:checked + label span {
   background:url(../img/check_radio_sheet3.png) -19px top no-repeat;
+}
+form {
+  margin-bottom: 1rem;
 }
 .formcontainer {
   display: grid;
@@ -277,6 +292,10 @@ input[type="checkbox"]:checked + label span {
 .pnlcx-btn {
   max-width: 7rem;
   margin-left: 1rem;
+}
+.slink {
+  color: var(--ok-dark);
+  text-decoration: underline;
 }
 
 /* Tablas */
