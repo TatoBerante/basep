@@ -188,7 +188,7 @@ if (isset ($_REQUEST['sent'])) {
         echo "<table class='results cx'>
                 <tr>
                   <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
-                  <th rowspan='2'>
+                  <th rowspan='3'>
                     <input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
                     <label for='chkb_".$resultado['nro_cirugia']."'>
                       <span></span>
@@ -198,6 +198,9 @@ if (isset ($_REQUEST['sent'])) {
                 </tr>
                 <tr>
                   <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
+                </tr>
+                <tr>
+                  <th colspan='3'class='goleft'>Financiador: ".$resultado['cliente']."</th>
                 </tr>
                 <tr>
                   <td class='subh'>PRODUCTOS</td>

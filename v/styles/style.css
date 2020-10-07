@@ -223,13 +223,27 @@ form {
   /*border: 1px solid var(--accent-main-color);*/
   color: var(--light-main-color);
   background-color: var(--accent-main-color);
-  font-weight: bold;
+  font-weight: bolder;
   padding: 0.6rem;
   border-radius: 0.5rem;
   /*border: 1px solid var(--light-main-color);*/
   margin: 2rem auto;
   width: min(50%, 500px);
   cursor: pointer;
+}
+.buttons-warning {
+  text-decoration: none;
+  /*border: 1px solid var(--accent-main-color);*/
+  color: var(--light-main-color);
+  background-color: var(--error-color);
+  font-weight: bolder;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  /*border: 1px solid var(--light-main-color);*/
+  margin: 1rem auto;
+  width: 10rem;
+  cursor: pointer;
+  display: block;
 }
 .buttons-inline {
   border: 1px solid var(--accent-main-color);
@@ -340,8 +354,14 @@ form {
   font-weight: bolder;
 }
 .cx {
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 }
 .total {
   margin-left: 1rem;
+}
+.warning {
+  border: 1px solid var(--error-color);
+  color: var(--error-color);
+  border-radius: 0.5rem;
+  padding-top: 1rem;
 }

@@ -18,18 +18,23 @@ foreach ($_REQUEST as $key=>$dato) {
 }
 if ($cantcx < 1) echo "<div class='simple-line'>No se indicaron cirugías para liquidar. Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>VOLVER</a></div>";
 else {
-  echo "<div class='simple-line'>Puede cancelar esta liquidación haciendo click en el botón CANCELAR para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>CANCELAR</a></div>";
+  $medicos = lista_medicos();
+
+  echo "<div class='simple-line gocenter warning'>Puede cancelar esta liquidación haciendo click en el botón CANCELAR para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+
+  // Display cx seleccionadas:
   echo "<table class='results cx'>";
   $total = 0;
   foreach ($cxs as $cx=>$value) {
     $info = data_cx ($value);
-    $total += $info['monto'];
+    $pagable = ($info['monto'] * $info['aplicable']) / 100;
+    $total += $pagable;
     echo "<tr>
-            <td>CX ".$value."</td>
-            <td>Fecha: ".$info['fecha_cx']."</td>
-            <td>Paciente: ".$info['paciente']."</td>
-            <td>Médico: ".$info['medico']."</td>
+            <td>CX ".$value."<br>Fecha: ".$info['fecha_cx']."</td>
+            <td>Médico: ".$info['medico']."<br>Paciente: ".$info['paciente']."</td>
+            <td>Financiador: ".$info['aplicable']."%<br>".$info['cliente']."</td>
             <td class='goright'>$ ".number_format ($info['monto'], 2, ',', '.')."</td>
+            <td class='goright'>$ ".number_format ($pagable, 2, ',', '.')."</td>
           </tr>";
   }
   echo "<tr>
@@ -37,5 +42,31 @@ else {
           <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
         </tr>
       </table>";
+  // Fin de display cx seleccionadas
+
+  // Seleccionar acreedor:
+  /*
+  echo "Acreedor: <select name='acr' id='acr' class='input-text'>
+          <option value='x'>seleccione un acreedor</option>";
+  foreach ($medicos as $medico) {
+    echo "<option value='".$medico['id_medico_sys']."'>".$medico['medico']."</option>";
+  }
+  echo "</select>";
+  */
+  
+  ?>
+  <datalist id='medicos'>
+  <?php
+  foreach ($medicos as $medico) {
+    echo "<option value='".$medico['id_medico_sys']." - ".$medico['medico']." (SALDO: $ ".$medico['saldo'].")'>";
+  }
+  ?>
+  </datalist>
+  <div class="simple-line gocenter">
+    Acreedor: <input type='text' list='medicos' id='medico' class='input-text' style='width:30rem'>
+    <span class='left-margin'>Importe cta/cte:</span> <input type="text" name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="<?php echo $pagocc;?>" style='width:7rem'>
+    <span class='left-margin'>Importe remito:</span> <input type="text" name="pago" id="pago" autocomplete="off" class="input-text goright" value="<?php echo $pago;?>" style='width:7rem'>
+  </div>
+  <?php
 }
 ?>

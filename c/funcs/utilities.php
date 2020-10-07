@@ -32,7 +32,7 @@ function search_usuarios ($clue) {
 }
 
 function search_clientes ($clue, $start=0) {
-	include "conn.php";
+	require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$clientes = array();
 	$q = "SELECT * FROM clientes WHERE cliente LIKE '%".$clue."%' ORDER BY cliente";
@@ -81,13 +81,14 @@ function search_cx ($medico = '',
 	$mysqli = mysqli_conn();
 	$cirugias = array();
 
-	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal
+	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal, cli.cliente
 				FROM cirugias cx
 				INNER JOIN medicos med ON cx.cod_medico = med.id_medico
+				INNER JOIN clientes cli ON cx.cod_cliente = cli.id_cliente
 				WHERE 1";
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
-	// if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
+	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
 	// if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
 	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
 		$cxd = $anocxd."-".$mescxd."-01";
@@ -116,7 +117,11 @@ function data_cx ($nro_cx) {
 	else {
 		$data = mysqli_fetch_assoc($resultado);
 		$total = $data['total'];
-		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico FROM cirugias cx LEFT JOIN medicos med ON cx.cod_medico = med.id_medico WHERE cx.nro_cirugia='".$nro_cx."' LIMIT 1 ";
+		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable
+					FROM cirugias cx
+					INNER JOIN clientes cli ON cx.cod_cliente = cli.id_cliente
+					LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
+					WHERE cx.nro_cirugia='".$nro_cx."' LIMIT 1";
 		$resultado = mysqli_query($mysqli , $q);
 		if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 		else {
@@ -125,10 +130,28 @@ function data_cx ($nro_cx) {
 			$cx['fecha_cx'] = $data['fecha_cx_h'];
 			$cx['medico'] = $data['medico'];
 			$cx['monto'] = $total;
+			$cx['cliente'] = $data['cliente'];
+			$cx['aplicable'] = $data['aplicable'];
 			mysqli_free_result($resultado);
 			mysqli_close($mysqli);
 			return $cx;
 		}
+	}
+}
+function lista_medicos () {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$medicos = array();
+	$q = "SELECT * FROM medicos ORDER BY medico";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$medicos[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $medicos;
 	}
 }
 ?>
