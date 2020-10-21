@@ -245,6 +245,20 @@ form {
   cursor: pointer;
   display: block;
 }
+.buttons-standalone {
+  text-decoration: none;
+  /*border: 1px solid var(--accent-main-color);*/
+  color: var(--light-main-color);
+  background-color: var(--accent-main-color);
+  font-weight: bolder;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  /*border: 1px solid var(--light-main-color);*/
+  margin: 2rem auto;
+  width: 10rem;
+  cursor: pointer;
+  display: block;
+}
 .buttons-inline {
   border: 1px solid var(--accent-main-color);
   color: var(--light-main-color);
@@ -302,6 +316,9 @@ form {
 }
 .simple-line {
   margin-top: 1rem;
+}
+.detached-line {
+  margin-top: 3rem;
 }
 .pnlcx-btn {
   max-width: 7rem;

@@ -215,22 +215,53 @@ function updateCirugias () {
         $fecha_emision = trim ($row_data[11]);
         $comprobante = trim ($row_data[12]);
         $serie = trim ($row_data[13]);
-        $cod_cliente = trim ($row_data[14]);
-        $cod_institucion = trim ($row_data[15]);
-        $cod_vendedor = trim ($row_data[16]);
-        $nombre_vendedor = trim ($row_data[17]);
-        $producto = trim ($row_data[18]);
-        $descripcion = trim ($row_data[19]);
-        $item = trim ($row_data[20]);
-        $cantidad = trim ($row_data[21]);
-        $precio_venta = trim ($row_data[22]);
-        $valor_total1 = trim ($row_data[23]);
-        $valor_total2 = trim ($row_data[24]);
-        $serierecibo = trim ($row_data[25]);
-        $recibo = trim ($row_data[26]);
+        $id_cliente = trim ($row_data[14]);
+        $cod_cliente = trim ($row_data[15]);
+        $cod_institucion = trim ($row_data[16]);
+        $cod_vendedor = trim ($row_data[17]);
+        $nombre_vendedor = trim ($row_data[18]);
+        $producto = trim ($row_data[19]);
+        $descripcion = trim ($row_data[20]);
+        $item = trim ($row_data[21]);
+        $cantidad = trim ($row_data[22]);
+        $precio_venta = trim ($row_data[23]);
+        $valor_total = trim ($row_data[24]);
+        /*
+        $valor_total2 = trim ($row_data[25]);
+        $serierecibo = trim ($row_data[26]);
+        $recibo = trim ($row_data[27]);
+        */
 
-        $sql = "INSERT INTO cirugias (recno, filial, nro_presupuesto, orden_compra, fecha_pedido_venta, nro_pedido_de_venta, tipo_de_venta, fecha_cx, nro_cirugia, cod_medico, nombre_paciente, fecha_emision, comprobante, serie, cod_cliente, cod_institucion, cod_vendedor, nombre_vendedor, producto, descripcion, item, cantidad, precio_venta, valor_total1, valor_total2, serierecibo, recibo)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        /*
+        0 R_E_C_N_O_          |
+        1 filial|
+        2 nro_presupuesto|
+        3 orden_compra             |
+        4 fecha_pedido_venta|
+        5 nro_pedido_de_Venta|
+        6 tipo_de_venta             |
+        7 fecha_CIR       |
+        8 nro_cirugia|
+        9 cod_medico|
+        10 nomnre_paciente                                                    |
+        11 fecha_emision   |
+        12 comprobante |
+        13 serie|
+        14 id_cliente |
+        15 cod_cliente|
+        16 cod_institucion|
+        17 cod_vendedor|
+        18 nombre_vendedor                         |
+        19 producto       |
+        20 descripcion                             |
+        21 item|
+        22 cantidad                |
+        23 precio_venta            |
+        24 valor_total             
+        */
+
+        $sql = "INSERT INTO cirugias (recno, filial, nro_presupuesto, orden_compra, fecha_pedido_venta, nro_pedido_de_venta, tipo_de_venta, fecha_cx, nro_cirugia, cod_medico, nombre_paciente, fecha_emision, comprobante, serie, id_cliente, cod_cliente, cod_institucion, cod_vendedor, nombre_vendedor, producto, descripcion, item, cantidad, precio_venta, valor_total)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_stmt_init ($mysqli);
         if (!mysqli_stmt_prepare ($stmt, $sql)) {
             // error report:
@@ -240,14 +271,17 @@ function updateCirugias () {
             $errors++;
         }
         else {
-          mysqli_stmt_bind_param ($stmt, "sssssssssssssssssssssssssss", $recno, $filial, $nro_presupuesto, $orden_compra, $fecha_pedido_venta, $nro_pedido_de_venta, $tipo_de_venta, $fecha_cx, $nro_cirugia, $cod_medico, $nombre_paciente, $fecha_emision, $comprobante, $serie, $cod_cliente, $cod_institucion, $cod_vendedor, $nombre_vendedor, $producto, $descripcion, $item, $cantidad, $precio_venta, $valor_total1, $valor_total2, $serierecibo, $recibo);
+          mysqli_stmt_bind_param ($stmt, "sssssssssssssssssssssssss", $recno, $filial, $nro_presupuesto, $orden_compra, $fecha_pedido_venta, $nro_pedido_de_venta, $tipo_de_venta, $fecha_cx, $nro_cirugia, $cod_medico, $nombre_paciente, $fecha_emision, $comprobante, $serie, $id_cliente, $cod_cliente, $cod_institucion, $cod_vendedor, $nombre_vendedor, $producto, $descripcion, $item, $cantidad, $precio_venta, $valor_total);
           if (mysqli_stmt_execute ($stmt)) {
             $new++;
             mysqli_stmt_close($stmt);
           }
           else {
             // error report (fallo por cliente ya registrado previamente):
-            // echo "<p>Data:  ".$empresa." / ".$id_producro." / ".$descripcion.": ".mysqli_stmt_error($stmt)."</p>";
+            echo "<p>Data:  [ recno ".$recno." ] ".$empresa." / ".$id_producro." / ".$descripcion.": ".mysqli_stmt_error($stmt).":<br>
+            fecha_emision: ".$fecha_emision." /  ".trim ($row_data[11])."
+            paciente: ".$nombre_paciente." /  ".trim ($row_data[10])."
+            <hr></p>";
             $errors++;
             
           }

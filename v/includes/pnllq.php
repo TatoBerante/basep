@@ -23,15 +23,19 @@ else {
   echo "<div class='simple-line gocenter warning'>Puede cancelar esta liquidación haciendo click en el botón CANCELAR para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
 
   // Display cx seleccionadas:
+  ?>
+  <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
+  <?php
   echo "<table class='results cx'>";
   $total = 0;
   foreach ($cxs as $cx=>$value) {
     $info = data_cx ($value);
     $pagable = ($info['monto'] * $info['aplicable']) / 100;
     $total += $pagable;
+    $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
     echo "<tr>
-            <td>CX ".$value."<br>Fecha: ".$info['fecha_cx']."</td>
-            <td>Médico: ".$info['medico']."<br>Paciente: ".$info['paciente']."</td>
+            <td><input type='hidden' name='cx_".$value."' value='".$value."'>CX ".$value."<br>Fecha: ".$info['fecha_cx']."</td>
+            <td>Médico: ".$medico."<br>Paciente: ".$info['paciente']."</td>
             <td>Financiador: ".$info['aplicable']."%<br>".$info['cliente']."</td>
             <td class='goright'>$ ".number_format ($info['monto'], 2, ',', '.')."</td>
             <td class='goright'>$ ".number_format ($pagable, 2, ',', '.')."</td>
@@ -63,10 +67,13 @@ else {
   ?>
   </datalist>
   <div class="simple-line gocenter">
-    Acreedor: <input type='text' list='medicos' id='medico' class='input-text' style='width:30rem'>
-    <span class='left-margin'>Importe cta/cte:</span> <input type="text" name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="<?php echo $pagocc;?>" style='width:7rem'>
-    <span class='left-margin'>Importe remito:</span> <input type="text" name="pago" id="pago" autocomplete="off" class="input-text goright" value="<?php echo $pago;?>" style='width:7rem'>
+    Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
+    <span class='left-margin'>Importe cta/cte:</span> <input type="text" autocompĺete='off' name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="<?php echo $pagocc;?>" style='width:7rem'>
+    <span class='left-margin'>Importe remito:</span> <input type="text" autocompĺete='off' name="pago" id="pago" autocomplete="off" class="input-text goright" value="<?php echo $pago;?>" style='width:7rem'>
   </div>
+  <div class='gocenter'><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'>PREPARAR</a></div>
+  <input type="hidden" name="return" value="<?=$returnstring;?>">
+  </form>
   <?php
 }
 ?>

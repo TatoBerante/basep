@@ -235,7 +235,7 @@ if (isset ($_REQUEST['sent'])) {
         </table>";
   }
   echo "<input type='hidden' name='filters' value='".$filterstring."'>
-  <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>LIQUIDAR INDICADOS</a></div></form>";
+  <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>PROCESAR</a></div></form>";
   ?>
   <script>
     document.getElementById("cantcx").innerHTML = <?=$cantcx;?>

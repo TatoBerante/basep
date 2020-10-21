@@ -83,20 +83,30 @@ function search_cx ($medico = '',
 
 	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal, cli.cliente
 				FROM cirugias cx
-				INNER JOIN medicos med ON cx.cod_medico = med.id_medico
-				INNER JOIN clientes cli ON cx.cod_cliente = cli.id_cliente
+				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
+				INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
 				WHERE 1";
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
 	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
 	// if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
+
 	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
+		// Leap year issue
+		if ($mescxh == '01' || $mescxh == '03' || $mescxh == '05' || $mescxh == '07' || $mescxh == '08' || $mescxh == '10' || $mescxh == '12') $lastdh = '31';
+		else {
+			if ($mescxh != '02') $lastdh = '30';
+			else { // Feb
+				$leap = date('L', mktime(0, 0, 0, 1, 1, $anocxd));
+				$lastdh = ($leap) ? '29' : '28';
+			}
+		}
 		$cxd = $anocxd."-".$mescxd."-01";
-		$cxh = $anocxh."-".$mescxh."-31";
+		$cxh = $anocxh."-".$mescxh."-".$lastdh;
 		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
 	}
 	$q .= " ORDER BY fecha_cx";
-	
+	//echo "<p>$q</p>";
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
@@ -119,7 +129,7 @@ function data_cx ($nro_cx) {
 		$total = $data['total'];
 		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable
 					FROM cirugias cx
-					INNER JOIN clientes cli ON cx.cod_cliente = cli.id_cliente
+					INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
 					LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
 					WHERE cx.nro_cirugia='".$nro_cx."' LIMIT 1";
 		$resultado = mysqli_query($mysqli , $q);
