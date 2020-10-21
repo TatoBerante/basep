@@ -89,6 +89,7 @@ function search_cx ($medico = '',
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
 	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
+	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
 	// if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
 
 	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
@@ -127,7 +128,7 @@ function data_cx ($nro_cx) {
 	else {
 		$data = mysqli_fetch_assoc($resultado);
 		$total = $data['total'];
-		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable
+		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado
 					FROM cirugias cx
 					INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
 					LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -142,6 +143,7 @@ function data_cx ($nro_cx) {
 			$cx['monto'] = $total;
 			$cx['cliente'] = $data['cliente'];
 			$cx['aplicable'] = $data['aplicable'];
+			$cx['estado'] = $data['estado'];
 			mysqli_free_result($resultado);
 			mysqli_close($mysqli);
 			return $cx;

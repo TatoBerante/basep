@@ -353,6 +353,12 @@ form {
 .rowguide:hover {
   background-color: var(--table-guide);
 }
+.cx_column_mid {
+  width: 9rem;
+}
+.cx_column_small {
+  width: 7rem;
+}
 .acciones {
   display: flex;
   justify-content: space-around;

@@ -132,7 +132,8 @@ else {
     <span class='left-margin'>Mostrar:</span> <select name="estado" id="estado" class='input-text'>
       <option value="0"<?php if ($_REQUEST['estado'] == '0') echo " selected"?>>TODAS</option>
       <option value="1"<?php if ($_REQUEST['estado'] == '1') echo " selected"?>>PENDIENTES</option>
-      <option value="2"<?php if ($_REQUEST['estado'] == '2') echo " selected"?>>FINALIZADAS</option>
+      <option value="2"<?php if ($_REQUEST['estado'] == '2') echo " selected"?>>PREPARADAS</option>
+      <option value="3"<?php if ($_REQUEST['estado'] == '3') echo " selected"?>>FINALIZADAS</option>
     </select>
     <input type="hidden" name="sent" value="1">
     <input type="submit" value="BUSCAR" class='buttons-inline pnlcx-btn'>
@@ -175,6 +176,17 @@ if (isset ($_REQUEST['sent'])) {
     $first_record = true;
     $total = 0;
     foreach ($resultados as $resultado) {
+      if ($resultado['estado'] == '1') {
+        // Pendiente
+        $procesar = "preparar";
+      }
+      else if ($resultado['estado'] == '2') {
+        // Preparada
+        $procesar = "liquidar";
+      }
+      else {
+        // Liquidada
+      }
       if ($resultado['nro_cirugia'] != $idcxold) {
         if (!$first_record) {
           echo "<tr>
@@ -192,7 +204,7 @@ if (isset ($_REQUEST['sent'])) {
                     <input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
                     <label for='chkb_".$resultado['nro_cirugia']."'>
                       <span></span>
-                      Liquidar
+                      ".$procesar."
                     </label> 
                     </th>
                 </tr>
@@ -204,12 +216,12 @@ if (isset ($_REQUEST['sent'])) {
                 </tr>
                 <tr>
                   <td class='subh'>PRODUCTOS</td>
-                  <td class='subh gocenter'>CANTIDAD</td>
-                  <td class='subh gocenter'>VALOR</td>
-                  <td class='subh gocenter'>SUBTOTAL</td>
+                  <td class='subh gocenter' style='width:7rem;'>CANTIDAD</td>
+                  <td class='subh gocenter cx_column_mid'>VALOR</td>
+                  <td class='subh gocenter cx_column_mid'>SUBTOTAL</td>
                 </tr>
                 <tr>
-                  <td>RECNO: ".$resultado['recno']." | ".$resultado['producto']."</td>
+                  <td>".$resultado['producto']."</td>
                   <td class='cell-cantidad'>".$resultado['cantidad']."</td>
                   <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
                   <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
@@ -219,7 +231,7 @@ if (isset ($_REQUEST['sent'])) {
       }
       else {
         echo "<tr>
-                <td>RECNO: ".$resultado['recno']." | ".$resultado['producto']."</td>
+                <td>".$resultado['producto']."</td>
                 <td class='cell-cantidad'>".$resultado['cantidad']."</td>
                 <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
                 <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>

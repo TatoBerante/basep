@@ -9,22 +9,39 @@ $returnstring = "&sent=1&srchcx=".$filtros[0]."&vendcx=".$filtros[1]."&instcx=".
 <?php
 $cantcx = 0;
 $cxs = array();
+$preparadas = 0;
+$pendientes = 0;
+$valstring = '';
 foreach ($_REQUEST as $key=>$dato) {
   $dato = explode ('_', $key);
   if ($dato[0] == 'chkb') {
+    $valstring .= "&".$key."=1";
     $cxs[] = $dato[1];
+    $info = data_cx ($dato[1]);
+    if ($info['estado'] == 1) $pendientes++;
+    else if ($info['estado'] == 2) $preparadas++;
     $cantcx++;
   }
 }
-if ($cantcx < 1) echo "<div class='simple-line'>No se indicaron cirugías para liquidar. Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>VOLVER</a></div>";
+if ($cantcx < 1) {
+  echo "<div class='simple-line'>No se indicaron cirugías para procesar. Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>VOLVER</a></div>";
+}
+else if ($preparadas > 0 && $pendientes > 0) {
+  echo "<div class='simple-line'>Se seleccionaron cirugías con diferentes estados (pendientes y preparadas). Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>VOLVER</a></div>";
+}
 else {
   $medicos = lista_medicos();
 
-  echo "<div class='simple-line gocenter warning'>Puede cancelar esta liquidación haciendo click en el botón CANCELAR para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+  echo "<div class='simple-line gocenter warning'>Puede cancelar este proceso haciendo click en el botón CANCELAR para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+
+  if ($pendientes > 0) $estado = 'pendiente';
+  else $estado = 'preparada';
 
   // Display cx seleccionadas:
   ?>
   <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
+  <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
+  <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
   <?php
   echo "<table class='results cx'>";
   $total = 0;
@@ -75,5 +92,11 @@ else {
   <input type="hidden" name="return" value="<?=$returnstring;?>">
   </form>
   <?php
+  if (isset ($_REQUEST['errform'])) {
+    if ($_REQUEST['errform'] == 1) $msgerror = "datos incorrectos";
+    if ($_REQUEST['errform'] == 2) $msgerror = "no se pudo conectar a la base de datos";
+    if ($_REQUEST['errform'] == 3) $msgerror = "nick de usuario existente";
+    echo "<div class='error-msg'>".$msgerror."</div>";
+  }
 }
 ?>
