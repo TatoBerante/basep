@@ -128,7 +128,7 @@ function data_cx ($nro_cx) {
 	else {
 		$data = mysqli_fetch_assoc($resultado);
 		$total = $data['total'];
-		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado
+		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado, cx.id_remito
 					FROM cirugias cx
 					INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
 					LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -144,10 +144,26 @@ function data_cx ($nro_cx) {
 			$cx['cliente'] = $data['cliente'];
 			$cx['aplicable'] = $data['aplicable'];
 			$cx['estado'] = $data['estado'];
+			$cx['id_remito'] = $data['id_remito'];
 			mysqli_free_result($resultado);
 			mysqli_close($mysqli);
 			return $cx;
 		}
+	}
+}
+function data_remito ($id_remito) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$remito = array();
+	$q = "SELECT r.*, m.id_medico_sys, m.medico, DATE_FORMAT(r.fecha_preparado, '%d-%m-%Y') as fecha_prep_h
+				FROM remitos r
+				INNER JOIN medicos m ON r.id_acreedor = m.id_medico_sys
+				WHERE id_remito = ".$id_remito;
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$remito = mysqli_fetch_assoc($resultado);
+		return $remito;
 	}
 }
 function lista_medicos () {

@@ -1,83 +1,126 @@
 <?php
 session_start();
 date_default_timezone_set('Etc/GMT+3');
-
 // Validaciones
-// href='../v/default.php?page=pnlcx".$_REQUEST['return']."'
+
 $data = explode (' - ', $_REQUEST['medico']);
-if ($_REQUEST['medico'] == '' || $_REQUEST['pago'] == '' || !is_numeric($_REQUEST['pago']) || count ($data) < 2) {
+$id_medico = $data[0];
+$pago = trim ($_REQUEST['pago']);
+$descuento = ($_REQUEST['pagocc'] == '') ? '0' : trim($_REQUEST['pagocc']);
+$today = date('Y-m-d', time());
+
+if ($_REQUEST['estado'] == 'pendiente' && ($_REQUEST['medico'] == '' || $pago == '' || !is_numeric($pago) || count ($data) < 2)) {
   header ('location:../v/default.php?page=pnllq'.$_REQUEST['valstring'].'&errform=1&estado='.$_REQUEST['estado']);
 }
 else {
+  require_once "funcs/conn.php";
+  require_once "funcs/utilities.php";
+
   if ($_REQUEST['estado'] == 'pendiente') {
-    echo "<h3>Preparar</h3>";
+
     /*
     SI SE PROCESAN PENDIENTES:
     ==========================
     1. Registrar liquidación en tabla remitos y obtener id_remito.
     2. Cambiar estado lógico de cada cx a 2 (1:pendiente, 2:preparada, 3:liquidada).
     */
-
-    // Utils:
-    $descuento = ($_REQUEST['pagocc'] == '') ? '0' : $_REQUEST['pagocc'];
-
-    // 1.
-    $id_medico = $data[0];
-    $q = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES ('".$_REQUEST['pago']."', '".$descuento."', ".$id_medico.", CURDATE())";
-    /**************************************
-    OBTENER EL ÚLTIMO ID:
-    $id_remito =  mysqli_insert_id($conn);
-    **************************************/
-    $id_remito = '9999999';
-    echo "<p>$q</p>";
-
-    // 2.
-    $cxs = array();
-    foreach ($_REQUEST as $key=>$value) {
-      // echo "<p>$key: $value</p>";
-      $data = explode ('_', $key);
-      if ($data[0] == 'cx') {
-        $cxs[] = $data[1];
-      }
+    
+    
+    $mysqli = mysqli_conn();
+    
+    if (!$mysqli) {
+      header ('location:../v/default.php?page=pnllq'.$_REQUEST['valstring'].'&errform=2&estado='.$_REQUEST['estado']);
     }
-    foreach ($cxs as $cx) {
-      $q = "UPDATE cirugias SET estado = 2, id_remito = ".$id_remito." WHERE nro_cirugia = '".$cx."'";
-      echo $q."<br>";
+    else {
+      // 1.
+      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
+      $stmt = mysqli_stmt_init ($mysqli);
+      
+      if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+      else {
+        mysqli_stmt_bind_param ($stmt, "ddis", $pago, $descuento, $id_medico, $today);
+        if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
+        mysqli_stmt_close($stmt);
+        
+        $id_remito =  mysqli_insert_id($mysqli);
+        
+        // 2.
+        $cxs = array();
+        foreach ($_REQUEST as $key=>$value) {
+          $data = explode ('_', $key);
+          if ($data[0] == 'cx') {
+            $cxs[] = $data[1];
+          }
+        }
+        foreach ($cxs as $cx) {
+          $sql = "UPDATE cirugias SET estado = ?, id_remito = ? WHERE nro_cirugia = ?";
+          $stmt = mysqli_stmt_init ($mysqli);
+          if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+          else {
+            echo $cx."<br>";
+            $nestado = 2;
+            if (!mysqli_stmt_bind_param ($stmt, "iis", $nestado, $id_remito, $cx)) echo "ERROR";
+            if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
+            mysqli_stmt_close($stmt);
+          }
+        }
+        mysqli_close($mysqli);
+        header ('location:../v/default.php?page=sccss&org=prep');
+      }
     }
   }
   else if ($_REQUEST['estado'] == 'preparada') {
-    echo "<h3>Liquidar</h3>";
     /*SI SE PROCESAN PREPARADAS:
     ============================
     1. Cambiar estado lógico de cada cx a 3 (1:pendiente, 2:preparada, 3:liquidada).
     2. Actualizar saldo en tabla medicos.
-    3. Si es necesario registrar movimiento en cuenta_medico.
     */
 
     // 1.
-    $cxs = array();
+    $rems = array();
     foreach ($_REQUEST as $key=>$value) {
-      // echo "<p>$key: $value</p>";
       $data = explode ('_', $key);
-      if ($data[0] == 'cx') {
-        $cxs[] = $data[1];
+      if ($data[0] == 'rem') {
+        $rems[] = $data[1];
       }
     }
-    foreach ($cxs as $cx) {
-      $q = "UPDATE cirugias SET estado = 3 WHERE nro_cirugia = '".$cx."'";
-      echo $q."<br>";
+    foreach ($rems as $rem) {
+      $mysqli = mysqli_conn();
+      if (!$mysqli) {
+        header ('location:../v/default.php?page=pnllq'.$_REQUEST['valstring'].'&errform=2&estado='.$_REQUEST['estado']);
+      }
+      else {
+        $nestado = 3;
+        $sql = "UPDATE cirugias cx, remitos rem
+                SET cx.estado = ?, rem.fecha_liquidado = ?
+                WHERE cx.id_remito = ? AND rem.id_remito = ?";
+        $stmt = mysqli_stmt_init ($mysqli);
+        if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+        else {
+          mysqli_stmt_bind_param ($stmt, "isii", $nestado, $today, $rem, $rem);
+          if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
+          mysqli_stmt_close($stmt);
+          // 3.
+          $remito = data_remito ($rem);
+          if ($remito['monto_ctacte'] > 0) {
+            $sql = "UPDATE medicos SET saldo = (saldo - ?) WHERE id_medico_sys = ?";
+            $stmt = mysqli_stmt_init ($mysqli);
+            if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+            else {
+              mysqli_stmt_bind_param ($stmt, "di", $remito['monto_ctacte'], $remito['id_medico_sys']);
+              if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
+              mysqli_stmt_close($stmt);
+            }
+          }
+        }
+      }
     }
-
-    // 3.
-    if ($descuento > 0) {
-      $q = "UPDATE medicos SET saldo = (saldo - ".$descuento.") WHERE id_medico_sys = ".$id_medico;
-      echo "<p>$q</p>";
-    }
-    else echo "<p>No se aplican descuentos a cta cte</p>";
+    mysqli_close($mysqli);
+    header ('location:../v/default.php?page=sccss&org=liq');
   }
   else {
-    echo "ERROR";
+    header ('location:../v/default.php?page=pnllq'.$_REQUEST['valstring'].'&errform=3&estado='.$_REQUEST['estado']);
   }
-  echo "<p><a href='../v/default.php?page=pnlcx".$_REQUEST['return']."' class='buttons-warning'>VOLVER</a></p>";
+  //echo "<p><a href='../v/default.php?page=pnlcx".$_REQUEST['return']."' class='buttons-warning'>VOLVER</a></p>";
 }
 ?>

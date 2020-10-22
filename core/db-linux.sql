@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 23, 2020 at 10:05 AM
+-- Generation Time: Oct 22, 2020 at 07:17 PM
 -- Server version: 8.0.21-0ubuntu0.20.04.4
 -- PHP Version: 7.4.3
 
@@ -12,194 +12,21 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `basep`
 --
+CREATE DATABASE IF NOT EXISTS `basep` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `basep`;
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `clientes`
---
-
-CREATE TABLE `clientes` (
-  `id_cliente_sys` int UNSIGNED NOT NULL,
-  `id_cliente` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `empresa` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cliente` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo_cliente` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `condicion_pago` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `condicion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `usuario_id` int UNSIGNED NOT NULL,
-  `usuario_nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `usuario_apellido` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `usuario_nick` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `usuario_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `usuario_hry` tinyint UNSIGNED NOT NULL DEFAULT '100',
-  `usuario_el` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0: desactivado / 1:activo'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `usuarios`
---
-
-INSERT INTO `usuarios` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_nick`, `usuario_key`, `usuario_hry`, `usuario_el`) VALUES
-(1, 'Tato', 'Berante', 'admin', 'xpxrulz', 1, 1),
-(4, 'falso', 'berante', 'user1234', 'poiupoiux', 100, 1);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `clientes`
---
-ALTER TABLE `clientes`
-  ADD PRIMARY KEY (`id_cliente_sys`),
-  ADD UNIQUE KEY `unique_index` (`id_cliente`,`empresa`);
-
---
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`usuario_id`),
-  ADD UNIQUE KEY `usuario_nick` (`usuario_nick`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `clientes`
---
-ALTER TABLE `clientes`
-  MODIFY `id_cliente_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `usuario_id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-COMMIT;
-
---
--- Table structure for table `medicos`
---
-
-CREATE TABLE `medicos` (
-  `id_medico_sys` int UNSIGNED NOT NULL,
-  `id_medico` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `medico` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `medicos`
---
-ALTER TABLE `medicos`
-  ADD PRIMARY KEY (`id_medico_sys`),
-  ADD UNIQUE KEY `id_medico` (`id_medico`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `medicos`
---
-ALTER TABLE `medicos`
-  MODIFY `id_medico_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
-
---
--- Table structure for table `productos`
---
-
-CREATE TABLE `productos` (
-  `id_producto_sys` int UNSIGNED NOT NULL,
-  `empresa` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_producto` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descripcion` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `productos`
---
-ALTER TABLE `productos`
-  ADD PRIMARY KEY (`id_producto_sys`),
-  ADD UNIQUE KEY `empresa` (`empresa`,`id_producto`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `productos`
---
-ALTER TABLE `productos`
-  MODIFY `id_producto_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
-
---
--- Table structure for table `vendedores`
---
-
-CREATE TABLE `vendedores` (
-  `id_vendedor_sys` int UNSIGNED NOT NULL,
-  `id_vendedor` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `vendedor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `vendedores`
---
-ALTER TABLE `vendedores`
-  ADD PRIMARY KEY (`id_vendedor_sys`),
-  ADD UNIQUE KEY `id_vendedor` (`id_vendedor`,`vendedor`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `vendedores`
---
-ALTER TABLE `vendedores`
-  MODIFY `id_vendedor_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 --
 -- Table structure for table `cirugias`
 --
 
-CREATE TABLE `cirugias` (
-  `id_cirugia_sys` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `cirugias`;
+CREATE TABLE IF NOT EXISTS `cirugias` (
+  `id_cirugia_sys` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `recno` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `filial` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nro_presupuesto` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -214,6 +41,7 @@ CREATE TABLE `cirugias` (
   `fecha_emision` date DEFAULT NULL,
   `comprobante` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `serie` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_cliente` int UNSIGNED DEFAULT NULL,
   `cod_cliente` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cod_institucion` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cod_vendedor` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -223,10 +51,144 @@ CREATE TABLE `cirugias` (
   `item` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cantidad` float DEFAULT '0',
   `precio_venta` double DEFAULT '0',
-  `valor_total1` double DEFAULT '0',
-  `valor_total2` double DEFAULT '0',
-  `serierecibo` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `recibo` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `valor_total` double DEFAULT '0',
+  `id_remito` int UNSIGNED DEFAULT NULL,
+  `estado` tinyint NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id_cirugia_sys`),
+  UNIQUE KEY `recno` (`recno`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clientes`
+--
+
+DROP TABLE IF EXISTS `clientes`;
+CREATE TABLE IF NOT EXISTS `clientes` (
+  `id_cliente_sys` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_cliente` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empresa` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cliente` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_cliente` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `condicion_pago` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `condicion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aplicable` float UNSIGNED NOT NULL DEFAULT '15',
+  PRIMARY KEY (`id_cliente_sys`),
+  UNIQUE KEY `unique_index` (`id_cliente`,`empresa`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `financiadores`
+--
+
+DROP TABLE IF EXISTS `financiadores`;
+CREATE TABLE IF NOT EXISTS `financiadores` (
+  `id_financiador` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre_financiador` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aplicable` tinyint NOT NULL DEFAULT '15',
+  PRIMARY KEY (`id_financiador`),
+  UNIQUE KEY `nombre_financiador` (`nombre_financiador`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `medicos`
+--
+
+DROP TABLE IF EXISTS `medicos`;
+CREATE TABLE IF NOT EXISTS `medicos` (
+  `id_medico_sys` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_medico` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `medico` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `saldo` float NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_medico_sys`),
+  UNIQUE KEY `id_medico` (`id_medico`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `productos`
+--
+
+DROP TABLE IF EXISTS `productos`;
+CREATE TABLE IF NOT EXISTS `productos` (
+  `id_producto_sys` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `empresa` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_producto` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id_producto_sys`),
+  UNIQUE KEY `empresa` (`empresa`,`id_producto`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `regalias`
+--
+
+DROP TABLE IF EXISTS `regalias`;
+CREATE TABLE IF NOT EXISTS `regalias` (
+  `id_regalia` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_medico_sys` int UNSIGNED NOT NULL,
+  `descripcion` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valor` float NOT NULL,
+  PRIMARY KEY (`id_regalia`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `remitos`
+--
+
+DROP TABLE IF EXISTS `remitos`;
+CREATE TABLE IF NOT EXISTS `remitos` (
+  `id_remito` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `monto_total` float NOT NULL DEFAULT '0',
+  `monto_ctacte` float NOT NULL DEFAULT '0',
+  `id_acreedor` int UNSIGNED NOT NULL,
+  `fecha_preparado` date DEFAULT NULL,
+  `fecha_liquidado` date DEFAULT NULL,
+  PRIMARY KEY (`id_remito`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `usuario_id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `usuario_nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usuario_apellido` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usuario_nick` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usuario_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usuario_hry` tinyint UNSIGNED NOT NULL DEFAULT '100',
+  `usuario_el` tinyint UNSIGNED NOT NULL DEFAULT '1' COMMENT '0: desactivado / 1:activo',
+  PRIMARY KEY (`usuario_id`),
+  UNIQUE KEY `usuario_nick` (`usuario_nick`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendedores`
+--
+
+DROP TABLE IF EXISTS `vendedores`;
+CREATE TABLE IF NOT EXISTS `vendedores` (
+  `id_vendedor_sys` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_vendedor` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vendedor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id_vendedor_sys`),
+  UNIQUE KEY `id_vendedor` (`id_vendedor`,`vendedor`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -236,21 +198,5 @@ CREATE TABLE `cirugias` (
 --
 -- Indexes for table `cirugias`
 --
-ALTER TABLE `cirugias`
-  ADD PRIMARY KEY (`id_cirugia_sys`),
-  ADD UNIQUE KEY `recno` (`recno`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `cirugias`
---
-ALTER TABLE `cirugias`
-  MODIFY `id_cirugia_sys` int UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cirugias` ADD FULLTEXT KEY `nro_cirugia` (`nro_cirugia`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

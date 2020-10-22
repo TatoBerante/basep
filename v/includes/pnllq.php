@@ -1,4 +1,3 @@
-<h2>Liquidación</h2>
 <?php
 require_once ('../c/funcs/utilities.php');
 $filtros = explode ('!?', $_REQUEST['filters']);
@@ -32,70 +31,116 @@ else if ($preparadas > 0 && $pendientes > 0) {
 else {
   $medicos = lista_medicos();
 
-  echo "<div class='simple-line gocenter warning'>Puede cancelar este proceso haciendo click en el botón CANCELAR para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+  if ($pendientes > 0) {
+    $estado = 'pendiente';
+    $proceso = "preparar";
+  }
+  else {
+    $estado = 'preparada';
+    $proceso = "liquidar";
+  }
+  echo "<h2>".$proceso."</h2><div class='simple-line gocenter warning'>Puede detener este proceso haciendo click en el botón CANCELAR y retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
 
-  if ($pendientes > 0) $estado = 'pendiente';
-  else $estado = 'preparada';
-
-  // Display cx seleccionadas:
-  ?>
-  <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
-  <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
-  <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
-  <?php
-  echo "<table class='results cx'>";
-  $total = 0;
-  foreach ($cxs as $cx=>$value) {
-    $info = data_cx ($value);
-    $pagable = ($info['monto'] * $info['aplicable']) / 100;
-    $total += $pagable;
-    $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
+  // Display cx seleccionadas (solo para preparar):
+  if ($proceso == 'preparar') {
+    ?>
+    <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
+    <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
+    <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
+    <?php
+    echo "<table class='results cx'>";
+    $total = 0;
+    foreach ($cxs as $cx=>$value) {
+      $info = data_cx ($value);
+      $pagable = ($info['monto'] * $info['aplicable']) / 100;
+      $total += $pagable;
+      $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
+      echo "<tr>
+              <td><input type='hidden' name='cx_".$value."' value='".$value."'>CX ".$value."<br>Fecha: ".$info['fecha_cx']."</td>
+              <td>Médico: ".$medico."<br>Paciente: ".$info['paciente']."</td>
+              <td>Financiador: ".$info['aplicable']."%<br>".$info['cliente']."</td>
+              <td class='goright'>$ ".number_format ($info['monto'], 2, ',', '.')."</td>
+              <td class='goright'>$ ".number_format ($pagable, 2, ',', '.')."</td>
+            </tr>";
+    }
     echo "<tr>
-            <td><input type='hidden' name='cx_".$value."' value='".$value."'>CX ".$value."<br>Fecha: ".$info['fecha_cx']."</td>
-            <td>Médico: ".$medico."<br>Paciente: ".$info['paciente']."</td>
-            <td>Financiador: ".$info['aplicable']."%<br>".$info['cliente']."</td>
-            <td class='goright'>$ ".number_format ($info['monto'], 2, ',', '.')."</td>
-            <td class='goright'>$ ".number_format ($pagable, 2, ',', '.')."</td>
-          </tr>";
+            <td colspan='4' class='goright'>TOTAL:</td>
+            <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
+          </tr>
+        </table>";
+    // Fin de display cx seleccionadas
+    ?>
+    <datalist id='medicos'>
+    <?php
+    foreach ($medicos as $medico) {
+      echo "<option value='".$medico['id_medico_sys']." - ".$medico['medico']." (SALDO: $ ".$medico['saldo'].")'>";
+    }
+    ?>
+    </datalist>
+    <div class="simple-line gocenter">
+      Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
+      <span class='left-margin'>Importe cta/cte:</span> <input type="text" autocompĺete='off' name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="<?php echo $pagocc;?>" style='width:7rem'>
+      <span class='left-margin'>Importe remito:</span> <input type="text" autocompĺete='off' name="pago" id="pago" autocomplete="off" class="input-text goright" value="<?php echo $pago;?>" style='width:7rem'>
+    </div>
+    <?php
   }
-  echo "<tr>
-          <td colspan='4' class='goright'>TOTAL:</td>
-          <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
-        </tr>
-      </table>";
-  // Fin de display cx seleccionadas
-
-  // Seleccionar acreedor:
-  /*
-  echo "Acreedor: <select name='acr' id='acr' class='input-text'>
-          <option value='x'>seleccione un acreedor</option>";
-  foreach ($medicos as $medico) {
-    echo "<option value='".$medico['id_medico_sys']."'>".$medico['medico']."</option>";
+  else { // caso de que sean preparadas y haya que liquidar
+    
+    $total = 0;
+    $remitos = array();
+    foreach ($cxs as $cx=>$value) {
+      $info = data_cx ($value);
+      if (!in_array($info['id_remito'], $remitos)) {
+        $remitos[] = $info['id_remito']; 
+      }
+    }
+    ?>
+    <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
+    <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
+    <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
+    <?php
+    echo "<table class='results cx'>
+            <tr>
+              <th>REMITO</th>
+              <th>preparado</th>
+              <th>acreedor</th>
+              <th>monto</th>
+              <th>cta/cte</th>
+              <th>subtotal</th>
+            </tr>";
+    $total = 0;
+    foreach ($remitos as $key=>$value) {
+      $remito = data_remito ($value);
+      $subtotal = $remito['monto_total'] - $remito['monto_ctacte'];
+      echo "<tr>
+              <td class='gocenter'>
+                <input type='hidden' name='rem_".$remito['id_remito']."' value='".$remito['id_remito']."'>
+                ".$remito['id_remito']."
+              </td>
+              <td class='gocenter'>".$remito['fecha_prep_h']."</td>
+              <td>".$remito['medico']."</td>
+              <td class='goright'>$ ".number_format ($remito['monto_total'], 2, ',', '.')."</td>
+              <td class='goright'>$ ".number_format ($remito['monto_ctacte'], 2, ',', '.')."</td>
+              <td class='goright'>$ ".number_format ($subtotal, 2, ',', '.')."</td>
+            </tr>";
+      $total += $subtotal;
+    }
+    echo "<tr>
+            <td colspan='5' class='goright'>TOTAL:</td>
+            <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
+          </tr>
+        </table>";
+        
   }
-  echo "</select>";
-  */
-  
   ?>
-  <datalist id='medicos'>
-  <?php
-  foreach ($medicos as $medico) {
-    echo "<option value='".$medico['id_medico_sys']." - ".$medico['medico']." (SALDO: $ ".$medico['saldo'].")'>";
-  }
-  ?>
-  </datalist>
-  <div class="simple-line gocenter">
-    Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
-    <span class='left-margin'>Importe cta/cte:</span> <input type="text" autocompĺete='off' name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="<?php echo $pagocc;?>" style='width:7rem'>
-    <span class='left-margin'>Importe remito:</span> <input type="text" autocompĺete='off' name="pago" id="pago" autocomplete="off" class="input-text goright" value="<?php echo $pago;?>" style='width:7rem'>
-  </div>
-  <div class='gocenter'><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'>PREPARAR</a></div>
+  <div class='gocenter'><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'><?=$proceso;?></a></div>
   <input type="hidden" name="return" value="<?=$returnstring;?>">
   </form>
   <?php
   if (isset ($_REQUEST['errform'])) {
     if ($_REQUEST['errform'] == 1) $msgerror = "datos incorrectos";
     if ($_REQUEST['errform'] == 2) $msgerror = "no se pudo conectar a la base de datos";
-    if ($_REQUEST['errform'] == 3) $msgerror = "nick de usuario existente";
+    if ($_REQUEST['errform'] == 3) $msgerror = "falta un dato importante";
     echo "<div class='error-msg'>".$msgerror."</div>";
   }
 }

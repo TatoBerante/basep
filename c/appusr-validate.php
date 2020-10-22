@@ -32,7 +32,7 @@ if ($errores > 0) {
   else header ('location:../v/default.php?page=appusr&actflag=mod&idusr='.$_REQUEST['flag'].'&errform=1'.$errret);
 }
 else {
-  require_once ('funcs/conn.php');
+  require_once "funcs/conn.php";
   $mysqli = mysqli_conn();
   if (!$mysqli) {
     header ('location:../v/default.php?page=appusr&actflag=new&nombreusr='.$ns_nom.'&apellidousr='.$ns_ape.'&nickusr='.$ns_nck.'&keyusr='.$ns_key.'&errform=2');

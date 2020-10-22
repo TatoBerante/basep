@@ -175,6 +175,7 @@ if (isset ($_REQUEST['sent'])) {
     $idcxold = 'x';
     $first_record = true;
     $total = 0;
+    $elegibles= 0;
     foreach ($resultados as $resultado) {
       if ($resultado['estado'] == '1') {
         // Pendiente
@@ -200,13 +201,17 @@ if (isset ($_REQUEST['sent'])) {
         echo "<table class='results cx'>
                 <tr>
                   <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
-                  <th rowspan='3'>
-                    <input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
+                  <th rowspan='3'>";
+        if ($resultado['estado'] == '3') echo "LIQUIDADA";
+        else {
+          echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
                     <label for='chkb_".$resultado['nro_cirugia']."'>
                       <span></span>
                       ".$procesar."
-                    </label> 
-                    </th>
+                    </label> ";
+          $elegibles++;
+        }
+        echo "</th>
                 </tr>
                 <tr>
                   <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
@@ -246,8 +251,10 @@ if (isset ($_REQUEST['sent'])) {
           </tr>
         </table>";
   }
-  echo "<input type='hidden' name='filters' value='".$filterstring."'>
-  <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>PROCESAR</a></div></form>";
+  if ($elegibles > 0) {
+    echo "<input type='hidden' name='filters' value='".$filterstring."'>
+    <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>PROCESAR</a></div></form>";
+  }
   ?>
   <script>
     document.getElementById("cantcx").innerHTML = <?=$cantcx;?>

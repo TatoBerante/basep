@@ -6,4 +6,10 @@ if ($_REQUEST['org'] == 'appusr' && $_REQUEST['actflag'] == 'new') {
 if ($_REQUEST['org'] == 'appusr' && $_REQUEST['actflag'] == 'mod') {
   echo "<p class='sccss-msg'>Usuario ".$_REQUEST['nickusr']." modificado correctamente.</p>";
 }
+if ($_REQUEST['org'] == 'prep') {
+  echo "<p class='sccss-msg'>Liquidación preparada correctamente.</p>";
+}
+if ($_REQUEST['org'] == 'liq') {
+  echo "<p class='sccss-msg'>Liquidación finalizada correctamente.</p>";
+}
 ?>
