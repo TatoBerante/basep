@@ -3,4 +3,5 @@
 <a href='default.php?page=pnlusr'><li>panel de usuarios</li></a>
 <a href='default.php?page=pnlcli'><li>panel de clientes</li></a>
 <a href='default.php?page=pnlcx'><li>panel de cirugías</li></a>
+<a href='default.php?page=pnlmed'><li>panel de médicos</li></a>
 <a href='../c/logout.php'><li>logout</li></a>

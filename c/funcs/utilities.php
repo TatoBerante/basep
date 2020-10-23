@@ -49,6 +49,39 @@ function search_clientes ($clue, $start=0) {
 	}
 }
 
+function search_medicos ($clue, $start=0) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$medicos = array();
+	$q = "SELECT * FROM medicos WHERE medico LIKE '%".$clue."%' ORDER BY medico";
+	if ($clue == '') $q .= " LIMIT ".$start.", 15";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$medicos[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $medicos;
+	}
+}
+
+function cliente_by_id ($id) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$clientes = array();
+	$q = "SELECT * FROM clientes WHERE id_cliente_sys = ".$id;
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$cliente = mysqli_fetch_assoc($resultado);
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $cliente;
+	}
+}
+
 function user_by_id ($id) {
   require_once "conn.php";
 	$mysqli = mysqli_conn();

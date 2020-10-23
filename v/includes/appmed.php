@@ -1,0 +1,1 @@
+<h2>Appmed ID <?=$_REQUEST['idm'];?></h2>
