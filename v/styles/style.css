@@ -150,7 +150,7 @@ h2 {
   border-radius: 0.5rem;
 }
 /* Form style */
-.input-text {
+.input-text, textarea {
   padding: 0.5rem;
   border-radius: 0.5rem;
   border: 1px solid var(--borders-color);
@@ -328,6 +328,15 @@ form {
   color: var(--ok-dark);
   text-decoration: underline;
 }
+.error-inline {
+  text-decoration: none;
+  color: var(--error-color);
+  background-color: var(--error-light);
+  font-weight: bolder;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  margin: 2rem auto;
+}
 
 /* Tablas */
 .results {
@@ -387,4 +396,10 @@ form {
   color: var(--error-color);
   border-radius: 0.5rem;
   padding-top: 1rem;
+}
+.trok {
+  background-color: var(--ok-light);
+  color: var(--ok-dark);
+  border: 1px solid var(--ok-dark);
+  font-weight: bold;
 }

@@ -49,6 +49,21 @@ function search_clientes ($clue, $start=0) {
 	}
 }
 
+function cliente_by_id ($id) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$clientes = array();
+	$q = "SELECT * FROM clientes WHERE id_cliente_sys = ".$id;
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$cliente = mysqli_fetch_assoc($resultado);
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $cliente;
+	}
+}
+
 function search_medicos ($clue, $start=0) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
@@ -67,18 +82,35 @@ function search_medicos ($clue, $start=0) {
 	}
 }
 
-function cliente_by_id ($id) {
+function medico_by_id ($id) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
-	$clientes = array();
-	$q = "SELECT * FROM clientes WHERE id_cliente_sys = ".$id;
+	$medico = array();
+	$q = "SELECT * FROM medicos WHERE id_medico_sys = ".$id;
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
-		$cliente = mysqli_fetch_assoc($resultado);
+		$medico = mysqli_fetch_assoc($resultado);
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
-		return $cliente;
+		return $medico;
+	}
+}
+
+function search_10_regalias ($idm) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$regalias = array();
+	$q = "SELECT *, DATE_FORMAT(fecha, '%d-%m-%Y') as fecha_h FROM regalias WHERE id_medico_sys = ".$idm." ORDER BY fecha DESC, id_regalia DESC LIMIT 10";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$regalias[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $regalias;
 	}
 }
 

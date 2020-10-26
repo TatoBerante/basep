@@ -1,0 +1,21 @@
+La preparacion es el recibo.
+El valor se establece en liquidacion no en preparacion (al medico se le paga por producto, no por cx).
+El valor se asigna por producto, no por cs completa.
+Mostrar fecha de factura, factura, fecha de recibo y recibo en panel de cx.
+Mostrar en pagina de médico resúmen de situación.
+
+Al momento de preparar tildar cuáles se hace efectiva la preparación. Tiene que exiustir la posibilidad de dejar cx sin preparar.
+
+Silvio necesita imprimir en serie (por fecha, por numero de orden de pago)
+
+Impresión de recibo excel de Matías.
+
+Extras:
+
+Vendedor ve solo sus cx, salvo permiso especial.
+Vendedor no tendría que ver datos monetarios.
+Ver doc Lemnos. "Retira" es vendedor que lleva el efete. Por default es el vendedor, pero debe ser editable al momento de armar el recibo.
+
+Post:
+Vendedor podría tener la chance de preparar, pero sin valores monetarios.
+

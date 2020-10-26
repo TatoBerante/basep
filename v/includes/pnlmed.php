@@ -25,25 +25,28 @@ if (isset ($_REQUEST['sent'])) {
     ?>
     <div class='simple-line'>Mostrando <?php echo count($resultados);?> resultados:</div>
     <!--<div class="tablagen">-->
-    <table class='results cx'>
+    <!--<table class='results cx'>-->
     <?php
     foreach ($resultados as $resultado) {
+      echo "<div class='simple-line' style='margin-top:2rem;'><a href='default.php?page=appmed&idm=".$resultado['id_medico_sys']."' class='buttons'>".$resultado['medico']."</a></div>";
+      /*
       echo "<tr style='height:3.5rem;'>
               <td>".$resultado['medico']."</td>
               <td class='goright'>
                 <a href='default.php?page=appmed&idm=".$resultado['id_medico_sys']."' class='accion'>VER</a>
               </td>
             </tr>";
+      */
     }
     ?>
-    </table>
+    <!--</table>-->
     <?php
   }
   if ($clue == '') {
     $siguiente = $start + 15;
     $anterior = $start - 15;
     echo "<div class='gocenter'>";
-    if ($start > 0) echo "<a href='default.php?page=pnlcli&sent=1&start=".$anterior."' class='buttons next'>anterior</a>";
+    if ($start > 0) echo "<a href='default.php?page=pnlmed&sent=1&start=".$anterior."' class='buttons next'>anterior</a>";
     echo "<a href='default.php?page=pnlmed&sent=1&start=".$siguiente."' class='buttons next'>siguiente</a></div>";
   }
 }
