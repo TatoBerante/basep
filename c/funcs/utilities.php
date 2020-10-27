@@ -193,7 +193,7 @@ function data_cx ($nro_cx) {
 	else {
 		$data = mysqli_fetch_assoc($resultado);
 		$total = $data['total'];
-		$q = "SELECT cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado, cx.id_remito
+		$q = "SELECT cx.id_cirugia_sys, cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado, cx.id_remito, cx.nombre_vendedor
 					FROM cirugias cx
 					INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
 					LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -202,6 +202,7 @@ function data_cx ($nro_cx) {
 		if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 		else {
 			$data = mysqli_fetch_assoc($resultado);
+			$cx['id_cirugia_sys'] = $data['id_cirugia_sys'];
 			$cx['paciente'] = $data['nombre_paciente'];
 			$cx['fecha_cx'] = $data['fecha_cx_h'];
 			$cx['medico'] = $data['medico'];
@@ -210,10 +211,47 @@ function data_cx ($nro_cx) {
 			$cx['aplicable'] = $data['aplicable'];
 			$cx['estado'] = $data['estado'];
 			$cx['id_remito'] = $data['id_remito'];
+			$cx['vendedor'] = $data['nombre_vendedor'];
 			mysqli_free_result($resultado);
 			mysqli_close($mysqli);
 			return $cx;
 		}
+	}
+}
+function data_cx_detalle ($nro_cx) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$q = "SELECT cx.id_cirugia_sys, date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.nro_cirugia,
+				cx.nombre_paciente, cx.nombre_vendedor,
+				CONCAT (cx.producto, ' - ', cx.descripcion) AS producto,
+				cx.cantidad, cx.precio_venta, med.medico, cli.cliente, cli.aplicable,
+				(cx.cantidad * cx.precio_venta) AS subtotal,
+				(((cx.cantidad * cx.precio_venta) * cli.aplicable) / 100) AS pagable
+				FROM cirugias cx
+				INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
+				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
+				WHERE cx.nro_cirugia = '".$nro_cx."'
+				ORDER BY cx.producto";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$cxs = array ();
+		while ($data = mysqli_fetch_assoc($resultado)) {
+			$cxs[] = $data;
+		/*
+			$cx['paciente'] = $data['nombre_paciente'];
+			$cx['fecha_cx'] = $data['fecha_cx_h'];
+			$cx['medico'] = $data['medico'];
+			$cx['monto'] = $total;
+			$cx['cliente'] = $data['cliente'];
+			$cx['aplicable'] = $data['aplicable'];
+			$cx['estado'] = $data['estado'];
+			$cx['id_remito'] = $data['id_remito'];
+		*/
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $cxs;
 	}
 }
 function data_remito ($id_remito) {

@@ -18,4 +18,3 @@ Ver doc Lemnos. "Retira" es vendedor que lleva el efete. Por default es el vende
 
 Post:
 Vendedor podría tener la chance de preparar, pero sin valores monetarios.
-

@@ -44,10 +44,74 @@ else {
   // Display cx seleccionadas (solo para preparar):
   if ($proceso == 'preparar') {
     ?>
+    <datalist id='medicos'>
+    <?php
+    foreach ($medicos as $medico) {
+      echo "<option value='".$medico['id_medico_sys']." - ".$medico['medico']." (SALDO: $ ".$medico['saldo'].")'>";
+    }
+    ?>
+    </datalist>
     <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
     <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
     <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
     <?php
+    //echo "<table class='results cx'>";
+    foreach ($cxs as $cir) {
+      $cxx = data_cx_detalle ($cir);
+      //print_r ($cxx);
+      //echo "<hr>";
+      $info = data_cx ($cir);
+      $pagable = ($info['monto'] * $info['aplicable']) / 100;
+      $total += $pagable;
+      $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
+      echo "<table class='results cx'>";
+      echo "<tr>
+              <th colspan='5' class='goleft'><p>
+                cx ".$cir." (".$info['fecha_cx'].") MEDico: ".$medico." - PACiente: ".$info['paciente']."</p><p>
+                financiador: ".$info['cliente']." (".$info['aplicable']."%) - vendedor: ".$info['vendedor']."</p>
+              </th>
+              <th class='goright'>
+                <input type='checkbox' id='chkb_".$cir."' name='chkb_".$cir."'>
+                <label for='chkb_".$cir."'>
+                <span></span>
+                ".$proceso."
+              </label>
+              </th>
+            </tr>
+            <tr>
+              <td class='subh gocenter'>cant</td>
+              <td class='subh gocenter'>producto</td>
+              <td class='subh gocenter'>valor</td>
+              <td class='subh gocenter'>subtotal</td>
+              <td class='subh gocenter'>sugerido</td>
+              <td class='subh gocenter'>pagar</td>
+            </tr>";
+      $total = 0;
+      foreach ($cxx as $cxy) {
+        echo "<tr>
+                <td class='gocenter'>".$cxy['cantidad']."</td>
+                <td>".$cxy['producto']."</td>
+                <td class='goright'>$ ".number_format ($cxy['precio_venta'], 2, ',', '.')."</td>
+                <td class='goright'>$ ".number_format ($cxy['subtotal'], 2, ',', '.')."</td>
+                <td class='goright'>$ ".number_format ($cxy['pagable'], 2, ',', '.')."</td>
+                <td class='gocenter'>$ <input type='text' name='pagopr_".$cxy['id_cirugia_sys']."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
+              </tr>";
+        $total += $cxy['pagable'];
+      }
+      echo "<tr>
+              <td colspan='4' class='subh gocenter'>
+                Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
+                <span class='left-margin'>
+                Importe cta/cte:</span> <input type='text' autocompĺete='off' name='pagocc' id='pagocc' autocomplete='off' class='input-text goright' value='".$pagocc."' style='width:7rem'>
+              </td>
+              <td class='subh goright'>$ ".number_format ($total, 2, ',', '.')."</td>
+              <td class='subh gocenter'>$ <input type='text' name='pagopr_".$info['id_cirugia_sys']."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
+            </tr>
+          </table>";   
+    }
+    
+    //echo "</table>";
+    /*
     echo "<table class='results cx'>";
     $total = 0;
     foreach ($cxs as $cx=>$value) {
@@ -68,7 +132,9 @@ else {
             <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
           </tr>
         </table>";
+    */
     // Fin de display cx seleccionadas
+    /*
     ?>
     <datalist id='medicos'>
     <?php
@@ -83,6 +149,7 @@ else {
       <span class='left-margin'>Importe remito:</span> <input type="text" autocompĺete='off' name="pago" id="pago" autocomplete="off" class="input-text goright" value="<?php echo $pago;?>" style='width:7rem'>
     </div>
     <?php
+    */
   }
   else { // caso de que sean preparadas y haya que liquidar
     
@@ -133,7 +200,7 @@ else {
         
   }
   ?>
-  <div class='gocenter'><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'><?=$proceso;?></a></div>
+  <div class='gocenter'><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a></div>
   <input type="hidden" name="return" value="<?=$returnstring;?>">
   </form>
   <?php
