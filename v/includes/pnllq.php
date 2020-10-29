@@ -39,8 +39,10 @@ else {
     $estado = 'preparada';
     $proceso = "liquidar";
   }
-  echo "<h2>".$proceso."</h2><div class='simple-line gocenter warning'>Puede detener este proceso haciendo click en el botón CANCELAR y retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
-
+  echo "<h2>".$proceso."</h2>";
+  /*
+  <div class='simple-line gocenter warning'>Puede detener este proceso haciendo click en el botón CANCELAR y retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+  */
   // Display cx seleccionadas (solo para preparar):
   if ($proceso == 'preparar') {
     ?>
@@ -51,7 +53,7 @@ else {
     }
     ?>
     </datalist>
-    <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
+    <!--<form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">-->
     <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
     <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
     <?php
@@ -64,7 +66,8 @@ else {
       $pagable = ($info['monto'] * $info['aplicable']) / 100;
       $total += $pagable;
       $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
-      echo "<table class='results cx'>";
+      echo "<form method='post' action='../c/pnllqprep-validate.php' autocompĺete='off' name='formprep' id='formprep'>
+            <table class='results cx'>";
       echo "<tr>
               <th colspan='5' class='goleft'><p>
                 cx ".$cir." (".$info['fecha_cx'].") MEDico: ".$medico." - PACiente: ".$info['paciente']."</p><p>
@@ -94,20 +97,20 @@ else {
                 <td class='goright'>$ ".number_format ($cxy['precio_venta'], 2, ',', '.')."</td>
                 <td class='goright'>$ ".number_format ($cxy['subtotal'], 2, ',', '.')."</td>
                 <td class='goright'>$ ".number_format ($cxy['pagable'], 2, ',', '.')."</td>
-                <td class='gocenter'>$ <input type='text' name='pagopr_".$cxy['id_cirugia_sys']."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
+                <td class='gocenter'>$ <input type='text' name='pagopr_".$cir."_".$cxy['id_cirugia_sys']."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
               </tr>";
         $total += $cxy['pagable'];
       }
       echo "<tr>
               <td colspan='4' class='subh gocenter'>
-                Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
+                Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico_".$cir."' name='medico_".$cir."' class='input-text' style='width:30rem'>
                 <span class='left-margin'>
-                Importe cta/cte:</span> <input type='text' autocompĺete='off' name='pagocc' id='pagocc' autocomplete='off' class='input-text goright' value='".$pagocc."' style='width:7rem'>
+                Importe cta/cte:</span> <input type='text' autocompĺete='off' name='pagocc_".$cir."' id='pagocc_".$cir."' autocomplete='off' class='input-text goright' value='".$pagocc."' style='width:7rem'>
               </td>
               <td class='subh goright'>$ ".number_format ($total, 2, ',', '.')."</td>
-              <td class='subh gocenter'>$ <input type='text' name='pagopr_".$info['id_cirugia_sys']."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
+              <td class='subh gocenter'>$ <input type='text' name='pagocx_".$cir."' id='pagocx_".$cir."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
             </tr>
-          </table>";   
+          </table>"; 
     }
     
     //echo "</table>";
@@ -200,12 +203,12 @@ else {
         
   }
   ?>
-  <div class='gocenter'><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a></div>
+  <div class='gocenter'><a href='#' onclick="document.getElementById('formprep').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a></div>
   <input type="hidden" name="return" value="<?=$returnstring;?>">
   </form>
   <?php
   if (isset ($_REQUEST['errform'])) {
-    if ($_REQUEST['errform'] == 1) $msgerror = "datos incorrectos";
+    if ($_REQUEST['errform'] == 1) $msgerror = "una cirugía marcada requiere un acrredor";
     if ($_REQUEST['errform'] == 2) $msgerror = "no se pudo conectar a la base de datos";
     if ($_REQUEST['errform'] == 3) $msgerror = "falta un dato importante";
     echo "<div class='error-msg'>".$msgerror."</div>";
