@@ -96,19 +96,27 @@ else {
                 <td>".$cxy['producto']."</td>
                 <td class='goright'>$ ".number_format ($cxy['precio_venta'], 2, ',', '.')."</td>
                 <td class='goright'>$ ".number_format ($cxy['subtotal'], 2, ',', '.')."</td>
-                <td class='goright'>$ ".number_format ($cxy['pagable'], 2, ',', '.')."</td>
-                <td class='gocenter'>$ <input type='text' name='pagopr_".$cir."_".$cxy['id_cirugia_sys']."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
-              </tr>";
+                <td class='goright'>$ ".number_format ($cxy['pagable'], 2, ',', '.')."</td>";
+                ?>
+                <td class="gocenter">$ <input type="text" name="pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>" id="pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>" value="" class="input-text goright" autocomplete="off" style="width:7rem;" onblur="addValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>')"></td>
+                <?php
+        echo "</tr>";
         $total += $cxy['pagable'];
       }
       echo "<tr>
               <td colspan='4' class='subh gocenter'>
                 Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico_".$cir."' name='medico_".$cir."' class='input-text' style='width:30rem'>
                 <span class='left-margin'>
-                Importe cta/cte:</span> <input type='text' autocompĺete='off' name='pagocc_".$cir."' id='pagocc_".$cir."' autocomplete='off' class='input-text goright' value='".$pagocc."' style='width:7rem'>
-              </td>
+                Importe cta/cte:</span>";
+                ?>
+                <input type="text" autocompĺete="off" name="pagocc_<?=$cir;?>" id="pagocc_<?=$cir;?>" autocomplete="off" class="input-text goright" value="<?=$pagocc;?>" style="width:7rem" onblur="addValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
+      <?php
+      echo "</td>
               <td class='subh goright'>$ ".number_format ($total, 2, ',', '.')."</td>
-              <td class='subh gocenter'>$ <input type='text' name='pagocx_".$cir."' id='pagocx_".$cir."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'></td>
+              <td class='subh goright'> <!--
+                $ <input type='text' name='pagocx_".$cir."' id='pagocx_".$cir."' value='' class='input-text goright' autocomplete='off' style='width:7rem;'> -->
+                $ <span id='pagocx_".$cir."' style='margin-right:2rem;'>0</span>
+              </td>
             </tr>
           </table>"; 
     }
@@ -206,6 +214,24 @@ else {
   <div class='gocenter'><a href='#' onclick="document.getElementById('formprep').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a></div>
   <input type="hidden" name="return" value="<?=$returnstring;?>">
   </form>
+  <span id='testob' style='visibility: hidden;'>0</span>
+  <script>
+    function addValue(sender, cx) {
+      let buff = parseFloat(document.getElementById('testob').innerHTML);
+      if ((isNaN(parseFloat(buff)) && isNaN(buff - 0)) || buff < 0) buff = 0;
+      let valor = parseFloat(sender.value.toString());
+      if ((isNaN(parseFloat(valor)) && isNaN(valor - 0)) || valor < 0) valor = 0;
+      let dat = parseFloat(document.getElementById(cx).innerHTML);
+      let imprime = (dat - buff) + valor;
+      document.getElementById('testob').innerHTML = imprime; 
+      document.getElementById(cx).innerHTML = imprime;
+    }
+    function subValue(sender, cx, monto) {
+      let valor = parseFloat(sender.value.toString());
+      if ((isNaN(parseFloat(valor)) && isNaN(valor - 0)) || valor < 0) valor = 0;
+      document.getElementById('testob').innerHTML = valor; 
+    }
+  </script>
   <?php
   if (isset ($_REQUEST['errform'])) {
     if ($_REQUEST['errform'] == 1) $msgerror = "una cirugía marcada requiere un acrredor";

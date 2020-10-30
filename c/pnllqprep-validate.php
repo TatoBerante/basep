@@ -84,10 +84,10 @@ else {
 
         $id_remito =  mysqli_insert_id($mysqli);
 
-        $sql = "UPDATE cirugias SET id_remito = ? WHERE id_cirugia_sys = ?";
+        $sql = "UPDATE cirugias SET id_remito = ? WHERE nro_cirugia = ?";
         $stmt = mysqli_stmt_init ($mysqli);
         if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-        mysqli_stmt_bind_param ($stmt, "ii", $id_remito, $id_cx);
+        mysqli_stmt_bind_param ($stmt, "ii", $id_remito, $aceptar);
         if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
         mysqli_stmt_close($stmt);
       }
