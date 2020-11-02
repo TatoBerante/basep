@@ -105,11 +105,13 @@ else {
       }
       echo "<tr>
               <td colspan='4' class='subh gocenter'>
+                <!--
                 Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico_".$cir."' name='medico_".$cir."' class='input-text' style='width:30rem'>
                 <span class='left-margin'>
                 Importe cta/cte:</span>";
                 ?>
-                <input type="text" autocompĺete="off" name="pagocc_<?=$cir;?>" id="pagocc_<?=$cir;?>" autocomplete="off" class="input-text goright" value="<?=$pagocc;?>" style="width:7rem" onblur="addValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
+                <input type="text" autocompĺete="off" name="pagocc_<?=$cir;?>" id="pagocc_<?=$cir;?>" autocomplete="off" class="input-text goright" value="<?=$pagocc;?>" style="width:7rem" onblur="resValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
+                -->
       <?php
       echo "</td>
               <td class='subh goright'>$ ".number_format ($total, 2, ',', '.')."</td>
@@ -119,6 +121,8 @@ else {
               </td>
             </tr>
           </table>"; 
+      
+      
     }
     
     //echo "</table>";
@@ -210,21 +214,49 @@ else {
         </table>";
         
   }
-  ?>
+  echo "<div class='supertotal'>
+          <div>
+            Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico_".$cir."' name='medico_".$cir."' class='input-text' style='width:30rem'>
+          </div>
+          <div>
+            Importe cta/cte:</span>";
+            ?>
+            <input type="text" autocompĺete="off" name="pagocc_<?=$cir;?>" id="pagocc_<?=$cir;?>" autocomplete="off" class="input-text goright" value="<?=$pagocc;?>" style="width:7rem" onblur="resValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
+          </div>
+          <div>
+            $ <span id='supertotal'>0</span>
+          </div>
+        </div>
+  
   <div class='gocenter'><a href='#' onclick="document.getElementById('formprep').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a></div>
   <input type="hidden" name="return" value="<?=$returnstring;?>">
   </form>
-  <span id='testob' style='visibility: hidden;'>0</span>
+  <!--<span id='testob' style='visibility: hidden;'>0</span>-->
+  <span id='testob'>0</span>
   <script>
     function addValue(sender, cx) {
       let buff = parseFloat(document.getElementById('testob').innerHTML);
       if ((isNaN(parseFloat(buff)) && isNaN(buff - 0)) || buff < 0) buff = 0;
       let valor = parseFloat(sender.value.toString());
       if ((isNaN(parseFloat(valor)) && isNaN(valor - 0)) || valor < 0) valor = 0;
-      let dat = parseFloat(document.getElementById(cx).innerHTML);
+      let dat1 = parseFloat(document.getElementById(cx).innerHTML);
+      let dat = parseFloat(document.getElementById('supertotal').innerHTML);
       let imprime = (dat - buff) + valor;
+      let imprime1 = (dat1 - buff) + valor;
       document.getElementById('testob').innerHTML = imprime; 
-      document.getElementById(cx).innerHTML = imprime;
+      document.getElementById('supertotal').innerHTML = imprime;
+      document.getElementById(cx).innerHTML = imprime1;
+    }
+    function resValue(sender, cx) {
+      let buff = parseFloat(document.getElementById('testob').innerHTML);
+      if ((isNaN(parseFloat(buff)) && isNaN(buff - 0)) || buff < 0) buff = 0;
+      let valor = parseFloat(sender.value.toString());
+      if ((isNaN(parseFloat(valor)) && isNaN(valor - 0)) || valor < 0) valor = 0;
+      //let dat = parseFloat(document.getElementById(cx).innerHTML);
+      let dat = parseFloat(document.getElementById('supertotal').innerHTML);
+      let imprime = (dat - buff) - valor;
+      document.getElementById('testob').innerHTML = imprime; 
+      document.getElementById('supertotal').innerHTML = imprime;
     }
     function subValue(sender, cx, monto) {
       let valor = parseFloat(sender.value.toString());

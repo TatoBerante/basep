@@ -403,3 +403,14 @@ form {
   border: 1px solid var(--ok-dark);
   font-weight: bold;
 }
+.supertotal {
+  padding: 1rem;
+  display: flex;
+  border: 1px solid var(--ok-dark);
+  background-color: var(--ok-light);
+  color: var(--ok-dark);
+  font-weight: bolder;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 1rem;
+}
