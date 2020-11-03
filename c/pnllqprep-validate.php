@@ -2,68 +2,103 @@
 session_start();
 date_default_timezone_set('Etc/GMT+3');
 
-$error = 0;
+$req = $_REQUEST;
 
-$cxs = $_REQUEST;
-$string = '';
+// Recorrido de validaciones:
+$cxsent = 0;
+$haymedico = true;
+$pagoccok = true;
 foreach ($_REQUEST as $key => $value) {
   $data = explode ('_', $key);
   if ($data[0] == 'chkb') {
     $aceptar = $data[1];
     $string .= "&chkb_".$aceptar;
+    //echo "<p>CX: $aceptar</p>";
+    $return_string .= "&chkb_".$aceptar."=1";
+    $cxsent++;
   }
   if ($data[0] != 'chkb' && $data[1] == $aceptar) {
-    if ($data[0] == 'medico' && $value == '') {
+    if ($data[0] == 'pagopr' && ($value == '' || !is_numeric($value))) {
       $error++;
+    }
+    //echo "PROD: $data[2] / Valor: $value<br>";
+  }
+  if ($data[0] == 'medico') {
+    $datam = explode (' - ', $value);
+    if (!is_numeric($datam[0])) $haymedico = false;
+    else {
+      $idmedico = $datam[0];
+      //echo "MEDICO: $value (se usará ID $idmedico)<br>";
+    }
+  }
+  if ($data[0] == 'pagocc') {
+    if (!is_numeric($value)) $pagoccok = false;
+    else if ($value == '') $pagocc = 0;
+    else {
+      $pagocc = $value;
+      //echo "PAGO CC: $value<br>";
     }
   }
 }
+// Fin recorrido validaciones
 
-if ($error > 0) {
-  header ('location:../v/default.php?page=pnllq&return='.$_REQUEST['return'].'&errform=1&estado=1'.$string);
+if ($cxsent < 1 || !$haymedico || !$pagoccok || $error > 0) {
+  if ($cxsent < 1) $errortype = '2';
+  else if (!$haymedico) $errortype = '3';
+  else if (!$pagoccok) $errortype = '4';
+  else if ($error > 0) $errortype = '5';
+  else $errortype = '1';
+  header ("location:../v/default.php?page=pnllq&return=".$_REQUEST['return']."&estado=1".$return_string.$_REQUEST['valstring']."&filters=".$_REQUEST['filters']."&error=".$errortype);
 }
 else {
+  echo "<p><a href='../v/default.php?page=pnllq&return=".$_REQUEST['return']."&estado=1".$return_string.$_REQUEST['valstring']."&filters=".$_REQUEST['filters']."'>VOLVER</a></p>";
+
+  echo "<p><pre>";
+  print_r ($req);
+  echo "</pre></p>";
   
   require_once "funcs/conn.php";
   require_once "funcs/utilities.php";
-
-  $today = date('Y-m-d', time());
 
   $mysqli = mysqli_conn();
   if (!$mysqli) {
     header ('location:../v/default.php?page=pnllq&return='.$_REQUEST['return'].'&errform=2&estado=1');
   }
-
-  foreach ($cxs as $key => $value) {
-    $data = explode ('_', $key);
-    if ($data[0] == 'chkb') {
-      $aceptar = $data[1];
-      //echo "<p>+------------ START SELECTED CX $aceptar ------------+</p>";
-    }
-    if ($data[0] != 'chkb' && $data[1] == $aceptar) {
-      //echo "<p>";
-      if ($data[0] == 'pagopr') {
-        /*
-        echo "ESTO ES UN PRODUCTO ($data[2]) ---> ";
-        echo "Pagar producto $data[2] el valor de $value";
-        */
+  else {
+    $monto_total = 0;
+    $today = date('Y-m-d', time());
+    $lista_cxs_marcadas = array();
+    foreach ($req as $key => $value) {
+      $data = explode ('_', $key);
+      if ($data[0] == 'chkb') {
+        // Es dato de cx (nro_cirugia en tabla cirugias)
+        $nro_cx = $data[1];
+        $lista_cxs_marcadas[] = $nro_cx;
+      }
+      else if ($data[0] == 'pagopr' && $data[1] == $nro_cx) {
+        // Es dato de producto (id_cirugia_sys en tabla cirugias) y el nro_cx fue marcado
+        $id_cx = $data[2];
+        $monto = $value;
         $sql = "UPDATE cirugias SET monto_a_pagar = ?, estado = ? WHERE id_cirugia_sys = ?";
         $estado = 2;
         $stmt = mysqli_stmt_init ($mysqli);
         if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-        mysqli_stmt_bind_param ($stmt, "dii", $value, $estado, $data[2]);
+        mysqli_stmt_bind_param ($stmt, "dii", $monto, $estado, $id_cx);
         if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
         mysqli_stmt_close($stmt);
-        $id_cx = $data[2];
+        $monto_total += $monto;
       }
       else if ($data[0] == 'medico') {
+        // Es el id_medico_sys en tabla medicos
         $sub = explode (' - ', $value);
-        //echo "MEDICO ACREEDOR ID $sub[0]: $value";
         $id_medico = $sub[0];
       }
       else if ($data[0] == 'pagocc') {
-        //echo "DESCUENTO A CC MEDICO: $value";
-        if ($value > 0) {
+        // Es el monto a descontar del saldo de cc del médico
+        $ctacte = $value;
+        // Habilitar lo siguiente si el descuento se debe efectivizar el momento de preparar:
+        /*
+        if ($ctacte > 0) {
           $sql = "UPDATE medicos SET saldo = (saldo - ?) WHERE id_medico_sys = ?";
           $stmt = mysqli_stmt_init ($mysqli);
           if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
@@ -71,32 +106,28 @@ else {
           if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
           mysqli_stmt_close($stmt);
         }
-        $ctacte = $value;
+        */
       }
-      else if ($data[0] == 'pagocx') {
-        //echo "REGISTRO PAGO TOTAL CX: $value";
-        $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init ($mysqli);
-        if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-        mysqli_stmt_bind_param ($stmt, "ddis", $value, $ctacte, $id_medico, $today);
-        if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
-        mysqli_stmt_close($stmt);
+    }
+    $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
+    $stmt = mysqli_stmt_init ($mysqli);
+    if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+    mysqli_stmt_bind_param ($stmt, "ddis", $monto_total, $ctacte, $id_medico, $today);
+    if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
+    mysqli_stmt_close($stmt);
 
-        $id_remito =  mysqli_insert_id($mysqli);
+    $id_remito =  mysqli_insert_id($mysqli);
 
-        $sql = "UPDATE cirugias SET id_remito = ? WHERE nro_cirugia = ?";
-        $stmt = mysqli_stmt_init ($mysqli);
-        if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-        mysqli_stmt_bind_param ($stmt, "ii", $id_remito, $aceptar);
-        if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
-        mysqli_stmt_close($stmt);
-      }
+    foreach ($lista_cxs_marcadas as $cx) {
+      $sql = "UPDATE cirugias SET id_remito = ? WHERE nro_cirugia = ?";
+      $stmt = mysqli_stmt_init ($mysqli);
+      if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+      mysqli_stmt_bind_param ($stmt, "ii", $id_remito, $cx);
+      if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
+      mysqli_stmt_close($stmt);
     }
   }
   mysqli_close($mysqli);
-  /*
-  SELECT `id_cirugia_sys`, `fecha_cx`, `nro_cirugia`, CONCAT (`producto`, ': ', `descripcion`) AS producto, `monto_a_pagar`, `estado` FROM `cirugias` WHERE `nro_cirugia` IN ('00000013471', '00000013700') 
-  */
   header ('location:../v/default.php?page=sccss&org=prep');
 }
 ?>

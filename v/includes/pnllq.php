@@ -40,9 +40,17 @@ else {
     $proceso = "liquidar";
   }
   echo "<h2>".$proceso."</h2>";
-  /*
-  <div class='simple-line gocenter warning'>Puede detener este proceso haciendo click en el botón CANCELAR y retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
-  */
+  echo "<div class='simple-line gocenter warning'>Puede detener este proceso haciendo click en el botón CANCELAR y retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+
+  if (isset ($_REQUEST['error'])) {
+    if ($_REQUEST['error'] == '1') $msg = "algo salió mal";
+    else if ($_REQUEST['error'] == '2') $msg = "no se marcó ninguna cx para preparar";
+    else if ($_REQUEST['error'] == '3') $msg = "no se seleccionó un médico acreedor";
+    else if ($_REQUEST['error'] == '4') $msg = "el descuento de cta. cte. no es un valor aceptable";
+    else if ($_REQUEST['error'] == '5') $msg = "existen valores a pagar incorrectos";
+    echo "<div class='error-msg'>$msg</div>";
+  }
+  
   // Display cx seleccionadas (solo para preparar):
   if ($proceso == 'preparar') {
     ?>
@@ -54,6 +62,7 @@ else {
     ?>
     </datalist>
     <!--<form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">-->
+    <form method='post' action='../c/pnllqprep-validate.php' autocompĺete='off' name='formprep' id='formprep'>
     <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
     <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
     <?php
@@ -66,7 +75,7 @@ else {
       $pagable = ($info['monto'] * $info['aplicable']) / 100;
       $total += $pagable;
       $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
-      echo "<form method='post' action='../c/pnllqprep-validate.php' autocompĺete='off' name='formprep' id='formprep'>
+      echo "<!--<form method='post' action='../c/pnllqprep-validate.php' autocompĺete='off' name='formprep' id='formprep'>-->
             <table class='results cx'>";
       echo "<tr>
               <th colspan='5' class='goleft'><p>
@@ -98,7 +107,7 @@ else {
                 <td class='goright'>$ ".number_format ($cxy['subtotal'], 2, ',', '.')."</td>
                 <td class='goright'>$ ".number_format ($cxy['pagable'], 2, ',', '.')."</td>";
                 ?>
-                <td class="gocenter">$ <input type="text" name="pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>" id="pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>" value="" class="input-text goright" autocomplete="off" style="width:7rem;" onblur="addValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>')"></td>
+                <td class="gocenter">$ <input type="text" name="pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>" id="pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>" value="0" class="input-text goright" autocomplete="off" style="width:7rem;" onblur="addValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagopr_<?=$cir."_".$cxy['id_cirugia_sys'];?>')"></td>
                 <?php
         echo "</tr>";
         $total += $cxy['pagable'];
@@ -214,25 +223,34 @@ else {
         </table>";
         
   }
-  echo "<div class='supertotal'>
+  if ($proceso == 'preparar') {
+    echo "<div class='supertotal'>
           <div>
-            Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico_".$cir."' name='medico_".$cir."' class='input-text' style='width:30rem'>
+            Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
           </div>
           <div>
             Importe cta/cte:</span>";
             ?>
-            <input type="text" autocompĺete="off" name="pagocc_<?=$cir;?>" id="pagocc_<?=$cir;?>" autocomplete="off" class="input-text goright" value="<?=$pagocc;?>" style="width:7rem" onblur="resValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
+            <input type="text" autocompĺete="off" name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="0" style="width:7rem" onblur="resValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
           </div>
           <div>
             $ <span id='supertotal'>0</span>
           </div>
         </div>
+  <?php } ?>
+    <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
+    <input type="hidden" name="filters" id="filters" value="<?=$_REQUEST['filters'];?>">
+    <input type="hidden" name="return" value="<?=$returnstring;?>">
+  <div class='gocenter'>
+    <!--<a href='#' onclick="document.getElementById('formprep').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a>-->
+<?php
+if ($proceso == 'preparar') {?><input type="submit" value="REGISTRAR" class='buttons-standalone'><?php }
+else { ?><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'><?=$proceso;?> </a><?php  }
+?>
+  </div>
   
-  <div class='gocenter'><a href='#' onclick="document.getElementById('formprep').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a></div>
-  <input type="hidden" name="return" value="<?=$returnstring;?>">
   </form>
-  <!--<span id='testob' style='visibility: hidden;'>0</span>-->
-  <span id='testob'>0</span>
+  <span id='testob' style='visibility: hidden;'>0</span>
   <script>
     function addValue(sender, cx) {
       let buff = parseFloat(document.getElementById('testob').innerHTML);
