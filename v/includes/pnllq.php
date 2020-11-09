@@ -75,6 +75,7 @@ else {
       $pagable = ($info['monto'] * $info['aplicable']) / 100;
       $total += $pagable;
       $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
+      $cod_vendedor =  $info['cod_vendedor'];
       echo "<!--<form method='post' action='../c/pnllqprep-validate.php' autocompĺete='off' name='formprep' id='formprep'>-->
             <table class='results cx'>";
       echo "<tr>
@@ -129,9 +130,7 @@ else {
                 $ <span id='pagocx_".$cir."' style='margin-right:2rem;'>0</span>
               </td>
             </tr>
-          </table>"; 
-      
-      
+          </table>";
     }
     
     //echo "</table>";
@@ -224,20 +223,63 @@ else {
         
   }
   if ($proceso == 'preparar') {
-    echo "<div class='supertotal'>
-          <div>
-            Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
-          </div>
-          <div>
-            Importe cta/cte:</span>";
-            ?>
-            <input type="text" autocompĺete="off" name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="0" style="width:7rem" onblur="resValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
-          </div>
-          <div>
-            $ <span id='supertotal'>0</span>
-          </div>
-        </div>
-  <?php } ?>
+    $vendedores = lista_vendedores();
+    //print_r ($vendedores);
+    echo "<!-- Versión sin portador
+          <div class='supertotal'>
+            <div>
+              Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
+            </div>
+            <div>
+              Importe cta/cte:</span>";
+              ?>
+              <input type="text" autocompĺete="off" name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="0" style="width:7rem" onblur="resValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
+            </div>
+            <div>
+              <select name="portador" id="portador">
+                <option value="x">portador</option>
+                <?php
+                foreach ($vendedores as $vendedor) {
+                  echo "<option value='".$vendedor['id_vendedor_sys']."'";
+                  if ($vendedor['id_vendedor'] == $cod_vendedor) echo " selected";
+                  echo ">".$vendedor['vendedor']."</option>";
+                }
+                ?>
+              </select>
+            </div>
+            <div>
+              $ <span id='supertotal'>0</span>
+            </div>
+          Fin versión sin portador -->
+          <table class='supertotabla'>
+            <tr>
+              <td style='width:50%'>
+                Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
+              </td>
+              <td rowspan='2' style='width:25%'>
+                Importe cta/cte:
+                <input type="text" autocompĺete="off" name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="0" style="width:7rem" onblur="resValue(this, 'pagocx_<?=$cir;?>')" onfocus="subValue(this, 'pagocx_<?=$cir;?>', 'pagocc_<?=$cir."_".$cxy['id_cirugia_sys'];?>')">
+              </td>
+              <td rowspan='2' class='total-preparar'>$ <span id='supertotal'>0</span></td>
+            </tr>
+            <tr>
+              <td>
+                RETIRA: <select name="portador" id="portador" class="input-text">
+                  <option value="x">N/A</option>
+                  <?php
+                  foreach ($vendedores as $vendedor) {
+                    echo "<option value='".$vendedor['id_vendedor_sys']."'";
+                    if ($vendedor['id_vendedor'] == $cod_vendedor) echo " selected";
+                    echo ">".$vendedor['vendedor']."</option>";
+                  }
+                  ?>
+                </select>
+              </td>
+            </tr>
+          </table>
+          <?php
+  }
+  ?>
     <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
     <input type="hidden" name="filters" id="filters" value="<?=$_REQUEST['filters'];?>">
     <input type="hidden" name="return" value="<?=$returnstring;?>">

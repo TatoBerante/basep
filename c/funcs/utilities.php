@@ -86,11 +86,24 @@ function medico_by_id ($id) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$medico = array();
+	// Datos genéricos:
 	$q = "SELECT * FROM medicos WHERE id_medico_sys = ".$id;
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
 		$medico = mysqli_fetch_assoc($resultado);
+		// Total pendiente:
+		$q = "SELECT SUM(cx.precio_venta) AS total_pendientes FROM cirugias cx
+					WHERE cx.cod_medico = '".$medico['id_medico']."' AND estado = 1";
+		$resultado = mysqli_query($mysqli , $q);
+		$fila = mysqli_fetch_assoc($resultado);
+		$medico['total_pendientes'] = $fila['total_pendientes'];
+		// Total preparado:
+		$q = "SELECT SUM(cx.precio_venta) AS total_preparados FROM cirugias cx
+					WHERE cx.cod_medico = '".$medico['id_medico']."' AND estado = 2";
+		$resultado = mysqli_query($mysqli , $q);
+		$fila = mysqli_fetch_assoc($resultado);
+		$medico['total_preparados'] = $fila['total_preparados'];
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
 		return $medico;
@@ -193,7 +206,7 @@ function data_cx ($nro_cx) {
 	else {
 		$data = mysqli_fetch_assoc($resultado);
 		$total = $data['total'];
-		$q = "SELECT cx.id_cirugia_sys, cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado, cx.id_remito, cx.nombre_vendedor
+		$q = "SELECT cx.id_cirugia_sys, cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado, cx.id_remito, cx.nombre_vendedor, cx.cod_vendedor
 					FROM cirugias cx
 					INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
 					LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -212,6 +225,7 @@ function data_cx ($nro_cx) {
 			$cx['estado'] = $data['estado'];
 			$cx['id_remito'] = $data['id_remito'];
 			$cx['vendedor'] = $data['nombre_vendedor'];
+			$cx['cod_vendedor'] = $data['cod_vendedor'];
 			mysqli_free_result($resultado);
 			mysqli_close($mysqli);
 			return $cx;
@@ -283,6 +297,22 @@ function lista_medicos () {
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
 		return $medicos;
+	}
+}
+function lista_vendedores () {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$vendedores = array();
+	$q = "SELECT * FROM vendedores ORDER BY vendedor";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$vendedores[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $vendedores;
 	}
 }
 ?>

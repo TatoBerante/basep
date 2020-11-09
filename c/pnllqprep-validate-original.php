@@ -5,6 +5,10 @@ date_default_timezone_set('Etc/GMT+3');
 $error = 0;
 
 $cxs = $_REQUEST;
+echo "<pre>";
+print_r ($_REQUEST);
+echo "</pre>";
+die();
 $string = '';
 foreach ($_REQUEST as $key => $value) {
   $data = explode ('_', $key);
@@ -61,6 +65,11 @@ else {
         //echo "MEDICO ACREEDOR ID $sub[0]: $value";
         $id_medico = $sub[0];
       }
+      else if ($data[0] == 'portador') {
+        $sub = explode (' - ', $value);
+        //echo "MEDICO ACREEDOR ID $sub[0]: $value";
+        $id_portador = $value;
+      }
       else if ($data[0] == 'pagocc') {
         //echo "DESCUENTO A CC MEDICO: $value";
         if ($value > 0) {
@@ -75,10 +84,18 @@ else {
       }
       else if ($data[0] == 'pagocx') {
         //echo "REGISTRO PAGO TOTAL CX: $value";
-        $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init ($mysqli);
-        if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-        mysqli_stmt_bind_param ($stmt, "ddis", $value, $ctacte, $id_medico, $today);
+        if ($id_portador == 'N/A') {
+          $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
+          $stmt = mysqli_stmt_init ($mysqli);
+          if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+          mysqli_stmt_bind_param ($stmt, "ddis", $value, $ctacte, $id_medico, $today);
+        }
+        else {
+          $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, id_portador, fecha_preparado) VALUES (?, ?, ?, ?, ?)";
+          $stmt = mysqli_stmt_init ($mysqli);
+          if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+          mysqli_stmt_bind_param ($stmt, "ddiis", $value, $ctacte, $id_medico, $id_portador, $today);
+        }
         if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
         mysqli_stmt_close($stmt);
 

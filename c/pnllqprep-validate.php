@@ -31,6 +31,9 @@ foreach ($_REQUEST as $key => $value) {
       //echo "MEDICO: $value (se usará ID $idmedico)<br>";
     }
   }
+  else if ($data[0] == 'portador') {
+    $id_portador = $value;
+  }
   if ($data[0] == 'pagocc') {
     if (!is_numeric($value)) $pagoccok = false;
     else if ($value == '') $pagocc = 0;
@@ -109,10 +112,18 @@ else {
         */
       }
     }
-    $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
-    $stmt = mysqli_stmt_init ($mysqli);
-    if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-    mysqli_stmt_bind_param ($stmt, "ddis", $monto_total, $ctacte, $id_medico, $today);
+    if ($id_portador == 'N/A') {
+      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
+      $stmt = mysqli_stmt_init ($mysqli);
+      if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+      mysqli_stmt_bind_param ($stmt, "ddis", $monto_total, $ctacte, $id_medico, $today);
+    }
+    else {
+      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, id_portador, fecha_preparado) VALUES (?, ?, ?, ?, ?)";
+      $stmt = mysqli_stmt_init ($mysqli);
+      if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+      mysqli_stmt_bind_param ($stmt, "ddiis", $monto_total, $ctacte, $id_medico, $id_portador, $today);
+    }
     if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
     mysqli_stmt_close($stmt);
 

@@ -3,7 +3,9 @@ require_once '../c/funcs/utilities.php';
 $medico = medico_by_id ($_REQUEST['idm']);
 ?>
 <h2><?=$medico['medico'];?></h2>
-<h3>Saldo actual: $ <?=number_format($medico['saldo'], 2, ',', '.');?></h3><br>
+<h3>Saldo actual: $ <?=number_format($medico['saldo'], 2, ',', '.');?></h3>
+<h3>Pendiente: $ <?=number_format($medico['total_pendientes'], 2, ',', '.');?></h3>
+<h3>Preparado: $ <?=number_format($medico['total_preparados'], 2, ',', '.');?></h3><br>
 <h3>Registrar nueva regalía</h3>
 <div class="simple-line">
   <form action="../c/appmed-validate.php" method="post" id="regform" name="regform">

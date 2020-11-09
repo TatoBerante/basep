@@ -258,6 +258,8 @@ form {
   width: 20rem;
   cursor: pointer;
   display: block;
+  box-shadow: none;
+  border: none;
 }
 .buttons-inline {
   border: 1px solid var(--accent-main-color);
@@ -413,4 +415,19 @@ form {
   align-items: center;
   justify-content: space-around;
   border-radius: 1rem;
+}
+.supertotabla {
+  width: 100%;
+  border: 1px solid var(--ok-dark);
+  background-color: var(--ok-light);
+  color: var(--ok-dark);
+  font-weight: bolder;
+  border-radius: 1rem;
+}
+.supertotabla td {
+  padding: 1rem;
+}
+.total-preparar {
+  font-size: 2rem;
+  text-align: right;
 }
