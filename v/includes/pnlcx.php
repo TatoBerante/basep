@@ -141,119 +141,166 @@ else {
 </form>
 <?php
 if (isset ($_REQUEST['sent'])) {
-  require_once ('../c/funcs/utilities.php');
-  $filterstring = $clue."!?".$vendcx."!?".$instcx."!?".$acr."!?".$fin."!?".$_REQUEST['estado']."!?".$_REQUEST['mescxd']."!?".$_REQUEST['anocxd']."!?".$_REQUEST['mescxh']."!?".$_REQUEST['anocxh']."!?".$_REQUEST['meslqd']."!?".$_REQUEST['anolqd']."!?".$_REQUEST['meslqh']."!?".$_REQUEST['anolqh'];
   $resultados = search_cx (
-                  $clue,
-                  $vendcx,
-                  $instcx,
-                  $acr,
-                  $fin,
-                  $_REQUEST['estado'],
-                  $_REQUEST['mescxd'],
-                  $_REQUEST['anocxd'],
-                  $_REQUEST['mescxh'],
-                  $_REQUEST['anocxh'],
-                  $_REQUEST['meslqd'],
-                  $_REQUEST['anolqd'],
-                  $_REQUEST['meslqh'],
-                  $_REQUEST['anolqh']
-                );
+    $clue,
+    $vendcx,
+    $instcx,
+    $acr,
+    $fin,
+    $_REQUEST['estado'],
+    $_REQUEST['mescxd'],
+    $_REQUEST['anocxd'],
+    $_REQUEST['mescxh'],
+    $_REQUEST['anocxh'],
+    $_REQUEST['meslqd'],
+    $_REQUEST['anolqd'],
+    $_REQUEST['meslqh'],
+    $_REQUEST['anolqh']
+  );
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
-    $cantcx = 0;
-    ?>
-    <form action='default.php?page=pnllq' method='post' id='checkform'>
-    <br>
-    <div class='mostrandores'>
-      <span>Mostrando <span id='cantcx'></span> resultados:</span>
-        <?php
-        if (isset ($_REQUEST['errchk'])) echo "<span class='error-text'>No se indicaron cirugías para liquidar</span>";
+    $filterstring = $clue."!?".$vendcx."!?".$instcx."!?".$acr."!?".$fin."!?".$_REQUEST['estado']."!?".$_REQUEST['mescxd']."!?".$_REQUEST['anocxd']."!?".$_REQUEST['mescxh']."!?".$_REQUEST['anocxh']."!?".$_REQUEST['meslqd']."!?".$_REQUEST['anolqd']."!?".$_REQUEST['meslqh']."!?".$_REQUEST['anolqh'];
+
+    if ($_REQUEST['estado'] == '1' || $_REQUEST['estado'] == '0') { // Mostrar pendientes o todas
+        $cantcx = 0;
         ?>
-    </div>
-    <?php
-    $idcxold = 'x';
-    $first_record = true;
-    $total = 0;
-    $elegibles= 0;
-    foreach ($resultados as $resultado) {
-      if ($resultado['estado'] == '1') {
-        // Pendiente
-        $procesar = "preparar";
-      }
-      else if ($resultado['estado'] == '2') {
-        // Preparada
-        $procesar = "liquidar";
-      }
-      else {
-        // Liquidada
-      }
-      if ($resultado['nro_cirugia'] != $idcxold) {
-        if (!$first_record) {
-          echo "<tr>
-                  <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
-                </tr>
-              </table>";
-          $total = 0;
+        <form action='default.php?page=pnllq' method='post' id='checkform'>
+        <br>
+        <div class='mostrandores'>
+          <span>Mostrando <span id='cantcx'></span> resultados:</span>
+            <?php
+            if (isset ($_REQUEST['errchk'])) echo "<span class='error-text'>No se indicaron cirugías para liquidar</span>";
+            ?>
+        </div>
+        <?php
+        $idcxold = 'x';
+        $first_record = true;
+        $total = 0;
+        $elegibles= 0;
+        foreach ($resultados as $resultado) {
+          if ($resultado['estado'] == '1') {
+            // Pendiente
+            $procesar = "preparar";
+          }
+          else if ($resultado['estado'] == '2') {
+            // Preparada
+            $procesar = "liquidar";
+          }
+          else {
+            // Liquidada
+          }
+          if ($resultado['nro_cirugia'] != $idcxold) {
+            if (!$first_record) {
+              echo "<tr>
+                      <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
+                    </tr>
+                  </table>";
+              $total = 0;
+            }
+            //Print new header
+            $cantcx++;
+            echo "<table class='results cx'>
+                    <tr>
+                      <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
+                      <th rowspan='3'>";
+            if ($resultado['estado'] == '3') echo "LIQUIDADA";
+            else {
+              echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
+                        <label for='chkb_".$resultado['nro_cirugia']."'>
+                          <span></span>
+                          ".$procesar."
+                        </label> ";
+              $elegibles++;
+            }
+            echo "</th>
+                    </tr>
+                    <tr>
+                      <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
+                    </tr>
+                    <tr>
+                      <th colspan='3'class='goleft'>Financiador: ".$resultado['cliente']."</th>
+                    </tr>
+                    <tr>
+                      <td class='subh'>PRODUCTOS</td>
+                      <td class='subh gocenter' style='width:7rem;'>CANTIDAD</td>
+                      <td class='subh gocenter cx_column_mid'>VALOR</td>
+                      <td class='subh gocenter cx_column_mid'>SUBTOTAL</td>
+                    </tr>
+                    <tr>
+                      <td>".$resultado['producto']."</td>
+                      <td class='cell-cantidad'>".$resultado['cantidad']."</td>
+                      <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
+                      <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
+                    </tr>";
+            $idcxold = $resultado['nro_cirugia'];
+            $total += $resultado['subtotal'];
+          }
+          else {
+            echo "<tr>
+                    <td>".$resultado['producto']."</td>
+                    <td class='cell-cantidad'>".$resultado['cantidad']."</td>
+                    <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
+                    <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
+                  </tr>";
+            $idcxold = $resultado['nro_cirugia'];
+            $total += $resultado['subtotal'];
+          }
+          $first_record = false;
         }
-        //Print new header
-        $cantcx++;
-        echo "<table class='results cx'>
-                <tr>
-                  <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
-                  <th rowspan='3'>";
-        if ($resultado['estado'] == '3') echo "LIQUIDADA";
-        else {
-          echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
-                    <label for='chkb_".$resultado['nro_cirugia']."'>
-                      <span></span>
-                      ".$procesar."
-                    </label> ";
-          $elegibles++;
-        }
-        echo "</th>
-                </tr>
-                <tr>
-                  <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
-                </tr>
-                <tr>
-                  <th colspan='3'class='goleft'>Financiador: ".$resultado['cliente']."</th>
-                </tr>
-                <tr>
-                  <td class='subh'>PRODUCTOS</td>
-                  <td class='subh gocenter' style='width:7rem;'>CANTIDAD</td>
-                  <td class='subh gocenter cx_column_mid'>VALOR</td>
-                  <td class='subh gocenter cx_column_mid'>SUBTOTAL</td>
-                </tr>
-                <tr>
-                  <td>".$resultado['producto']."</td>
-                  <td class='cell-cantidad'>".$resultado['cantidad']."</td>
-                  <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
-                  <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
-                </tr>";
-        $idcxold = $resultado['nro_cirugia'];
-        $total += $resultado['subtotal'];
-      }
-      else {
         echo "<tr>
-                <td>".$resultado['producto']."</td>
-                <td class='cell-cantidad'>".$resultado['cantidad']."</td>
-                <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
-                <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
-              </tr>";
-        $idcxold = $resultado['nro_cirugia'];
-        $total += $resultado['subtotal'];
-      }
-      $first_record = false;
+                <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
+              </tr>
+            </table>";
     }
-    echo "<tr>
-            <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
-          </tr>
-        </table>";
-  }
-  if ($elegibles > 0) {
-    echo "<input type='hidden' name='filters' value='".$filterstring."'>
-    <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>PROCESAR</a></div></form>";
+    else if ($_REQUEST['estado'] == '2') { // Ver solo preparadas
+      $remitos = search_remitos (
+        $clue,
+        $vendcx,
+        $instcx,
+        $acr,
+        $fin,
+        $_REQUEST['estado'],
+        $_REQUEST['mescxd'],
+        $_REQUEST['anocxd'],
+        $_REQUEST['mescxh'],
+        $_REQUEST['anocxh'],
+        $_REQUEST['meslqd'],
+        $_REQUEST['anolqd'],
+        $_REQUEST['meslqh'],
+        $_REQUEST['anolqh']
+      );
+      echo "<p><pre>";
+      print_r ($remitos);
+      echo "</pre></p>";
+      $old_remito = 'x';
+      foreach ($remitos as $remito) {
+        if ($remito['id_remito'] != $old_remito) {
+          if ($old_remito != 'x') echo "</table>";
+          $retira = ($remito['retira'] == '') ? 'N/A' : $remito['retira'];
+          echo "<table class='results cx'>
+                  <tr>
+                    <th colspan='2' class='goleft'>REMITO ".$remito['id_remito']." (".$remito['fecha_preparado_h'].") ACREEDOR: ".$remito['acreedor']." - RETIRA: ".$retira."</th>
+                  </tr>
+                  <tr>
+                    <td>";
+                    $cxs = cxs_en_remito ($remito['id_remito']);
+                    echo "<pre>";
+                    print_r ($cxs);
+                    echo "</pre>";
+                  echo "</td>
+                  </tr>";
+          $old_remito = $remito['id_remito'];
+        }
+      }
+      echo "</table>";
+    }
+    else if ($_REQUEST['estado'] == '3') { // Ver solo preparadas
+      echo "mostrar finalizadas";
+    }
+    if ($elegibles > 0) {
+      echo "<input type='hidden' name='filters' value='".$filterstring."'>
+      <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>PROCESAR</a></div></form>";
+    }
   }
   ?>
   <script>

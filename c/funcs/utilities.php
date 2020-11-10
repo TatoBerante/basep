@@ -197,6 +197,7 @@ function search_cx ($medico = '',
 		return $cirugias;
 	}
 }
+
 function data_cx ($nro_cx) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
@@ -232,6 +233,7 @@ function data_cx ($nro_cx) {
 		}
 	}
 }
+
 function data_cx_detalle ($nro_cx) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
@@ -268,6 +270,7 @@ function data_cx_detalle ($nro_cx) {
 		return $cxs;
 	}
 }
+
 function data_remito ($id_remito) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
@@ -283,6 +286,7 @@ function data_remito ($id_remito) {
 		return $remito;
 	}
 }
+
 function lista_medicos () {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
@@ -299,6 +303,7 @@ function lista_medicos () {
 		return $medicos;
 	}
 }
+
 function lista_vendedores () {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
@@ -313,6 +318,93 @@ function lista_vendedores () {
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
 		return $vendedores;
+	}
+}
+
+function cxs_en_remito ($id_remito) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$cxs = array();
+	$q = "SELECT DISTINCT cx.nro_cirugia, date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h,
+				cx.nombre_paciente, med.medico as cirujano, rem.*
+				FROM cirugias cx
+				INNER JOIN remitos rem ON cx.id_remito = rem.id_remito
+				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
+				WHERE cx.id_remito = ".$id_remito;
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$cxs[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $cxs;
+	}
+}
+
+function search_remitos ($medico = '',
+												$vendedor = '',
+												$institucion = '',
+												$acreedor = '',
+												$financiador = '',
+												$estado,
+												$mescxd,
+												$anocxd,
+												$mescxh,
+												$anocxh,
+												$meslqd,
+												$anolqd,
+												$meslqh,
+												$anolqh) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$remitos = array();
+//  date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h
+	$q = "SELECT rem.id_remito, rem.monto_total, rem.monto_ctacte,
+				date_format(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h,
+				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
+				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente,
+				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h,
+				cx.nombre_vendedor as vendedor, cli.cliente as financiador
+				FROM remitos rem
+				INNER JOIN medicos med ON rem.id_acreedor = med.id_medico_sys
+				LEFT JOIN vendedores ven ON rem.id_portador = ven.id_vendedor_sys 
+				INNER JOIN cirugias cx ON rem.id_remito = cx.id_remito
+				INNER JOIN medicos cj ON cx.cod_medico = cj.id_medico
+				INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
+				WHERE rem.fecha_liquidado IS NULL";
+	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
+	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
+	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
+	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
+	// if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
+
+	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
+		// Leap year issue
+		if ($mescxh == '01' || $mescxh == '03' || $mescxh == '05' || $mescxh == '07' || $mescxh == '08' || $mescxh == '10' || $mescxh == '12') $lastdh = '31';
+		else {
+			if ($mescxh != '02') $lastdh = '30';
+			else { // Feb
+				$leap = date('L', mktime(0, 0, 0, 1, 1, $anocxd));
+				$lastdh = ($leap) ? '29' : '28';
+			}
+		}
+		$cxd = $anocxd."-".$mescxd."-01";
+		$cxh = $anocxh."-".$mescxh."-".$lastdh;
+		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
+	}
+
+	$q .= " ORDER BY rem.fecha_preparado, rem.id_remito";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$remitos[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $remitos;
 	}
 }
 ?>
