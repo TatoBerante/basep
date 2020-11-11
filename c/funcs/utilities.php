@@ -326,7 +326,7 @@ function cxs_en_remito ($id_remito) {
 	$mysqli = mysqli_conn();
 	$cxs = array();
 	$q = "SELECT DISTINCT cx.nro_cirugia, date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h,
-				cx.nombre_paciente, med.medico as cirujano, rem.*
+				cx.nombre_paciente, med.medico as cirujano, rem.*, (rem.monto_total - rem.monto_ctacte) AS total
 				FROM cirugias cx
 				INNER JOIN remitos rem ON cx.id_remito = rem.id_remito
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -341,6 +341,22 @@ function cxs_en_remito ($id_remito) {
 		mysqli_close($mysqli);
 		return $cxs;
 	}
+}
+
+function cx_subtotal ($nro_cx) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$q = "SELECT SUM(monto_a_pagar) as total FROM cirugias WHERE nro_cirugia = '".$nro_cx."'";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$fila = mysqli_fetch_assoc($resultado);
+		$total = $fila['total'];
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $total;
+	}
+	return 999;
 }
 
 function search_remitos ($medico = '',
@@ -361,7 +377,7 @@ function search_remitos ($medico = '',
 	$mysqli = mysqli_conn();
 	$remitos = array();
 //  date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h
-	$q = "SELECT rem.id_remito, rem.monto_total, rem.monto_ctacte,
+	$q = "SELECT rem.id_remito, rem.monto_total, rem.monto_ctacte, (rem.monto_total - rem.monto_ctacte) AS total,
 				date_format(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h,
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
 				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente,

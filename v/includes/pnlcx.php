@@ -281,6 +281,17 @@ if (isset ($_REQUEST['sent'])) {
                   <tr>
                     <th colspan='2' class='goleft'>REMITO ".$remito['id_remito']." (".$remito['fecha_preparado_h'].") ACREEDOR: ".$remito['acreedor']." - RETIRA: ".$retira."</th>
                   </tr>
+                  <tr class='subh'>
+                    <td colspan='2' class='goleft'>SUBTOTAL: $ ".number_format($remito['monto_total'], 2, ',', '.')." - DESC: $ ".number_format($remito['monto_ctacte'], 2, ',', '.')." - PAGO: $ ".number_format($remito['total'], 2, ',', '.')."</td>
+                  </tr>";
+          $cxs = cxs_en_remito ($remito['id_remito']);
+          foreach ($cxs as $cx) {
+            $cx_subtotal = cx_subtotal ($cx['nro_cirugia']);
+            echo "<tr><td>";
+            echo "CX ".$cx['nro_cirugia']." (".$cx['fecha_cx_h'].") - Paciente: ".$cx['nombre_paciente']." - Cirujano: ".$cx['cirujano'];
+            echo "</td><td class='goright' style='width:7rem;'>$ ".number_format($cx_subtotal, 2, ',', '.')."</td></tr>";
+          }
+          /*
                   <tr>
                     <td>";
                     $cxs = cxs_en_remito ($remito['id_remito']);
@@ -289,6 +300,7 @@ if (isset ($_REQUEST['sent'])) {
                     echo "</pre>";
                   echo "</td>
                   </tr>";
+          */
           $old_remito = $remito['id_remito'];
         }
       }
