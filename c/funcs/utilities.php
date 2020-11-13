@@ -275,10 +275,14 @@ function data_remito ($id_remito) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$remito = array();
-	$q = "SELECT r.*, m.id_medico_sys, m.medico, DATE_FORMAT(r.fecha_preparado, '%d-%m-%Y') as fecha_prep_h
+	$q = "SELECT r.*, m.id_medico_sys, m.medico, DATE_FORMAT(r.fecha_preparado, '%d-%m-%Y') as fecha_prep_h,
+				v.vendedor as retira, c.nro_cirugia, DATE_FORMAT(c.fecha_cx, '%d-%m-%Y') as fecha_cx_h,
+				c.nombre_paciente as paciente
 				FROM remitos r
 				INNER JOIN medicos m ON r.id_acreedor = m.id_medico_sys
-				WHERE id_remito = ".$id_remito;
+				LEFT JOIN vendedores v ON r.id_portador = v.id_vendedor_sys
+				INNER JOIN cirugias c ON r.id_remito = c.id_remito
+				WHERE r.id_remito = ".$id_remito;
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
@@ -378,7 +382,7 @@ function search_remitos ($medico = '',
 	$remitos = array();
 //  date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h
 	$q = "SELECT rem.id_remito, rem.monto_total, rem.monto_ctacte, (rem.monto_total - rem.monto_ctacte) AS total,
-				date_format(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h,
+				date_format(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h, rem.saldo_ctacte_previo as saldo_pre,
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
 				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente,
 				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h,

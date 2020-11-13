@@ -175,15 +175,10 @@ else {
     */
   }
   else { // caso de que sean preparadas y haya que liquidar
-    
+
     $total = 0;
     $remitos = array();
-    foreach ($cxs as $cx=>$value) {
-      $info = data_cx ($value);
-      if (!in_array($info['id_remito'], $remitos)) {
-        $remitos[] = $info['id_remito']; 
-      }
-    }
+
     ?>
     <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
     <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
@@ -192,23 +187,30 @@ else {
     echo "<table class='results cx'>
             <tr>
               <th>REMITO</th>
-              <th>preparado</th>
+              <th>cirugía</th>
               <th>acreedor</th>
+              <th>retira</th>
               <th>monto</th>
               <th>cta/cte</th>
               <th>subtotal</th>
             </tr>";
     $total = 0;
-    foreach ($remitos as $key=>$value) {
+    foreach ($cxs as $key=>$value) {
       $remito = data_remito ($value);
       $subtotal = $remito['monto_total'] - $remito['monto_ctacte'];
+      $retira = $remito['retira'];
       echo "<tr>
-              <td class='gocenter'>
+              <td class='goleft'>
                 <input type='hidden' name='rem_".$remito['id_remito']."' value='".$remito['id_remito']."'>
-                ".$remito['id_remito']."
+                N° ".$remito['id_remito']."<br>PREP: ".$remito['fecha_prep_h']."
               </td>
-              <td class='gocenter'>".$remito['fecha_prep_h']."</td>
+              <td>
+                ".$remito['nro_cirugia']." (".$remito['fecha_cx_h'].")<br>
+                Dr. ".$remito['medico']."<br>
+                pac. ".$remito['paciente']."<br>
+              </td>
               <td>".$remito['medico']."</td>
+              <td>".$remito['retira']."</td>
               <td class='goright'>$ ".number_format ($remito['monto_total'], 2, ',', '.')."</td>
               <td class='goright'>$ ".number_format ($remito['monto_ctacte'], 2, ',', '.')."</td>
               <td class='goright'>$ ".number_format ($subtotal, 2, ',', '.')."</td>
@@ -216,7 +218,7 @@ else {
       $total += $subtotal;
     }
     echo "<tr>
-            <td colspan='5' class='goright'>TOTAL:</td>
+            <td colspan='6' class='goright'>TOTAL:</td>
             <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
           </tr>
         </table>";

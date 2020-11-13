@@ -100,7 +100,11 @@ else {
         // Es el monto a descontar del saldo de cc del médico
         $ctacte = $value;
         // Habilitar lo siguiente si el descuento se debe efectivizar el momento de preparar:
-        /*
+        // Conservar saldo existente para remito:
+        $qs = "SELECT saldo FROM medicos WHERE id_medico_sys = ".$id_medico;
+        $rs = mysqli_query($mysqli , $qs);
+        $rs = mysqli_fetch_assoc($rs);
+        $saldo_pre = $rs['saldo'];
         if ($ctacte > 0) {
           $sql = "UPDATE medicos SET saldo = (saldo - ?) WHERE id_medico_sys = ?";
           $stmt = mysqli_stmt_init ($mysqli);
@@ -109,25 +113,26 @@ else {
           if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
           mysqli_stmt_close($stmt);
         }
-        */
+        
       }
     }
     if ($id_portador == 'N/A') {
-      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, fecha_preparado) VALUES (?, ?, ?, ?)";
+      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, saldo_ctacte_previo, fecha_preparado) VALUES (?, ?, ?, ?, ?)";
       $stmt = mysqli_stmt_init ($mysqli);
       if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-      mysqli_stmt_bind_param ($stmt, "ddis", $monto_total, $ctacte, $id_medico, $today);
+      mysqli_stmt_bind_param ($stmt, "ddids", $monto_total, $ctacte, $id_medico, $saldo_pre, $today);
     }
     else {
-      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, id_portador, fecha_preparado) VALUES (?, ?, ?, ?, ?)";
+      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, saldo_ctacte_previo, id_portador, fecha_preparado) VALUES (?, ?, ?, ?, ?, ?)";
       $stmt = mysqli_stmt_init ($mysqli);
       if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-      mysqli_stmt_bind_param ($stmt, "ddiis", $monto_total, $ctacte, $id_medico, $id_portador, $today);
+      mysqli_stmt_bind_param ($stmt, "ddidis", $monto_total, $ctacte, $id_medico, $saldo_pre, $id_portador, $today);
     }
     if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
     mysqli_stmt_close($stmt);
 
     $id_remito =  mysqli_insert_id($mysqli);
+    if ($id_remito == '') echo "error";
 
     foreach ($lista_cxs_marcadas as $cx) {
       $sql = "UPDATE cirugias SET id_remito = ? WHERE nro_cirugia = ?";

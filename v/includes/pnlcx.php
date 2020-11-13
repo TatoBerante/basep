@@ -161,7 +161,7 @@ if (isset ($_REQUEST['sent'])) {
   else {
     $filterstring = $clue."!?".$vendcx."!?".$instcx."!?".$acr."!?".$fin."!?".$_REQUEST['estado']."!?".$_REQUEST['mescxd']."!?".$_REQUEST['anocxd']."!?".$_REQUEST['mescxh']."!?".$_REQUEST['anocxh']."!?".$_REQUEST['meslqd']."!?".$_REQUEST['anolqd']."!?".$_REQUEST['meslqh']."!?".$_REQUEST['anolqh'];
 
-    if ($_REQUEST['estado'] == '1' || $_REQUEST['estado'] == '0') { // Mostrar pendientes o todas
+    if ($_REQUEST['estado'] != '2') { // Mostrar pendientes o todas
         $cantcx = 0;
         ?>
         <form action='default.php?page=pnllq' method='post' id='checkform'>
@@ -203,7 +203,7 @@ if (isset ($_REQUEST['sent'])) {
                     <tr>
                       <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
                       <th rowspan='3'>";
-            if ($resultado['estado'] == '3') echo "LIQUIDADA";
+            if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnldetlq&idc=".$resultado['id_cirugia_sys']."' class='buttons'>LIQUIDADA</a>";
             else {
               echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
                         <label for='chkb_".$resultado['nro_cirugia']."'>
@@ -253,6 +253,17 @@ if (isset ($_REQUEST['sent'])) {
             </table>";
     }
     else if ($_REQUEST['estado'] == '2') { // Ver solo preparadas
+      $cantcx = 0;
+      ?>
+      <form action='default.php?page=pnllq' method='post' id='checkform'>
+      <br>
+      <div class='mostrandores'>
+        <span>Mostrando <span id='cantcx'></span> resultados:</span>
+          <?php
+          if (isset ($_REQUEST['errchk'])) echo "<span class='error-text'>No se indicaron cirugías para liquidar</span>";
+          ?>
+      </div>
+      <?php
       $remitos = search_remitos (
         $clue,
         $vendcx,
@@ -269,27 +280,67 @@ if (isset ($_REQUEST['sent'])) {
         $_REQUEST['meslqh'],
         $_REQUEST['anolqh']
       );
+      /*
       echo "<p><pre>";
       print_r ($remitos);
       echo "</pre></p>";
+      */
       $old_remito = 'x';
       foreach ($remitos as $remito) {
         if ($remito['id_remito'] != $old_remito) {
-          if ($old_remito != 'x') echo "</table>";
+          if ($old_remito != 'x') {
+            
+            echo "<tr>
+                    <td class='subh goright'>
+                      SUBTOTAL: $ ".number_format($old_subt, 2, ',', '.')."
+                    </td>
+                    <td class='subh goright'>
+                      SALDO: $ ".number_format($old_saldo, 2, ',', '.')."
+                    </td>
+                    <td class='subh goright'>
+                      DESC: $ ".number_format($old_ctacte, 2, ',', '.')."
+                    </td>
+                    <td class='subh goright'>
+                      PAGO: $ ".number_format($old_pago, 2, ',', '.')."
+                    </td>
+                  </tr></table>";
+                  
+          }
           $retira = ($remito['retira'] == '') ? 'N/A' : $remito['retira'];
           echo "<table class='results cx'>
                   <tr>
-                    <th colspan='2' class='goleft'>REMITO ".$remito['id_remito']." (".$remito['fecha_preparado_h'].") ACREEDOR: ".$remito['acreedor']." - RETIRA: ".$retira."</th>
+                    <th class='goleft' colspan='3'>REMITO ".$remito['id_remito']." (".$remito['fecha_preparado_h'].") ACREEDOR: ".$remito['acreedor']." - RETIRA: ".$retira."</th>
+                    <th style='width:10rem;'>";
+                    echo "<input type='checkbox' id='chkb_".$remito['id_remito']."' name='chkb_".$remito['id_remito']."'>
+                    <label for='chkb_".$remito['id_remito']."'>
+                      <span></span>
+                      LIQUIDAR
+                    </label> ";
+                    $elegibles++;
+                  echo "</th>
                   </tr>
-                  <tr class='subh'>
-                    <td colspan='2' class='goleft'>SUBTOTAL: $ ".number_format($remito['monto_total'], 2, ',', '.')." - DESC: $ ".number_format($remito['monto_ctacte'], 2, ',', '.')." - PAGO: $ ".number_format($remito['total'], 2, ',', '.')."</td>
-                  </tr>";
+                  <!--
+                  <tr>
+                    <td class='subh goright'>
+                      SUBTOTAL: $ ".number_format($remito['monto_total'], 2, ',', '.')."
+                    </td>
+                    <td class='subh goright'>
+                      SALDO: $ ".number_format($remito['saldo_pre'], 2, ',', '.')."
+                    </td>
+                    <td class='subh goright'>
+                      DESC: $ ".number_format($remito['monto_ctacte'], 2, ',', '.')."
+                    </td>
+                    <td class='subh goright'>
+                      PAGO: $ ".number_format($remito['total'], 2, ',', '.')."
+                    </td>
+                  </tr>-->";
+          $cantcx++;
           $cxs = cxs_en_remito ($remito['id_remito']);
           foreach ($cxs as $cx) {
             $cx_subtotal = cx_subtotal ($cx['nro_cirugia']);
-            echo "<tr><td>";
-            echo "CX ".$cx['nro_cirugia']." (".$cx['fecha_cx_h'].") - Paciente: ".$cx['nombre_paciente']." - Cirujano: ".$cx['cirujano'];
-            echo "</td><td class='goright' style='width:7rem;'>$ ".number_format($cx_subtotal, 2, ',', '.')."</td></tr>";
+            echo "<tr><td colspan='3'>";
+            echo "CX ".$cx['nro_cirugia']." (".$cx['fecha_cx_h'].") - Dr. ".$cx['cirujano']." - Pac. ".$cx['nombre_paciente'];
+            echo "</td><td class='goright'>$ ".number_format($cx_subtotal, 2, ',', '.')."</td></tr>";
           }
           /*
                   <tr>
@@ -302,16 +353,33 @@ if (isset ($_REQUEST['sent'])) {
                   </tr>";
           */
           $old_remito = $remito['id_remito'];
+          $old_subt = $remito['monto_total'];
+          $old_saldo = $remito['saldo_pre'];
+          $old_ctacte = $remito['monto_ctacte'];
+          $old_pago = $remito['total'];
         }
       }
-      echo "</table>";
+      echo "<tr>
+              <td class='subh goright'>
+                SUBTOTAL: $ ".number_format($remito['monto_total'], 2, ',', '.')."
+              </td>
+              <td class='subh goright'>
+                SALDO: $ ".number_format($remito['saldo_pre'], 2, ',', '.')."
+              </td>
+              <td class='subh goright'>
+                DESC: $ ".number_format($remito['monto_ctacte'], 2, ',', '.')."
+              </td>
+              <td class='subh goright'>
+                PAGO: $ ".number_format($remito['total'], 2, ',', '.')."
+              </td>
+            </tr></table>";
     }
     else if ($_REQUEST['estado'] == '3') { // Ver solo preparadas
       echo "mostrar finalizadas";
     }
     if ($elegibles > 0) {
       echo "<input type='hidden' name='filters' value='".$filterstring."'>
-      <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>PROCESAR</a></div></form>";
+      <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>CONTINUAR</a></div></form>";
     }
   }
   ?>
