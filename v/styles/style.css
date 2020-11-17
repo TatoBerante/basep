@@ -431,3 +431,18 @@ form {
   font-size: 2rem;
   text-align: right;
 }
+.data-remito {
+  border: 1px solid var(--ok-dark);
+  background-color: var(--ok-light);
+  color: var(--ok-dark);
+  font-weight: bolder;
+  padding: 0.5rem 0.5rem;
+  border-radius: 1rem;
+}
+.data-remito td {
+  padding: 0.5rem 0.5rem;
+}
+.remito-footer {
+  display: flex;
+  justify-content: space-between;
+}

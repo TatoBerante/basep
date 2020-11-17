@@ -209,7 +209,7 @@ function data_cx ($nro_cx) {
 		$total = $data['total'];
 		$q = "SELECT cx.id_cirugia_sys, cx.nombre_paciente, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, med.medico, cli.cliente, cli.aplicable, cx.estado, cx.id_remito, cx.nombre_vendedor, cx.cod_vendedor
 					FROM cirugias cx
-					INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
+					INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 					LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
 					WHERE cx.nro_cirugia='".$nro_cx."' LIMIT 1";
 		$resultado = mysqli_query($mysqli , $q);
@@ -237,15 +237,21 @@ function data_cx ($nro_cx) {
 function data_cx_detalle ($nro_cx) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
-	$q = "SELECT cx.id_cirugia_sys, date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.nro_cirugia,
-				cx.nombre_paciente, cx.nombre_vendedor,
+	$q = "SELECT cx.id_cirugia_sys, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.nro_cirugia,
+				cx.nombre_paciente, cx.nombre_vendedor, cx.id_remito, rem.monto_total, rem.monto_ctacte,
+				rem.saldo_ctacte_previo, DATE_FORMAT(rem.fecha_preparado, '%d-%m-%Y') AS fecha_prep_h,
+				DATE_FORMAT(rem.fecha_liquidado, '%d-%m-%Y') AS fecha_liq_h,
+				ven.vendedor as portador, acr.medico as acreedor,
 				CONCAT (cx.producto, ' - ', cx.descripcion) AS producto,
 				cx.cantidad, cx.precio_venta, med.medico, cli.cliente, cli.aplicable,
 				(cx.cantidad * cx.precio_venta) AS subtotal,
-				(((cx.cantidad * cx.precio_venta) * cli.aplicable) / 100) AS pagable
+				(((cx.cantidad * cx.precio_venta) * cli.aplicable) / 100) AS pagable, cx.monto_a_pagar
 				FROM cirugias cx
-				INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
+				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
+				LEFT JOIN remitos rem ON cx.id_remito = rem.id_remito
+				LEFT JOIN vendedores ven ON rem.id_portador = ven.id_vendedor_sys
+				LEFT JOIN medicos acr ON rem.id_acreedor = acr.id_medico_sys
 				WHERE cx.nro_cirugia = '".$nro_cx."'
 				ORDER BY cx.producto";
 	$resultado = mysqli_query($mysqli , $q);
@@ -392,7 +398,7 @@ function search_remitos ($medico = '',
 				LEFT JOIN vendedores ven ON rem.id_portador = ven.id_vendedor_sys 
 				INNER JOIN cirugias cx ON rem.id_remito = cx.id_remito
 				INNER JOIN medicos cj ON cx.cod_medico = cj.id_medico
-				INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
+				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				WHERE rem.fecha_liquidado IS NULL";
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";

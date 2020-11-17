@@ -13,6 +13,7 @@ function updateClientes () {
       //get row data
       $row_data = explode('|', $data);
       if (count($row_data) > 1) {
+        $id_csv = trim ($row_data[0]);
         $empresa = trim ($row_data[1]);
         $id_cliente = trim ($row_data[2]);
         $cliente = trim ($row_data[3]);
@@ -20,8 +21,8 @@ function updateClientes () {
         $condicion_pago = trim ($row_data[5]);
         $condicion = trim ($row_data[6]);
 
-        $sql = "INSERT INTO clientes (id_cliente, empresa, cliente, tipo_cliente, condicion_pago, condicion)
-                  VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO clientes (id_csv, id_cliente, empresa, cliente, tipo_cliente, condicion_pago, condicion)
+                  VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_stmt_init ($mysqli);
         if (!mysqli_stmt_prepare ($stmt, $sql)) {
             // error report:
@@ -31,7 +32,7 @@ function updateClientes () {
             $errors++;
         }
         else {
-          mysqli_stmt_bind_param ($stmt, "ssssss", $id_cliente, $empresa, $cliente, $tipo_cliente, $condicion_pago, $condicion);
+          mysqli_stmt_bind_param ($stmt, "sssssss", $id_csv, $id_cliente, $empresa, $cliente, $tipo_cliente, $condicion_pago, $condicion);
           if (mysqli_stmt_execute ($stmt)) {
             $new++;
             mysqli_stmt_close($stmt);

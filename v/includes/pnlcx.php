@@ -203,7 +203,7 @@ if (isset ($_REQUEST['sent'])) {
                     <tr>
                       <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
                       <th rowspan='3'>";
-            if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnldetlq&idc=".$resultado['id_cirugia_sys']."' class='buttons'>LIQUIDADA</a>";
+            if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnldetlq&nrocx=".$resultado['nro_cirugia']."' class='buttons'>LIQUIDADA</a>";
             else {
               echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
                         <label for='chkb_".$resultado['nro_cirugia']."'>
