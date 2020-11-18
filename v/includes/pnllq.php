@@ -92,11 +92,11 @@ else {
               </th>
             </tr>
             <tr>
-              <td class='subh gocenter'>cant</td>
+              <td class='subh gocenter' style='width:3rem;'>cant</td>
               <td class='subh gocenter'>producto</td>
-              <td class='subh gocenter'>valor</td>
-              <td class='subh gocenter'>subtotal</td>
-              <td class='subh gocenter'>sugerido</td>
+              <td class='subh gocenter' style='width:8rem;'>valor</td>
+              <td class='subh gocenter' style='width:8rem;'>subtotal</td>
+              <td class='subh gocenter' style='width:8rem;'>sugerido</td>
               <td class='subh gocenter'>pagar</td>
             </tr>";
       $total = 0;
@@ -187,7 +187,7 @@ else {
     echo "<table class='results cx'>
             <tr>
               <th>REMITO</th>
-              <th>cirugía</th>
+              <th>cirugías</th>
               <th>acreedor</th>
               <th>retira</th>
               <th>monto</th>
@@ -204,12 +204,19 @@ else {
                 <input type='hidden' name='rem_".$remito['id_remito']."' value='".$remito['id_remito']."'>
                 N° ".$remito['id_remito']."<br>PREP: ".$remito['fecha_prep_h']."
               </td>
-              <td>
+              <td>";
+      $cxsr = cxs_en_remito ($remito['id_remito']);
+      foreach ($cxsr as $cr) {
+        echo $cr['nro_cirugia']." (".$cr['fecha_cx_h']." pac. ".$cr['nombre_paciente'].")<br>";
+      }
+              /*
                 ".$remito['nro_cirugia']." (".$remito['fecha_cx_h'].")<br>
                 Dr. ".$remito['medico']."<br>
                 pac. ".$remito['paciente']."<br>
-              </td>
-              <td>".$remito['medico']."</td>
+              
+              */
+      echo "</td>
+            <td>".$remito['medico']."</td>
               <td>".$remito['retira']."</td>
               <td class='goright'>$ ".number_format ($remito['monto_total'], 2, ',', '.')."</td>
               <td class='goright'>$ ".number_format ($remito['monto_ctacte'], 2, ',', '.')."</td>

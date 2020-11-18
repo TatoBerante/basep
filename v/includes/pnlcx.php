@@ -6,6 +6,7 @@ if (isset ($_REQUEST['sent'])) {
   $instcx = sanitizeThis ($_REQUEST['instcx']);
   $acr = sanitizeThis ($_REQUEST['acr']);
   $fin = sanitizeThis ($_REQUEST['fin']);
+  $remito = sanitizeThis ($_REQUEST['remito']);
 }
 else {
   $clue = "";
@@ -125,12 +126,13 @@ else {
     }
     ?>
     </select>
+    <span class='left-margin'>Remito N° (anula demás filtros):</span> <input type="text" name="remito" id="remito" autocomplete="off" class="input-text gocenter" style='width:5rem;' value="<?php echo $remito;?>">
   </div>
   <div class="form-line">
     Acreedor: <input type="text" name="acr" id="acr" autocomplete="off" class="input-text" value="<?php echo $acr;?>">
     <span class='left-margin'>Financiador:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>">
     <span class='left-margin'>Mostrar:</span> <select name="estado" id="estado" class='input-text'>
-      <option value="0"<?php if ($_REQUEST['estado'] == '0') echo " selected"?>>TODAS</option>
+      <!--<option value="0"<?php if ($_REQUEST['estado'] == '0') echo " selected"?>>TODAS</option>-->
       <option value="1"<?php if ($_REQUEST['estado'] == '1') echo " selected"?>>PENDIENTES</option>
       <option value="2"<?php if ($_REQUEST['estado'] == '2') echo " selected"?>>PREPARADAS</option>
       <option value="3"<?php if ($_REQUEST['estado'] == '3') echo " selected"?>>FINALIZADAS</option>
@@ -140,7 +142,7 @@ else {
   </div>
 </form>
 <?php
-if (isset ($_REQUEST['sent'])) {
+if (isset ($_REQUEST['sent']) && $remito == '') {
   $resultados = search_cx (
     $clue,
     $vendcx,
@@ -203,7 +205,7 @@ if (isset ($_REQUEST['sent'])) {
                     <tr>
                       <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
                       <th rowspan='3'>";
-            if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnldetlq&nrocx=".$resultado['nro_cirugia']."' class='buttons'>LIQUIDADA</a>";
+            if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='buttons'>REMITO ".$resultado['id_remito']."</a>";
             else {
               echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
                         <label for='chkb_".$resultado['nro_cirugia']."'>
@@ -383,9 +385,90 @@ if (isset ($_REQUEST['sent'])) {
     }
   }
   ?>
-  <script>
-    document.getElementById("cantcx").innerHTML = <?=$cantcx;?>
-  </script>
+  
   <?php
 }
+else if (isset ($_REQUEST['sent']) && $remito != '') {
+  $cxs = cxs_en_remito ($remito);
+  if (count ($cxs) < 1) echo "<div class='error-msg'>No se encontraron resultados</div>";
+  else {
+    echo "<br><div class='mostrandores'>Mostrando detalle de remito n° ".$remito.":</div>";
+    $headok = false;
+    foreach ($cxs as $cir) {
+      $cxx = data_cx_detalle ($cir['nro_cirugia']);
+      /*
+      echo "<pre>";
+      print_r ($cxx);
+      echo "</pre>";
+      */
+      $info = data_cx ($cir['nro_cirugia']);
+      $pagable = ($info['monto'] * $info['aplicable']) / 100;
+      $total += $pagable;
+      $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
+      $cod_vendedor =  $info['cod_vendedor'];
+      
+      if (!$headok) {
+        $liquidado = ($cxx[0]['fecha_liq_h'] != '') ? $cxx[0]['fecha_liq_h'] : 'N/A';
+        echo "<br><table class='data-remito'>
+                <tr>
+                  <td>PREPARADO:</td><td class='goright'>".$cxx[0]['fecha_prep_h']."</td>
+                  <td class='separador'>LIQUIDADO:</td><td class='goright'>".$liquidado."</td>
+                </tr>
+                <tr>
+                  <td colspan='4'>ACREEDOR: ".$cxx[0]['acreedor']."</td>
+                </tr>
+                <tr>
+                  <td colspan='4'>RETIRA: ".$cxx[0]['portador']."</td>
+                </tr>
+                <tr>
+                  <td>SALDO:</td><td class='goright'>$ ".number_format($cxx[0]['saldo_ctacte_previo'], 2, ',', '.')."</td>
+                  <td class='separador'>SUBTOTAL:</td><td class='goright'>$ ".number_format($cxx[0]['monto_total'], 2, ',', '.')."</td>
+                </tr>
+                <tr>
+                  <td>DESCUENTO:</td><td class='goright'>$ ".number_format($cxx[0]['monto_ctacte'], 2, ',', '.')."</td>
+                  <td class='separador'>TOTAL:</td><td class='goright'>$ ".number_format($cxx[0]['pagado'], 2, ',', '.')."</td>
+                </tr>
+              </table>";
+        $headok = true;
+      }
+      echo "<table class='results cx'>
+            <tr>
+              <th colspan='6' class='goleft'><p>
+                cx ".$cxx[0]['nro_cirugia']." (".$info['fecha_cx'].") MEDico: ".$medico." - PACiente: ".$info['paciente']."</p><p>
+                financiador: ".$info['cliente']." (".$info['aplicable']."%) - vendedor: ".$info['vendedor']."</p>
+              </th>
+            </tr>
+            <tr>
+              <td class='subh gocenter' style='width:2rem;'>cant</td>
+              <td class='subh gocenter'>producto</td>
+              <td class='subh gocenter' style='width:8rem;'>valor</td>
+              <td class='subh gocenter' style='width:8rem;'>subtotal</td>
+              <td class='subh gocenter' style='width:8rem;'>sugerido</td>
+              <td class='subh gocenter' style='width:8rem;'>pagado</td>
+            </tr>";
+      $total = 0;
+      foreach ($cxx as $cxy) {
+        echo "<tr>
+                <td class='gocenter'>".$cxy['cantidad']."</td>
+                <td>".$cxy['producto']."</td>
+                <td class='goright'>$ ".number_format ($cxy['precio_venta'], 2, ',', '.')."</td>
+                <td class='goright'>$ ".number_format ($cxy['subtotal'], 2, ',', '.')."</td>
+                <td class='goright'>$ ".number_format ($cxy['pagable'], 2, ',', '.')."</td>
+                <td class='goright'>$ ".number_format ($cxy['monto_a_pagar'], 2, ',', '.')."</td>
+              </tr>";
+        $subtotal += $cxy['pagable'];
+        $total += $cxy['monto_a_pagar'];
+      }
+      echo "<tr>
+              <td colspan='4' class='subh gocenter'></td>
+              <td class='subh goright'>$ ".number_format ($subtotal, 2, ',', '.')."</td>
+              <td class='subh goright'>$ ".number_format ($total, 2, ',', '.')."</td>
+            </tr>
+          </table>";
+    }
+  }
+}
 ?>
+<script>
+  document.getElementById("cantcx").innerHTML = <?=$cantcx;?>
+</script>

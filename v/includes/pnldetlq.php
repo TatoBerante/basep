@@ -12,7 +12,7 @@ else {
     if (!$headok) {
       echo "<table class='data-remito'>
               <tr>
-                <td>EN REMITO:</td><td><a href='' class='buttons'>".$producto['id_remito']."</a></td>
+                <td>EN REMITO:</td><td>".$producto['id_remito']." <a href='default.php?page=pnlcx&sent=1&remito=".$producto['id_remito']."' class='green-link'>VER REMITO COMPLETO</a></td>
               </tr>
               <tr>
                 <td>PREPARADO:</td><td>".$producto['fecha_prep_h']."</td>

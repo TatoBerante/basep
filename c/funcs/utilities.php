@@ -159,10 +159,11 @@ function search_cx ($medico = '',
 	$mysqli = mysqli_conn();
 	$cirugias = array();
 
-	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal, cli.cliente
+	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal, cli.cliente, rem.id_remito
 				FROM cirugias cx
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
+				LEFT JOIN remitos rem ON cx.id_remito = rem.id_remito
 				WHERE 1";
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
@@ -245,7 +246,8 @@ function data_cx_detalle ($nro_cx) {
 				CONCAT (cx.producto, ' - ', cx.descripcion) AS producto,
 				cx.cantidad, cx.precio_venta, med.medico, cli.cliente, cli.aplicable,
 				(cx.cantidad * cx.precio_venta) AS subtotal,
-				(((cx.cantidad * cx.precio_venta) * cli.aplicable) / 100) AS pagable, cx.monto_a_pagar
+				(((cx.cantidad * cx.precio_venta) * cli.aplicable) / 100) AS pagable, cx.monto_a_pagar,
+				(rem.monto_total - rem.monto_ctacte) as pagado
 				FROM cirugias cx
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -340,7 +342,7 @@ function cxs_en_remito ($id_remito) {
 				FROM cirugias cx
 				INNER JOIN remitos rem ON cx.id_remito = rem.id_remito
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
-				WHERE cx.id_remito = ".$id_remito;
+				WHERE cx.id_remito = '".$id_remito."'";
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {

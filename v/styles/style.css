@@ -437,12 +437,26 @@ form {
   color: var(--ok-dark);
   font-weight: bolder;
   padding: 0.5rem 0.5rem;
-  border-radius: 1rem;
+  border-collapse: collapse;
 }
 .data-remito td {
   padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--ok-dark);
+}
+.separador {
+  border-left: 1px solid var(--ok-dark);
 }
 .remito-footer {
   display: flex;
   justify-content: space-between;
+}
+
+/* Links */
+.green-link {
+  text-decoration: none;
+  background-color: var(--ok-dark);
+  color: var(--ok-light);
+  padding: 3px 5px;
+  border-radius: 5px;
+  margin: 0 1rem;
 }
