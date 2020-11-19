@@ -460,3 +460,11 @@ form {
   border-radius: 5px;
   margin: 0 1rem;
 }
+.purple-link {
+  text-decoration: none;
+  background-color: var(--accent-main-color);
+  color: var(--light-main-color);
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 0;
+}

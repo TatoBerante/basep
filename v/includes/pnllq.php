@@ -3,13 +3,20 @@ require_once ('../c/funcs/utilities.php');
 $filtros = explode ('!?', $_REQUEST['filters']);
 
 $returnstring = "&sent=1&srchcx=".$filtros[0]."&vendcx=".$filtros[1]."&instcx=".$filtros[2]."&acr=".$filtros[3]."&fin=".$filtros[4]."&estado=".$filtros[5]."&mescxd=".$filtros[6]."&anocxd=".$filtros[7]."&mescxh=".$filtros[8]."&anocxh=".$filtros[9]."&meslqd=".$filtros[10]."&anolqd=".$filtros[11]."&meslqh=".$filtros[12]."&anolqh=".$filtros[13];
-
+/*
+echo "<p><pre>";
+print_r ($_REQUEST);
+echo "</pre></p>";
+*/
 ?>
 <?php
 $cantcx = 0;
+$cantrm = 0;
 $cxs = array();
+$rems = array();
 $preparadas = 0;
 $pendientes = 0;
+$liquidadas = 0;
 $valstring = '';
 foreach ($_REQUEST as $key=>$dato) {
   $dato = explode ('_', $key);
@@ -19,11 +26,17 @@ foreach ($_REQUEST as $key=>$dato) {
     $info = data_cx ($dato[1]);
     if ($info['estado'] == 1) $pendientes++;
     else if ($info['estado'] == 2) $preparadas++;
+    else if ($info['estado'] == 3) $liquidadas++;
     $cantcx++;
   }
+  if ($dato[0] == 'chkr') {
+    $rems[] = $dato[1];
+    $liquidadas++;
+    $cantrm++;
+  }
 }
-if ($cantcx < 1) {
-  echo "<div class='simple-line'>No se indicaron cirugías para procesar. Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>VOLVER</a></div>";
+if ($cantcx < 1 && $cantrm < 1) {
+  echo "<div class='error-msg'>No se indicaron cirugías para procesar. Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><div class='gocenter'><a href='default.php?page=pnlcx".$returnstring."' class='buttons-standalone'>VOLVER</a></div>";
 }
 else if ($preparadas > 0 && $pendientes > 0) {
   echo "<div class='simple-line'>Se seleccionaron cirugías con diferentes estados (pendientes y preparadas). Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>VOLVER</a></div>";
@@ -34,6 +47,10 @@ else {
   if ($pendientes > 0) {
     $estado = 'pendiente';
     $proceso = "preparar";
+  }
+  else if ($liquidadas > 0) {
+    $estado = 'liquidada';
+    $proceso = "imprimir";
   }
   else {
     $estado = 'preparada';
@@ -132,49 +149,8 @@ else {
             </tr>
           </table>";
     }
-    
-    //echo "</table>";
-    /*
-    echo "<table class='results cx'>";
-    $total = 0;
-    foreach ($cxs as $cx=>$value) {
-      $info = data_cx ($value);
-      $pagable = ($info['monto'] * $info['aplicable']) / 100;
-      $total += $pagable;
-      $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
-      echo "<tr>
-              <td><input type='hidden' name='cx_".$value."' value='".$value."'>CX ".$value."<br>Fecha: ".$info['fecha_cx']."</td>
-              <td>Médico: ".$medico."<br>Paciente: ".$info['paciente']."</td>
-              <td>Financiador: ".$info['aplicable']."%<br>".$info['cliente']."</td>
-              <td class='goright'>$ ".number_format ($info['monto'], 2, ',', '.')."</td>
-              <td class='goright'>$ ".number_format ($pagable, 2, ',', '.')."</td>
-            </tr>";
-    }
-    echo "<tr>
-            <td colspan='4' class='goright'>TOTAL:</td>
-            <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
-          </tr>
-        </table>";
-    */
-    // Fin de display cx seleccionadas
-    /*
-    ?>
-    <datalist id='medicos'>
-    <?php
-    foreach ($medicos as $medico) {
-      echo "<option value='".$medico['id_medico_sys']." - ".$medico['medico']." (SALDO: $ ".$medico['saldo'].")'>";
-    }
-    ?>
-    </datalist>
-    <div class="simple-line gocenter">
-      Acreedor: <input type='text' autocompĺete='off' list='medicos' id='medico' name='medico' class='input-text' style='width:30rem'>
-      <span class='left-margin'>Importe cta/cte:</span> <input type="text" autocompĺete='off' name="pagocc" id="pagocc" autocomplete="off" class="input-text goright" value="<?php echo $pagocc;?>" style='width:7rem'>
-      <span class='left-margin'>Importe remito:</span> <input type="text" autocompĺete='off' name="pago" id="pago" autocomplete="off" class="input-text goright" value="<?php echo $pago;?>" style='width:7rem'>
-    </div>
-    <?php
-    */
   }
-  else { // caso de que sean preparadas y haya que liquidar
+  else if ($proceso == 'preparar') { // caso de que sean preparadas y haya que liquidar
 
     $total = 0;
     $remitos = array();
@@ -230,6 +206,61 @@ else {
           </tr>
         </table>";
         
+  }
+  else { // Impresión de remitos (liquidadas)
+    $total = 0;
+    $remitos = array();
+
+    ?>
+    <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
+    <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
+    <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
+    <?php
+    echo "<table class='results cx'>
+            <tr>
+              <th>REMITO</th>
+              <th>cirugías</th>
+              <th>acreedor</th>
+              <th>retira</th>
+              <th>monto</th>
+              <th>cta/cte</th>
+              <th>subtotal</th>
+            </tr>";
+    $total = 0;
+    foreach ($rems as $key=>$value) {
+      $remito = data_remito ($value);
+      $subtotal = $remito['monto_total'] - $remito['monto_ctacte'];
+      $retira = $remito['retira'];
+      echo "<tr>
+              <td class='goleft'>
+                <input type='hidden' name='rem_".$remito['id_remito']."' value='".$remito['id_remito']."'>
+                N° ".$remito['id_remito']."<br>PREP: ".$remito['fecha_prep_h']."
+              </td>
+              <td>";
+      $cxsr = cxs_en_remito ($remito['id_remito']);
+      foreach ($cxsr as $cr) {
+        echo $cr['nro_cirugia']." (".$cr['fecha_cx_h']." pac. ".$cr['nombre_paciente'].")<br>";
+      }
+              /*
+                ".$remito['nro_cirugia']." (".$remito['fecha_cx_h'].")<br>
+                Dr. ".$remito['medico']."<br>
+                pac. ".$remito['paciente']."<br>
+              
+              */
+      echo "</td>
+            <td>".$remito['medico']."</td>
+              <td>".$remito['retira']."</td>
+              <td class='goright'>$ ".number_format ($remito['monto_total'], 2, ',', '.')."</td>
+              <td class='goright'>$ ".number_format ($remito['monto_ctacte'], 2, ',', '.')."</td>
+              <td class='goright'>$ ".number_format ($subtotal, 2, ',', '.')."</td>
+            </tr>";
+      $total += $subtotal;
+    }
+    echo "<tr>
+            <td colspan='6' class='goright'>TOTAL:</td>
+            <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
+          </tr>
+        </table>";
   }
   if ($proceso == 'preparar') {
     $vendedores = lista_vendedores();

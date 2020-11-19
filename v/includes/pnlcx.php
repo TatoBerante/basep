@@ -162,97 +162,118 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
     $filterstring = $clue."!?".$vendcx."!?".$instcx."!?".$acr."!?".$fin."!?".$_REQUEST['estado']."!?".$_REQUEST['mescxd']."!?".$_REQUEST['anocxd']."!?".$_REQUEST['mescxh']."!?".$_REQUEST['anocxh']."!?".$_REQUEST['meslqd']."!?".$_REQUEST['anolqd']."!?".$_REQUEST['meslqh']."!?".$_REQUEST['anolqh'];
-
-    if ($_REQUEST['estado'] != '2') { // Mostrar pendientes o todas
-        $cantcx = 0;
-        ?>
-        <form action='default.php?page=pnllq' method='post' id='checkform'>
-        <br>
-        <div class='mostrandores'>
-          <span>Mostrando <span id='cantcx'></span> resultados:</span>
-            <?php
-            if (isset ($_REQUEST['errchk'])) echo "<span class='error-text'>No se indicaron cirugías para liquidar</span>";
-            ?>
-        </div>
-        <?php
-        $idcxold = 'x';
-        $first_record = true;
-        $total = 0;
-        $elegibles= 0;
-        foreach ($resultados as $resultado) {
-          if ($resultado['estado'] == '1') {
-            // Pendiente
-            $procesar = "preparar";
-          }
-          else if ($resultado['estado'] == '2') {
-            // Preparada
-            $procesar = "liquidar";
-          }
-          else {
-            // Liquidada
-          }
-          if ($resultado['nro_cirugia'] != $idcxold) {
-            if (!$first_record) {
-              echo "<tr>
-                      <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
-                    </tr>
-                  </table>";
-              $total = 0;
-            }
-            //Print new header
-            $cantcx++;
-            echo "<table class='results cx'>
-                    <tr>
-                      <th colspan='3'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
-                      <th rowspan='3'>";
-            if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='buttons'>REMITO ".$resultado['id_remito']."</a>";
-            else {
-              echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
-                        <label for='chkb_".$resultado['nro_cirugia']."'>
-                          <span></span>
-                          ".$procesar."
-                        </label> ";
-              $elegibles++;
-            }
-            echo "</th>
-                    </tr>
-                    <tr>
-                      <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
-                    </tr>
-                    <tr>
-                      <th colspan='3'class='goleft'>Financiador: ".$resultado['cliente']."</th>
-                    </tr>
-                    <tr>
-                      <td class='subh'>PRODUCTOS</td>
-                      <td class='subh gocenter' style='width:7rem;'>CANTIDAD</td>
-                      <td class='subh gocenter cx_column_mid'>VALOR</td>
-                      <td class='subh gocenter cx_column_mid'>SUBTOTAL</td>
-                    </tr>
-                    <tr>
-                      <td>".$resultado['producto']."</td>
-                      <td class='cell-cantidad'>".$resultado['cantidad']."</td>
-                      <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
-                      <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
-                    </tr>";
-            $idcxold = $resultado['nro_cirugia'];
-            $total += $resultado['subtotal'];
-          }
-          else {
+    $elegibles= 0;
+    if ($_REQUEST['estado'] != '2') { // Mostrar pendientes o finalizadas
+      $cantcx = 0;
+      ?>
+      <form action='default.php?page=pnllq' method='post' id='checkform'>
+      <br>
+      <div class='mostrandores'>
+        <span>Mostrando <span id='cantcx'></span> resultados:</span>
+          <?php
+          if (isset ($_REQUEST['errchk'])) echo "<span class='error-text'>No se indicaron cirugías para liquidar</span>";
+          ?>
+      </div>
+      <?php
+      $idcxold = 'x';
+      $first_record = true;
+      $total = 0;
+      
+      foreach ($resultados as $resultado) {
+        if ($resultado['estado'] == '1') {
+          // Pendiente
+          $procesar = "preparar";
+        }
+        else if ($resultado['estado'] == '2') {
+          // Preparada
+          $procesar = "liquidar";
+        }
+        else {
+          // Liquidada
+          $procesar = "imprimir";
+        }
+        if ($resultado['nro_cirugia'] != $idcxold) {
+          if (!$first_record) {
             echo "<tr>
+                    <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
+                  </tr>
+                </table>";
+            $total = 0;
+          }
+          //Print new header
+          $cantcx++;
+          echo "<table class='results cx'>
+                  <tr>
+                    <th colspan='2'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
+                    <th rowspan='3' colspan='2' class='goright'>";
+          /* v1
+          if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='buttons'>REMITO ".$resultado['id_remito']."</a>";
+          else {
+            echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
+                      <label for='chkb_".$resultado['nro_cirugia']."'>
+                        <span></span>
+                        ".$procesar."
+                      </label> ";
+            $elegibles++;
+          }
+          */
+          //echo $resultado['estado'];
+          if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='purple-link'>REMITO ".$resultado['id_remito']."</a><br><br>";
+          if ($resultado['estado'] == '2') {
+            echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
+                      <label for='chkb_".$resultado['nro_cirugia']."'>
+                        <span></span>
+                        ".$procesar."
+                      </label> ";
+            
+          }
+          else if ($resultado['estado'] == '3') {
+            echo "<input type='checkbox' id='chkr_".$resultado['id_remito']."' name='chkr_".$resultado['id_remito']."'>
+                      <label for='chkr_".$resultado['id_remito']."'>
+                        <span></span>
+                        ".$procesar."
+                      </label> ";
+          }
+          $elegibles++;
+          echo "</th>
+                  </tr>
+                  <tr>
+                    <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
+                  </tr>
+                  <tr>
+                    <th colspan='3'class='goleft'>Financiador: ".$resultado['cliente']."</th>
+                  </tr>
+                  <tr>
+                    <td class='subh'>PRODUCTOS</td>
+                    <td class='subh gocenter' style='width:7rem;'>CANTIDAD</td>
+                    <td class='subh gocenter cx_column_mid'>VALOR</td>
+                    <td class='subh gocenter cx_column_mid' style='width:fit-content;'>SUBTOTAL</td>
+                  </tr>
+                  <tr>
                     <td>".$resultado['producto']."</td>
                     <td class='cell-cantidad'>".$resultado['cantidad']."</td>
                     <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
                     <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
                   </tr>";
-            $idcxold = $resultado['nro_cirugia'];
-            $total += $resultado['subtotal'];
-          }
-          $first_record = false;
+          $idcxold = $resultado['nro_cirugia'];
+          $total += $resultado['subtotal'];
         }
-        echo "<tr>
-                <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
-              </tr>
-            </table>";
+        else {
+          echo "<tr>
+                  <td>".$resultado['producto']."</td>
+                  <td class='cell-cantidad'>".$resultado['cantidad']."</td>
+                  <td class='cell-cash'>".number_format($resultado['precio_venta'], 2, ',', '.')."</td>
+                  <td class='cell-cash'>".number_format($resultado['subtotal'], 2, ',', '.')."</td>
+                </tr>";
+          $idcxold = $resultado['nro_cirugia'];
+          $total += $resultado['subtotal'];
+        }
+        $first_record = false;
+      }
+      echo "<tr>
+              <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
+            </tr>
+          </table>";
     }
     else if ($_REQUEST['estado'] == '2') { // Ver solo preparadas
       $cantcx = 0;
@@ -376,17 +397,11 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
               </td>
             </tr></table>";
     }
-    else if ($_REQUEST['estado'] == '3') { // Ver solo preparadas
-      echo "mostrar finalizadas";
-    }
     if ($elegibles > 0) {
       echo "<input type='hidden' name='filters' value='".$filterstring."'>
       <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>CONTINUAR</a></div></form>";
     }
   }
-  ?>
-  
-  <?php
 }
 else if (isset ($_REQUEST['sent']) && $remito != '') {
   $cxs = cxs_en_remito ($remito);
@@ -430,6 +445,7 @@ else if (isset ($_REQUEST['sent']) && $remito != '') {
                 </tr>
               </table>";
         $headok = true;
+        $elegibles++;
       }
       echo "<table class='results cx'>
             <tr>
