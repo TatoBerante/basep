@@ -260,6 +260,7 @@ form {
   display: block;
   box-shadow: none;
   border: none;
+  
 }
 .buttons-inline {
   border: 1px solid var(--accent-main-color);
