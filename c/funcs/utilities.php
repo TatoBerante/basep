@@ -14,6 +14,12 @@ function logThis ($desc) {
 	}
 }
 
+function showall ($vble) {
+	echo "<p><pre>";
+	print_r ($vble);
+	echo "</pre></p>";
+}
+
 function search_usuarios ($clue) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();

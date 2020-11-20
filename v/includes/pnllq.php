@@ -210,9 +210,9 @@ else {
   else { // Impresión de remitos (liquidadas)
     $total = 0;
     $remitos = array();
-
+    //showall ($_REQUEST);
     ?>
-    <form autocompĺete='off' action="../c/pnllq-validate.php" method="post" id="checkform">
+    <form autocompĺete='off' action="../v/appprint.php" method="post" id="checkform">
     <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
     <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
     <?php
@@ -327,6 +327,7 @@ else {
     <!--<a href='#' onclick="document.getElementById('formprep').submit()" class='buttons-standalone'><?=$proceso;?> marcadas</a>-->
 <?php
 if ($proceso == 'preparar') {?><input type="submit" value="REGISTRAR" class='buttons-standalone'><?php }
+else if ($proceso == 'imprimir') {?><input type="submit" value="<?=$proceso;?>" class='buttons-standalone'><?php }
 else { ?><a href='#' onclick="document.getElementById('checkform').submit()" class='buttons-standalone'><?=$proceso;?> </a><?php  }
 ?>
   </div>

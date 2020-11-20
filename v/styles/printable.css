@@ -1,0 +1,39 @@
+/*
+@media print{
+  @page {
+    size: auto;   
+    size: A4 portrait;
+    margin: 0;  
+    border: 1px solid red;  
+  }
+}
+*/
+@page {
+  /*
+  size: A4 portrait;
+  size: 210mm 297mm;
+  */
+  margin: 0;
+}
+@media print {
+  html, body {
+    /*
+    width: 210mm;
+    height: auto;
+    margin: 0;
+    */
+    font-family: monospace;
+  }
+  /* ... the rest of the rules ... */
+  .bloque {
+    page-break-after: always;
+    font-family: monospace;
+    padding: 1rem 2rem;
+    border: 1px solid #000;
+  }
+}
+.bloque {
+  font-family: monospace;
+  padding: 1rem 2rem;
+  border: 1px solid #000;
+}
