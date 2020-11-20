@@ -1,4 +1,5 @@
 <?php
+// https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
 session_start();
 if (false) {
   echo "error";
