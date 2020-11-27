@@ -17,10 +17,12 @@ else {
   }
   $gohref = "default.php?page=pnllq".$extrastr."&filters=".$_REQUEST['filters'].$_REQUEST['return'];
   //echo "<p><a href='".$gohref."'>GO!</a></p>";
+  
   /*
   showall ($_REQUEST);
   showall ($remitos);
   */
+
   ?>
   <!DOCTYPE html>
   <html lang="es">
@@ -32,6 +34,26 @@ else {
     <title>HM2</title>
   </head>
   <body>
+    <?php
+    foreach ($remitos as $remito) {
+      $data = data_remito ($remito);
+      $total_cx = $data['monto_total'] - $data['monto_ctacte'];
+      // Start bloque
+      echo "<div class='bloque'>
+              <div>Comprobante de cirugías <a href='".$gohref."'>(".$remito.")</a> para ".$data['medico']."</div>
+              <div>Retira: ".$data['retira']."</div>
+              <div>Subtotal: $ ".$data['monto_total']." | Saldo: $ ".$data['saldo_ctacte_previo']." | Descuento: $ ".$data['monto_ctacte']." | Pago: $ ".$total_cx."</div>";
+      $cxs = cxs_en_remito ($remito);
+      echo "<div>";
+      foreach ($cxs as $cx) {
+        echo "<div>CIR: ".$cx['cirujano']." (".$cx['nro_cirugia'].") PAC: ".$cx['nombre_paciente']." - FCX: ".$cx['fecha_cx_h']." - PAG: ".$cx['monto_total']."</div>";
+      }
+      echo "</div>";
+      echo "</div>";
+      // End bloque
+    }
+    ?>
+    <!--
     <div class="bloque">
     <?php
     for ($i=0; $i<15; $i++) {
@@ -44,6 +66,7 @@ else {
     echo "</div>";
     ?>
     </div>
+    -->
   </body>
   </html>
   <?php

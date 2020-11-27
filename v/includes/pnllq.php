@@ -35,6 +35,7 @@ foreach ($_REQUEST as $key=>$dato) {
     $cantrm++;
   }
 }
+//showall($cxs);
 if ($cantcx < 1 && $cantrm < 1) {
   echo "<div class='error-msg'>No se indicaron cirugías para procesar. Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><div class='gocenter'><a href='default.php?page=pnlcx".$returnstring."' class='buttons-standalone'>VOLVER</a></div>";
 }
@@ -42,6 +43,7 @@ else if ($preparadas > 0 && $pendientes > 0) {
   echo "<div class='simple-line'>Se seleccionaron cirugías con diferentes estados (pendientes y preparadas). Haga click en el botón VOLVER para retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados).</div><br><div class='simple-line'><a href='default.php?page=pnlcx".$returnstring."' class='buttons'>VOLVER</a></div>";
 }
 else {
+  
   $medicos = lista_medicos();
 
   if ($pendientes > 0) {
@@ -70,6 +72,7 @@ else {
   
   // Display cx seleccionadas (solo para preparar):
   if ($proceso == 'preparar') {
+    
     ?>
     <datalist id='medicos'>
     <?php
@@ -114,7 +117,7 @@ else {
               <td class='subh gocenter' style='width:8rem;'>valor</td>
               <td class='subh gocenter' style='width:8rem;'>subtotal</td>
               <td class='subh gocenter' style='width:8rem;'>sugerido</td>
-              <td class='subh gocenter'>pagar</td>
+              <td class='subh gocenter' style='width:12rem;'>pagar</td>
             </tr>";
       $total = 0;
       foreach ($cxx as $cxy) {
@@ -150,7 +153,7 @@ else {
           </table>";
     }
   }
-  else if ($proceso == 'preparar') { // caso de que sean preparadas y haya que liquidar
+  else if ($proceso == 'liquidar') { // caso de que sean preparadas y haya que liquidar
 
     $total = 0;
     $remitos = array();
@@ -205,7 +208,7 @@ else {
             <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
           </tr>
         </table>";
-        
+    
   }
   else { // Impresión de remitos (liquidadas)
     $total = 0;

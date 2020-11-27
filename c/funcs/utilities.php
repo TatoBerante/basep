@@ -168,7 +168,7 @@ function search_cx ($medico = '',
 	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal, cli.cliente, rem.id_remito
 				FROM cirugias cx
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
-				INNER JOIN clientes cli ON cx.id_cliente = cli.id_cliente
+				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				LEFT JOIN remitos rem ON cx.id_remito = rem.id_remito
 				WHERE 1";
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
@@ -191,8 +191,8 @@ function search_cx ($medico = '',
 		$cxh = $anocxh."-".$mescxh."-".$lastdh;
 		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
 	}
-	$q .= " ORDER BY fecha_cx";
-	//echo "<p>$q</p>";
+	$q .= " ORDER BY cx.fecha_cx, cx.nro_cirugia";
+	//showall($q);
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
@@ -399,7 +399,7 @@ function search_remitos ($medico = '',
 				date_format(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h, rem.saldo_ctacte_previo as saldo_pre,
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
 				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente,
-				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h,
+				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.monto_a_pagar,
 				cx.nombre_vendedor as vendedor, cli.cliente as financiador
 				FROM remitos rem
 				INNER JOIN medicos med ON rem.id_acreedor = med.id_medico_sys
@@ -407,7 +407,7 @@ function search_remitos ($medico = '',
 				INNER JOIN cirugias cx ON rem.id_remito = cx.id_remito
 				INNER JOIN medicos cj ON cx.cod_medico = cj.id_medico
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
-				WHERE rem.fecha_liquidado IS NULL";
+				WHERE 1";
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
 	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
@@ -429,7 +429,8 @@ function search_remitos ($medico = '',
 		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
 	}
 
-	$q .= " ORDER BY rem.fecha_preparado, rem.id_remito";
+	$q .= " ORDER BY rem.fecha_preparado, rem.id_remito, cx.nro_cirugia";
+	//showall($q);
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
@@ -438,7 +439,55 @@ function search_remitos ($medico = '',
 		}
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
+		
 		return $remitos;
+	}
+}
+function detalle_remito ($id_remito) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$remito = array();	
+	$q = "SELECT cx.nro_cirugia, cx.nombre_paciente AS paciente,
+				acr.medico AS acreedor, por.vendedor AS retira,
+				rem.id_remito, rem.monto_total AS total_remito, rem.monto_ctacte AS descuento,
+				rem.saldo_ctacte_previo AS saldo_previo,
+				med.medico, cli.cliente as financiador,
+				DATE_FORMAT(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h,
+				DATE_FORMAT(rem.fecha_liquidado, '%d-%m-%Y') AS fecha_liquidado_h,
+				DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h
+				FROM remitos rem
+				INNER JOIN cirugias cx ON rem.id_remito = cx.id_remito
+				INNER JOIN medicos acr ON rem.id_acreedor = acr.id_medico_sys
+				INNER JOIN vendedores por ON rem.id_portador = por.id_vendedor_sys
+				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
+				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
+				WHERE rem.id_remito = $id_remito
+				GROUP BY cx.nro_cirugia, cx.nombre_paciente, cx.fecha_cx, cx.cod_medico, cli.cliente";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$remito[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		//showall($q);
+		return $remito;
+	}
+}
+function total_cx ($nro_cirugia) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$q = "SELECT SUM(monto_a_pagar) as total FROM cirugias WHERE nro_cirugia = '".$nro_cirugia."'";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$fila = mysqli_fetch_assoc($resultado);
+		$total = $fila['total'];
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		
+		return $total;
 	}
 }
 ?>

@@ -163,7 +163,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
   else {
     $filterstring = $clue."!?".$vendcx."!?".$instcx."!?".$acr."!?".$fin."!?".$_REQUEST['estado']."!?".$_REQUEST['mescxd']."!?".$_REQUEST['anocxd']."!?".$_REQUEST['mescxh']."!?".$_REQUEST['anocxh']."!?".$_REQUEST['meslqd']."!?".$_REQUEST['anolqd']."!?".$_REQUEST['meslqh']."!?".$_REQUEST['anolqh'];
     $elegibles= 0;
-    if ($_REQUEST['estado'] != '2') { // Mostrar pendientes o finalizadas
+    if ($_REQUEST['estado'] == '1') { // Mostrar solo pendientes
       $cantcx = 0;
       ?>
       <form action='default.php?page=pnllq' method='post' id='checkform'>
@@ -219,7 +219,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           */
           //echo $resultado['estado'];
           if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='purple-link'>REMITO ".$resultado['id_remito']."</a><br><br>";
-          if ($resultado['estado'] == '2') {
+          if ($resultado['estado'] == '1') {
             echo "<input type='checkbox' id='chkb_".$resultado['nro_cirugia']."' name='chkb_".$resultado['nro_cirugia']."'>
                       <label for='chkb_".$resultado['nro_cirugia']."'>
                         <span></span>
@@ -274,6 +274,141 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
               <td class='subh goright' colspan='4'>Total $<span class='total'>".number_format($total, 2, ',', '.')."</span></td>
             </tr>
           </table>";
+    }
+    else if ($_REQUEST['estado'] == '3') { // Ver solo finalizadas
+      ?>
+        <!--<form action='appprint.php' method='post' id='checkform'>-->
+        <form action='default.php?page=pnllq' method='post' id='checkform'>
+      <?php
+      $remitos = search_remitos ($clue,
+                                  $vendcx,
+                                  $instcx,
+                                  $acr,
+                                  $fin,
+                                  $_REQUEST['estado'],
+                                  $_REQUEST['mescxd'],
+                                  $_REQUEST['anocxd'],
+                                  $_REQUEST['mescxh'],
+                                  $_REQUEST['anocxh'],
+                                  $_REQUEST['meslqd'],
+                                  $_REQUEST['anolqd'],
+                                  $_REQUEST['meslqh'],
+                                  $_REQUEST['anolqh']);
+      $procesar = 'imprimir';
+      $remitox = array();
+      foreach ($resultados as $cx) {
+        if (!in_array ($cx['id_remito'], $remitox)) {
+          $remitox[] = $cx['id_remito'];
+        }
+      }
+      foreach ($remitox as $remi) {
+        $elegibles++;
+        $data = detalle_remito ($remi);
+        
+        echo "<table class='results cx'>
+                <tr>
+                  <th class='goleft' colspan='4'>Remito N° ".$data[0]['id_remito']." (".$data[0]['fecha_preparado_h'].")</th>
+                  <th class='goright' rowspan='3'>
+                    <a href='default.php?page=pnlcx&sent=1&remito=".$data[0]['id_remito']."' class='purple-link'>VER REMITO</a><br><br>
+                    <input type='checkbox' id='chkr_".$data[0]['id_remito']."' name='chkr_".$data[0]['id_remito']."'>
+                    <label for='chkr_".$data[0]['id_remito']."'>
+                    <span></span>".$procesar."</label>
+                  </th>
+                </tr>
+                <tr>
+                  <th class='goleft' colspan='4'>
+                    Acreedor: ".$data[0]['acreedor']."
+                  </th>
+                </tr>
+                <tr>
+                  <th class='goleft' colspan='4'>
+                    Retira: ".$data[0]['retira']."
+                  </th>
+                </tr>";
+        foreach ($data as $resultado) {
+          echo "<tr>
+                  <td style='width:12%;'>CX ".$resultado['nro_cirugia']."<br>(".$resultado['fecha_cx_h'].")</td>
+                  <td style='width:30%;'>CIR: ".$resultado['medico']."<br>PAC: ".$resultado['paciente']."</td>
+                  <td style='width:46%;' colspan='2'>INST: Clinica<br>FIN: ".$resultado['financiador']."</td>
+                  <td class='goright' style='width:12%;'>$ ".number_format(total_cx($resultado['nro_cirugia']), 2, ',', '.')."</td>
+                </tr>";
+        }
+        $apagar = $data[0]['total_remito'] - $data[0]['descuento'];
+        echo "<tr>
+                <td colspan='5' class='subh'>
+                  <div class='fsb'>
+                    <span>SUBTOTAL: $ ".number_format($data[0]['total_remito'], 2, ',', '.')."</span>
+                    <span>SALDO: $ ".number_format($data[0]['saldo_previo'], 2, ',', '.')."</span>
+                    <span>DESCUENTO: $ ".number_format($data[0]['descuento'], 2, ',', '.')."</span>
+                    <span>TOTAL: $ ".number_format($apagar, 2, ',', '.')."</span>
+                  </div>
+                </td>
+              </tr>
+            </table>";
+      }
+      /*
+      $idoldrem = 'x';
+      $firstline = true;
+      $total_cx = 0;
+      $oldcx = '0';
+      foreach ($remitos as $resultado) {
+        if ($resultado['id_remito'] != $idoldrem) {
+          if (!$firstline) {
+            echo "<tr>
+                    <td class='subh' colspan='2'>SUBTOTAL: ".number_format($old_subtotal, 2, ',', '.')."</td>
+                    <td class='subh'>SALDO: ".number_format($old_saldo, 2, ',', '.')."</td>
+                    <td class='subh'>descuento: ".number_format($old_desc, 2, ',', '.')."</td>
+                    <td class='subh'>TOTAL REMITO: ".number_format($old_total, 2, ',', '.')."</td>
+                  </tr>
+                </table>";
+            //$total_cx = 0;
+          }
+          echo "<table class='results cx'><tr>
+                  <th colspan='3' class='goleft'>Remito ".$resultado['id_remito']." (".$resultado['fecha_preparado_h'].")</th>
+                  <th rowspan='3' colspan='2' class='goright'>
+                    <a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='purple-link'>REMITO ".$resultado['id_remito']."</a><br><br>
+                    <input type='checkbox' id='chkr_".$resultado['id_remito']."' name='chkr_".$resultado['id_remito']."'>
+                    <label for='chkr_".$resultado['id_remito']."'>
+                    <span></span>".$procesar."</label>
+                  </th>
+                </tr>
+                <tr>
+                  <th colspan='3' class='goleft'>
+                    Acreedor: ".$resultado['acreedor']."
+                  </th>
+                </tr>
+                <tr>
+                  <th colspan='3' class='goleft'>
+                    Retira: ".$resultado['retira']."
+                  </th>
+                </tr>";
+          $idoldrem = $resultado['id_remito'];
+        }
+        if ($resultado['nro_cirugia'] != $oldcx) {
+          echo "<tr>
+                <td style='width:9rem;'>CX ".$resultado['nro_cirugia']."<br>(".$resultado['fecha_cx_h'].")</td>
+                <td colspan='2'>CIR: ".$resultado['cirujano']."<br>PAC: ".$resultado['paciente']."</td>
+                <td>INST: Clinica<br>FIN: ".$resultado['financiador']."</td>
+                <td class='goright'>TOTAL cx: $ ".number_format($total_cx, 2, ',', '.')."</td>
+              </tr>";
+          $oldcx = $resultado['nro_cirugia'];
+          $total_cx = 0;
+        }
+        $total_cx += $resultado['monto_a_pagar'];
+        $firstline = false;
+        $old_subtotal = 0;
+        $old_saldo = $resultado['saldo_pre'];
+        $old_desc = $resultado['monto_ctacte'];
+        $old_total = $resultado['total'];
+      }
+      echo "<tr>
+              <td class='subh' colspan='2'>SUBTOTAL: ".number_format($old_subtotal, 2, ',', '.')."</td>
+              <td class='subh'>SALDO: ".number_format($old_saldo, 2, ',', '.')."</td>
+              <td class='subh'>descuento: ".number_format($old_desc, 2, ',', '.')."</td>
+              <td class='subh'>TOTAL REMITO: ".number_format($old_total, 2, ',', '.')."</td>
+            </tr>
+          </table>";
+      */
     }
     else if ($_REQUEST['estado'] == '2') { // Ver solo preparadas
       $cantcx = 0;
