@@ -54,12 +54,12 @@ if ($cxsent < 1 || !$haymedico || !$pagoccok || $error > 0) {
   header ("location:../v/default.php?page=pnllq&return=".$_REQUEST['return']."&estado=1".$return_string.$_REQUEST['valstring']."&filters=".$_REQUEST['filters']."&error=".$errortype);
 }
 else {
-  echo "<p><a href='../v/default.php?page=pnllq&return=".$_REQUEST['return']."&estado=1".$return_string.$_REQUEST['valstring']."&filters=".$_REQUEST['filters']."'>VOLVER</a></p>";
-
+  //echo "<p><a href='../v/default.php?page=pnllq&return=".$_REQUEST['return']."&estado=1".$return_string.$_REQUEST['valstring']."&filters=".$_REQUEST['filters']."'>VOLVER</a></p>";
+  /*
   echo "<p><pre>";
   print_r ($req);
   echo "</pre></p>";
-  
+  */
   require_once "funcs/conn.php";
   require_once "funcs/utilities.php";
 

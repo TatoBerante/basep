@@ -175,7 +175,8 @@ function search_cx ($medico = '',
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
 	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
 	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
-	// if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
+	if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
+	if ($acreedor != '') $q .= " AND med.medico LIKE '%".$acreedor."%'";
 
 	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
 		// Leap year issue
@@ -190,6 +191,20 @@ function search_cx ($medico = '',
 		$cxd = $anocxd."-".$mescxd."-01";
 		$cxh = $anocxh."-".$mescxh."-".$lastdh;
 		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
+	}
+	if ($meslqd != 'NC' && $anolqd != 'NC' && $meslqh != 'NC' && $anolqh != 'NC') {
+		// Leap year issue
+		if ($meslqh == '01' || $meslqh == '03' || $meslqh == '05' || $meslqh == '07' || $meslqh == '08' || $meslqh == '10' || $meslqh == '12') $lastdh = '31';
+		else {
+			if ($meslqh != '02') $lastdh = '30';
+			else { // Feb
+				$leap = date('L', mktime(0, 0, 0, 1, 1, $anolqd));
+				$lastdh = ($leap) ? '29' : '28';
+			}
+		}
+		$lqd = $anolqd."-".$meslqd."-01";
+		$lqh = $anolqh."-".$meslqh."-".$lastdh;
+		$q .= " AND rem.fecha_liquidado BETWEEN '".$lqd."' AND '".$lqh."'";
 	}
 	$q .= " ORDER BY cx.fecha_cx, cx.nro_cirugia";
 	//showall($q);
@@ -291,7 +306,7 @@ function data_remito ($id_remito) {
 	$remito = array();
 	$q = "SELECT r.*, m.id_medico_sys, m.medico, DATE_FORMAT(r.fecha_preparado, '%d-%m-%Y') as fecha_prep_h,
 				v.vendedor as retira, c.nro_cirugia, DATE_FORMAT(c.fecha_cx, '%d-%m-%Y') as fecha_cx_h,
-				c.nombre_paciente as paciente
+				c.nombre_paciente as paciente, DATE_FORMAT(r.fecha_liquidado, '%d/%m/%y') as fecha_lq_h
 				FROM remitos r
 				INNER JOIN medicos m ON r.id_acreedor = m.id_medico_sys
 				LEFT JOIN vendedores v ON r.id_portador = v.id_vendedor_sys
@@ -344,7 +359,8 @@ function cxs_en_remito ($id_remito) {
 	$mysqli = mysqli_conn();
 	$cxs = array();
 	$q = "SELECT DISTINCT cx.nro_cirugia, date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h,
-				cx.nombre_paciente, med.medico as cirujano, rem.*, (rem.monto_total - rem.monto_ctacte) AS total
+				cx.nombre_paciente, med.medico as cirujano, rem.*, (rem.monto_total - rem.monto_ctacte) AS total,
+				cx.institucion
 				FROM cirugias cx
 				INNER JOIN remitos rem ON cx.id_remito = rem.id_remito
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -408,11 +424,12 @@ function search_remitos ($medico = '',
 				INNER JOIN medicos cj ON cx.cod_medico = cj.id_medico
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				WHERE 1";
-	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
+	if ($medico != '') $q .= " AND cj.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
 	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
 	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
-	// if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
+	if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
+	if ($acreedor != '') $q .= " AND med.medico LIKE '%".$acreedor."%'";
 
 	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
 		// Leap year issue
@@ -428,6 +445,20 @@ function search_remitos ($medico = '',
 		$cxh = $anocxh."-".$mescxh."-".$lastdh;
 		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
 	}
+	if ($meslqd != 'NC' && $anolqd != 'NC' && $meslqh != 'NC' && $anolqh != 'NC') {
+		// Leap year issue
+		if ($meslqh == '01' || $meslqh == '03' || $meslqh == '05' || $meslqh == '07' || $meslqh == '08' || $meslqh == '10' || $meslqh == '12') $lastdh = '31';
+		else {
+			if ($meslqh != '02') $lastdh = '30';
+			else { // Feb
+				$leap = date('L', mktime(0, 0, 0, 1, 1, $anolqd));
+				$lastdh = ($leap) ? '29' : '28';
+			}
+		}
+		$lqd = $anolqd."-".$meslqd."-01";
+		$lqh = $anolqh."-".$meslqh."-".$lastdh;
+		$q .= " AND rem.fecha_liquidado BETWEEN '".$lqd."' AND '".$lqh."'";
+	}
 
 	$q .= " ORDER BY rem.fecha_preparado, rem.id_remito, cx.nro_cirugia";
 	//showall($q);
@@ -439,7 +470,6 @@ function search_remitos ($medico = '',
 		}
 		mysqli_free_result($resultado);
 		mysqli_close($mysqli);
-		
 		return $remitos;
 	}
 }
@@ -447,7 +477,7 @@ function detalle_remito ($id_remito) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$remito = array();	
-	$q = "SELECT cx.nro_cirugia, cx.nombre_paciente AS paciente,
+	$q = "SELECT cx.nro_cirugia, cx.nombre_paciente AS paciente, cx.institucion,
 				acr.medico AS acreedor, por.vendedor AS retira,
 				rem.id_remito, rem.monto_total AS total_remito, rem.monto_ctacte AS descuento,
 				rem.saldo_ctacte_previo AS saldo_previo,
@@ -462,7 +492,7 @@ function detalle_remito ($id_remito) {
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				WHERE rem.id_remito = $id_remito
-				GROUP BY cx.nro_cirugia, cx.nombre_paciente, cx.fecha_cx, cx.cod_medico, cli.cliente";
+				GROUP BY cx.nro_cirugia, cx.nombre_paciente, cx.fecha_cx, cx.cod_medico, cli.cliente, cx.institucion";
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {

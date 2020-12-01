@@ -126,7 +126,7 @@ else {
     }
     ?>
     </select>
-    <span class='left-margin'>Remito N° (anula demás filtros):</span> <input type="text" name="remito" id="remito" autocomplete="off" class="input-text gocenter" style='width:5rem;' value="<?php echo $remito;?>">
+    <span class='left-margin'>Remito N° (anula demás filtros):</span> <input type="text" name="remito" id="remito" autocomplete="off" class="input-text gocenter" style='width:5rem;' value="<?php echo $remito;?>"></span>
   </div>
   <div class="form-line">
     Acreedor: <input type="text" name="acr" id="acr" autocomplete="off" class="input-text" value="<?php echo $acr;?>">
@@ -205,7 +205,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           echo "<table class='results cx'>
                   <tr>
                     <th colspan='2'class='goleft'>CX ".$resultado['nro_cirugia']." (".$resultado['fecha_cx_h']."), Dr. ".$resultado['medico']."</th>
-                    <th rowspan='3' colspan='2' class='goright'>";
+                    <th rowspan='4' colspan='2' class='goright'>";
           /* v1
           if ($resultado['estado'] == '3') echo "<a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='buttons'>REMITO ".$resultado['id_remito']."</a>";
           else {
@@ -236,6 +236,9 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           }
           $elegibles++;
           echo "</th>
+                  </tr>
+                  <tr>
+                    <th colspan='3'class='goleft'>Institución: ".$resultado['institucion']."</th>
                   </tr>
                   <tr>
                     <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
@@ -329,7 +332,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           echo "<tr>
                   <td style='width:12%;'>CX ".$resultado['nro_cirugia']."<br>(".$resultado['fecha_cx_h'].")</td>
                   <td style='width:30%;'>CIR: ".$resultado['medico']."<br>PAC: ".$resultado['paciente']."</td>
-                  <td style='width:46%;' colspan='2'>INST: Clinica<br>FIN: ".$resultado['financiador']."</td>
+                  <td style='width:46%;' colspan='2'>INST: ".$resultado['institucion']."<br>FIN: ".$resultado['financiador']."</td>
                   <td class='goright' style='width:12%;'>$ ".number_format(total_cx($resultado['nro_cirugia']), 2, ',', '.')."</td>
                 </tr>";
         }
@@ -422,6 +425,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           ?>
       </div>
       <?php
+      // $instcx
       $remitos = search_remitos (
         $clue,
         $vendcx,
@@ -467,7 +471,9 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           $retira = ($remito['retira'] == '') ? 'N/A' : $remito['retira'];
           echo "<table class='results cx'>
                   <tr>
-                    <th class='goleft' colspan='3'>REMITO ".$remito['id_remito']." (".$remito['fecha_preparado_h'].") ACREEDOR: ".$remito['acreedor']." - RETIRA: ".$retira."</th>
+                    <th class='goleft' colspan='3'>
+                      REMITO ".$remito['id_remito']." (".$remito['fecha_preparado_h'].") ACREEDOR: ".$remito['acreedor']." - RETIRA: ".$retira."
+                    </th>
                     <th style='width:10rem;'>";
                     echo "<input type='checkbox' id='chkb_".$remito['id_remito']."' name='chkb_".$remito['id_remito']."'>
                     <label for='chkb_".$remito['id_remito']."'>
@@ -497,7 +503,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           foreach ($cxs as $cx) {
             $cx_subtotal = cx_subtotal ($cx['nro_cirugia']);
             echo "<tr><td colspan='3'>";
-            echo "CX ".$cx['nro_cirugia']." (".$cx['fecha_cx_h'].") - Dr. ".$cx['cirujano']." - Pac. ".$cx['nombre_paciente'];
+            echo "CX ".$cx['nro_cirugia']." (".$cx['fecha_cx_h'].") - Dr. ".$cx['cirujano']." - Pac. ".$cx['nombre_paciente']."<br>Institución: ".$cx['institucion'];
             echo "</td><td class='goright'>$ ".number_format($cx_subtotal, 2, ',', '.')."</td></tr>";
           }
           /*

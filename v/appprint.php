@@ -16,13 +16,6 @@ else {
     }
   }
   $gohref = "default.php?page=pnllq".$extrastr."&filters=".$_REQUEST['filters'].$_REQUEST['return'];
-  //echo "<p><a href='".$gohref."'>GO!</a></p>";
-  
-  /*
-  showall ($_REQUEST);
-  showall ($remitos);
-  */
-
   ?>
   <!DOCTYPE html>
   <html lang="es">
@@ -40,33 +33,50 @@ else {
       $total_cx = $data['monto_total'] - $data['monto_ctacte'];
       // Start bloque
       echo "<div class='bloque'>
-              <div>Comprobante de cirugías <a href='".$gohref."'>(".$remito.")</a> para ".$data['medico']."</div>
-              <div>Retira: ".$data['retira']."</div>
-              <div>Subtotal: $ ".$data['monto_total']." | Saldo: $ ".$data['saldo_ctacte_previo']." | Descuento: $ ".$data['monto_ctacte']." | Pago: $ ".$total_cx."</div>";
+              <table style='width:100%;' class='remito'>
+                <tr class='header'>
+                  <td>
+                    Comprobante de cirugías <a href='".$gohref."'>(".$remito.")</a> para ".$data['medico']."
+                  </td>
+                  <td rowspan='2' class='fecha'>
+                    ".$data['fecha_lq_h']."
+                  </td>
+                </tr>
+                <tr class='header'>
+                  <td>
+                    Retira: ".$data['retira']."
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan='2' class='subheader'>Detalle:</td>
+                </tr>";
       $cxs = cxs_en_remito ($remito);
-      echo "<div>";
       foreach ($cxs as $cx) {
-        echo "<div>CIR: ".$cx['cirujano']." (".$cx['nro_cirugia'].") PAC: ".$cx['nombre_paciente']." - FCX: ".$cx['fecha_cx_h']." - PAG: ".$cx['monto_total']."</div>";
+        $tcx = total_cx ($cx['nro_cirugia']);
+        echo "<tr>
+                <td>
+                  Cirujano: ".$cx['cirujano']." (".$cx['nro_cirugia'].") FCX ".$cx['fecha_cx_h']."<br>Paciente: ".$cx['nombre_paciente']." (".$cx['institucion'].")
+                </td>
+                <td style='text-align:right;' class='vcp'>
+                  $ ".number_format($tcx, 2, ',', '.')."
+                </td>
+              </tr>";
       }
-      echo "</div>";
-      echo "</div>";
+      echo "<tr class='subheader'>
+              <td colspan='2'>
+                <div class='totalcx'>
+                  <span>Subtotal: $ ".number_format($data['monto_total'], 2, ',', '.')."</span>
+                  <span>Saldo: $ ".number_format($data['saldo_ctacte_previo'], 2, ',', '.')."</span>
+                  <span>Descuento: $ ".number_format($data['monto_ctacte'], 2, ',', '.')."</span>
+                  <span>Total: $ ".number_format($total_cx, 2, ',', '.')."</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>";
       // End bloque
     }
     ?>
-    <!--
-    <div class="bloque">
-    <?php
-    for ($i=0; $i<15; $i++) {
-      echo "<p>Esta es la línea N° $i del bloque 1 (ñ y ó son españoles)</p>";
-    }
-    echo "</div><div class='bloque'>";
-    for ($i=0; $i<15; $i++) {
-      echo "<p>Esta es la línea N° $i del bloque 2 (ñ y ó son españoles)</p>";
-    }
-    echo "</div>";
-    ?>
-    </div>
-    -->
   </body>
   </html>
   <?php

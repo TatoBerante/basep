@@ -227,6 +227,7 @@ function updateCirugias () {
         $cantidad = trim ($row_data[22]);
         $precio_venta = trim ($row_data[23]);
         $valor_total = trim ($row_data[24]);
+        $institucion = trim ($row_data[25]);
         /*
         $valor_total2 = trim ($row_data[25]);
         $serierecibo = trim ($row_data[26]);
@@ -261,8 +262,8 @@ function updateCirugias () {
         24 valor_total             
         */
 
-        $sql = "INSERT INTO cirugias (recno, filial, nro_presupuesto, orden_compra, fecha_pedido_venta, nro_pedido_de_venta, tipo_de_venta, fecha_cx, nro_cirugia, cod_medico, nombre_paciente, fecha_emision, comprobante, serie, id_cliente, cod_cliente, cod_institucion, cod_vendedor, nombre_vendedor, producto, descripcion, item, cantidad, precio_venta, valor_total)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO cirugias (recno, filial, nro_presupuesto, orden_compra, fecha_pedido_venta, nro_pedido_de_venta, tipo_de_venta, fecha_cx, nro_cirugia, cod_medico, nombre_paciente, fecha_emision, comprobante, serie, id_cliente, cod_cliente, cod_institucion, cod_vendedor, nombre_vendedor, producto, descripcion, item, cantidad, precio_venta, valor_total, institucion)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_stmt_init ($mysqli);
         if (!mysqli_stmt_prepare ($stmt, $sql)) {
             // error report:
@@ -272,7 +273,7 @@ function updateCirugias () {
             $errors++;
         }
         else {
-          mysqli_stmt_bind_param ($stmt, "sssssssssssssssssssssssss", $recno, $filial, $nro_presupuesto, $orden_compra, $fecha_pedido_venta, $nro_pedido_de_venta, $tipo_de_venta, $fecha_cx, $nro_cirugia, $cod_medico, $nombre_paciente, $fecha_emision, $comprobante, $serie, $id_cliente, $cod_cliente, $cod_institucion, $cod_vendedor, $nombre_vendedor, $producto, $descripcion, $item, $cantidad, $precio_venta, $valor_total);
+          mysqli_stmt_bind_param ($stmt, "ssssssssssssssssssssssssss", $recno, $filial, $nro_presupuesto, $orden_compra, $fecha_pedido_venta, $nro_pedido_de_venta, $tipo_de_venta, $fecha_cx, $nro_cirugia, $cod_medico, $nombre_paciente, $fecha_emision, $comprobante, $serie, $id_cliente, $cod_cliente, $cod_institucion, $cod_vendedor, $nombre_vendedor, $producto, $descripcion, $item, $cantidad, $precio_venta, $valor_total, $institucion);
           if (mysqli_stmt_execute ($stmt)) {
             $new++;
             mysqli_stmt_close($stmt);
