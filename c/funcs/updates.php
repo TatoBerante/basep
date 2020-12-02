@@ -42,14 +42,14 @@ function updateClientes () {
             /*
             echo "<p>";
             echo "<p>Cliente ".$cliente.": ".mysqli_stmt_error($stmt)."</p>";
-            $errors++;
             */
+            $errors++;
           }
         }
       }
     }
   }
-  //echo "<p>ERRORES: ".$errors."</p>";
+  echo "<p>🔒 ".$errors." clientes omitidos.</p>";
   mysqli_close($mysqli);
   return $new;
 }
@@ -90,13 +90,14 @@ function updateProfesionales () {
             /*
             echo "<p>";
             echo "<p>Cliente ".$cliente.": ".mysqli_stmt_error($stmt)."</p>";
-            $errors++;
             */
+            $errors++;
           }
         }
       }
     }
   }
+  echo "<p>🔒 ".$errors." médicos omitidos.</p>";
   mysqli_close($mysqli);
   return $new;
 }
@@ -141,6 +142,7 @@ function updateVendedores () {
       }
     }
   }
+  echo "<p>🔒 ".$errors." vendedores omitidos.</p>";
   mysqli_close($mysqli);
   return $new;
 }
@@ -186,6 +188,7 @@ function updateProductos () {
       }
     }
   }
+  echo "<p>🔒 ".$errors." productos omitidos.</p>";
   mysqli_close($mysqli);
   return $new;
 }
@@ -228,38 +231,34 @@ function updateCirugias () {
         $precio_venta = trim ($row_data[23]);
         $valor_total = trim ($row_data[24]);
         $institucion = trim ($row_data[25]);
-        /*
-        $valor_total2 = trim ($row_data[25]);
-        $serierecibo = trim ($row_data[26]);
-        $recibo = trim ($row_data[27]);
-        */
 
         /*
-        0 R_E_C_N_O_          |
-        1 filial|
-        2 nro_presupuesto|
-        3 orden_compra             |
-        4 fecha_pedido_venta|
-        5 nro_pedido_de_Venta|
-        6 tipo_de_venta             |
-        7 fecha_CIR       |
-        8 nro_cirugia|
-        9 cod_medico|
-        10 nomnre_paciente                                                    |
-        11 fecha_emision   |
-        12 comprobante |
-        13 serie|
-        14 id_cliente |
-        15 cod_cliente|
-        16 cod_institucion|
-        17 cod_vendedor|
-        18 nombre_vendedor                         |
-        19 producto       |
-        20 descripcion                             |
-        21 item|
-        22 cantidad                |
-        23 precio_venta            |
-        24 valor_total             
+        0 R_E_C_N_O_
+        1 filial
+        2 nro_presupuesto
+        3 orden_compra
+        4 fecha_pedido_venta
+        5 nro_pedido_de_Venta
+        6 tipo_de_venta
+        7 fecha_CIR
+        8 nro_cirugia
+        9 cod_medico
+        10 nomnre_paciente
+        11 fecha_emision
+        12 comprobante
+        13 serie
+        14 id_cliente
+        15 cod_cliente
+        16 cod_institucion
+        17 cod_vendedor
+        18 nombre_vendedor
+        19 producto
+        20 descripcion
+        21 item
+        22 cantidad
+        23 precio_venta
+        24 valor_total
+        25 institucion          
         */
 
         $sql = "INSERT INTO cirugias (recno, filial, nro_presupuesto, orden_compra, fecha_pedido_venta, nro_pedido_de_venta, tipo_de_venta, fecha_cx, nro_cirugia, cod_medico, nombre_paciente, fecha_emision, comprobante, serie, id_cliente, cod_cliente, cod_institucion, cod_vendedor, nombre_vendedor, producto, descripcion, item, cantidad, precio_venta, valor_total, institucion)
@@ -280,17 +279,19 @@ function updateCirugias () {
           }
           else {
             // error report (fallo por cliente ya registrado previamente):
+            /*
             echo "<p>Data:  [ recno ".$recno." ] ".$empresa." / ".$id_producro." / ".$descripcion.": ".mysqli_stmt_error($stmt).":<br>
             fecha_emision: ".$fecha_emision." /  ".trim ($row_data[11])."
             paciente: ".$nombre_paciente." /  ".trim ($row_data[10])."
             <hr></p>";
+            */
             $errors++;
-            
           }
         }
       }
     }
   }
+  echo "<p>🔒 ".$errors." cirigías omitidas.</p>";
   mysqli_close($mysqli);
   return $new;
 }

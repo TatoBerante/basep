@@ -22,7 +22,7 @@ if ($clientes < 1) echo "No se agregaron clientes.";
 Ejemplo de final de operación completa:
 
 Se agregaron 5 clientes.
-Se agregaron 3 profesionales.
+Se agregaron 3 médicos.
 No se agregaron vendedores.
 Se agregaron 127 cirugías.
 */
@@ -39,10 +39,10 @@ else {
   if ($clientes == 1) echo "<p><span style='color:green;'>✔</span> Se agregó ".$clientes." cliente.</p>";
   else echo "<p><span style='color:green;'>✔</span> Se agregaron ".$clientes." clientes.</p>";
 }
-if ($profesionales < 1) echo "<p><span style='color:red;'>✘</span> No se agregaron profesionales.</p>";
+if ($profesionales < 1) echo "<p><span style='color:red;'>✘</span> No se agregaron médicos.</p>";
 else {
   if ($profesionales == 1) echo "<p><span style='color:green;'>✔</span> Se agregó ".$profesionales." profesional.</p>";
-  else echo "<p><span style='color:green;'>✔</span> Se agregaron ".$profesionales." profesionales.</p>";
+  else echo "<p><span style='color:green;'>✔</span> Se agregaron ".$profesionales." médicos.</p>";
 }
 if ($productos < 1) echo "<p><span style='color:red;'>✘</span> No se agregaron productos.</p>";
 else {
