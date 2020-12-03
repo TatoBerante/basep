@@ -13,7 +13,7 @@ echo "<p>".$leap."</p>";
 echo $year . ' ' . ($leap ? 'is' : 'is not') . ' a leap year.';
 */
 ?>
-<h3 class='subtitulo'>Manual de Operaciones</h3>
+<h3 class='subtitulo'>Manual de Procesos</h3>
 <div class='inst-pics'>
   <div class='proc-step'><img src="img/prepare.png" alt="preparar"><br>preparar</div>
   <div class='proc-step'><img src="img/next.png" alt="siguiente" class='sig'></div>
