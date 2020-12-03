@@ -310,7 +310,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
         
         echo "<table class='results cx'>
                 <tr>
-                  <th class='goleft' colspan='4'>Remito N° ".$data[0]['id_remito']." (".$data[0]['fecha_preparado_h'].")</th>
+                  <th class='goleft' colspan='4'>Remito N° ".$data[0]['id_remito']." (Prep: ".$data[0]['fecha_preparado_h']." - Liq: ".$data[0]['fecha_liquidado_h'].")</th>
                   <th class='goright' rowspan='3'>
                     <a href='default.php?page=pnlcx&sent=1&remito=".$data[0]['id_remito']."' class='purple-link'>VER REMITO</a><br><br>
                     <input type='checkbox' id='chkr_".$data[0]['id_remito']."' name='chkr_".$data[0]['id_remito']."'>

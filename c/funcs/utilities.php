@@ -24,7 +24,7 @@ function search_usuarios ($clue) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
   $usuarios = array();
-	$q = "SELECT * FROM usuarios WHERE usuario_apellido LIKE '%".$clue."%' ORDER BY usuario_apellido, usuario_nombre";
+	$q = "SELECT * FROM usuarios WHERE usuario_apellido LIKE '%".$clue."%' OR usuario_nombre LIKE '%".$clue."%' ORDER BY usuario_apellido, usuario_nombre";
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {
@@ -412,7 +412,9 @@ function search_remitos ($medico = '',
 	$remitos = array();
 //  date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h
 	$q = "SELECT rem.id_remito, rem.monto_total, rem.monto_ctacte, (rem.monto_total - rem.monto_ctacte) AS total,
-				date_format(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h, rem.saldo_ctacte_previo as saldo_pre,
+				date_format(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h,
+				date_format(rem.fecha_liquidado, '%d-%m-%Y') AS fecha_liquidado_h,
+				rem.saldo_ctacte_previo as saldo_pre,
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
 				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente,
 				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.monto_a_pagar,

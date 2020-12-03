@@ -455,6 +455,43 @@ form {
   display: flex;
   justify-content: space-between;
 }
+.inst-pics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inst-pics img {
+  height: 10vw;
+  margin: 0 2vw;
+}
+.inst-pics img.sig {
+  height: 5vw;
+}
+.proc-step {
+  text-align: center;
+}
+.normal-caps {
+  text-transform: none;
+}
+ul.manop li {
+  text-transform: none;
+}
+.home-h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.subtitulo {
+  margin: 0 0 2rem 0;
+  background-color: var(--dark-main-color);
+  color: var(--light-main-color);
+  padding: 0.5rem;
+}
+h4 {
+  background-color: var(--dark-secondary-color);
+  color: var(--light-main-color);
+  padding: 0.5rem;
+}
 
 /* Links */
 .green-link {
