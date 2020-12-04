@@ -20,6 +20,16 @@ else {
     $_SESSION['basep']['uid'] = $row['usuario_id'];
     $_SESSION['basep']['usr'] = $row['usuario_nombre'].' '.$row['usuario_apellido'];
     $_SESSION['basep']['hry'] = $row['usuario_hry'];
+
+    $ip = $_SERVER['REMOTE_ADDR'];
+
+    $sql = "INSERT INTO logins (id_usuario, ip) VALUES  (?, ?)";
+    $stmt = mysqli_stmt_init ($mysqli);
+    if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
+    mysqli_stmt_bind_param ($stmt, "is", $_SESSION['basep']['uid'], $ip);
+    if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
+    mysqli_stmt_close($stmt);
+
     header ('location: ../v/default.php');
   }
   else {

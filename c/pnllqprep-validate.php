@@ -116,17 +116,18 @@ else {
         
       }
     }
+    $responsable = $_SESSION['basep']['uid'];
     if ($id_portador == 'N/A') {
-      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, saldo_ctacte_previo, fecha_preparado) VALUES (?, ?, ?, ?, ?)";
+      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, saldo_ctacte_previo, fecha_preparado, preparado_por) VALUES (?, ?, ?, ?, ?, ?)";
       $stmt = mysqli_stmt_init ($mysqli);
       if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-      mysqli_stmt_bind_param ($stmt, "ddids", $monto_total, $ctacte, $id_medico, $saldo_pre, $today);
+      mysqli_stmt_bind_param ($stmt, "ddidsi", $monto_total, $ctacte, $id_medico, $saldo_pre, $today, $responsable);
     }
     else {
-      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, saldo_ctacte_previo, id_portador, fecha_preparado) VALUES (?, ?, ?, ?, ?, ?)";
+      $sql = "INSERT INTO remitos (monto_total, monto_ctacte, id_acreedor, saldo_ctacte_previo, id_portador, fecha_preparado, preparado_por) VALUES (?, ?, ?, ?, ?, ?, ?)";
       $stmt = mysqli_stmt_init ($mysqli);
       if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
-      mysqli_stmt_bind_param ($stmt, "ddidis", $monto_total, $ctacte, $id_medico, $saldo_pre, $id_portador, $today);
+      mysqli_stmt_bind_param ($stmt, "ddidisi", $monto_total, $ctacte, $id_medico, $saldo_pre, $id_portador, $today, $responsable);
     }
     if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
     mysqli_stmt_close($stmt);

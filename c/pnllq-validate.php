@@ -28,12 +28,13 @@ else {
     else {
       $nestado = 3;
       $sql = "UPDATE cirugias cx, remitos rem
-              SET cx.estado = ?, rem.fecha_liquidado = ?
+              SET cx.estado = ?, rem.fecha_liquidado = ?, rem.liquidado_por = ?
               WHERE cx.id_remito = ? AND rem.id_remito = ?";
       $stmt = mysqli_stmt_init ($mysqli);
       if (!mysqli_stmt_prepare ($stmt, $sql)) print_r (mysqli_stmt_error($stmt));
       else {
-        mysqli_stmt_bind_param ($stmt, "isii", $nestado, $today, $rem, $rem);
+        $responsable = $_SESSION['basep']['uid'];
+        mysqli_stmt_bind_param ($stmt, "isiii", $nestado, $today, $responsable, $rem, $rem);
         if (!mysqli_stmt_execute ($stmt)) echo mysqli_error($mysqli);
         mysqli_stmt_close($stmt);
       }
