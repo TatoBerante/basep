@@ -15,13 +15,13 @@ echo $year . ' ' . ($leap ? 'is' : 'is not') . ' a leap year.';
 ?>
 <h3 class='subtitulo'>Manual de Procesos</h3>
 <div class='inst-pics'>
-  <div class='proc-step'><img src="img/prepare.png" alt="preparar"><br>preparar</div>
-  <div class='proc-step'><img src="img/next.png" alt="siguiente" class='sig'></div>
-  <div class='proc-step'><img src="img/pay.png" alt="liquidar"><br>liquidar</div>
-  <div class='proc-step'><img src="img/next.png" alt="siguiente" class='sig'></div>
-  <div class='proc-step'><img src="img/print.png" alt="imprimir"><br>imprimir</div>
-  <div class='proc-step'><img src="img/next.png" alt="siguiente" class='sig'></div>
-  <div class='proc-step'><img src="img/audit.png" alt="auditar"><br>auditar</div>
+  <span class='proc-step'><img src="img/prepare.png" alt="preparar"><br>preparar</span>
+  <span class='proc-step'><img src="img/next.png" alt="siguiente" class='sig'></span>
+  <span class='proc-step'><img src="img/pay.png" alt="liquidar"><br>liquidar</span>
+  <span class='proc-step'><img src="img/next.png" alt="siguiente" class='sig'></span>
+  <span class='proc-step'><img src="img/print.png" alt="imprimir"><br>imprimir</span>
+  <span class='proc-step'><img src="img/next.png" alt="siguiente" class='sig'></span>
+  <span class='proc-step'><img src="img/audit.png" alt="auditar"><br>auditar</span>
 </div>
 <h4>Preparar</h4>
 <p class='normal-caps'>
