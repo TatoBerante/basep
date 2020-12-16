@@ -10,5 +10,5 @@ if (mysqli_connect_errno($conn)) {
     echo "Fallo al conectar a MySQL: " . mysqli_connect_error();
 }
 $conn->set_charset('utf8');
-$conn->query("SET collation_connection = utf8_general_ci");
+$conn->query("SET collation_connection = utf8mb4_unicode_ci");
 ?>

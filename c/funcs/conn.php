@@ -5,6 +5,10 @@ function mysqli_conn () {
   if (mysqli_connect_errno($mysqli)) {
     return false;
   }
-  else return $mysqli;
+  else {
+    $mysqli->set_charset('utf8');
+    $mysqli->query("SET collation_connection = utf8mb4_unicode_ci");
+    return $mysqli;
+  }
 }
 ?>
