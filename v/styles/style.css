@@ -511,3 +511,23 @@ h4 {
   border-radius: 5px;
   margin: 0;
 }
+.pagadoreal {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--ok-dark);
+  background-color: var(--ok-light);
+  color: var(--ok-dark);
+  font-weight: bolder;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.monto-resumen {
+  font-weight: bolder;
+  /*
+  background-color: var(--ok-dark);
+  color: var(--ok-light);
+  padding:5px;
+  border-radius: 5px;
+  */
+}

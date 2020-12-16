@@ -281,7 +281,12 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
     else if ($_REQUEST['estado'] == '3') { // Ver solo finalizadas
       ?>
         <!--<form action='appprint.php' method='post' id='checkform'>-->
-        <form action='default.php?page=pnllq' method='post' id='checkform'>
+      <div class="pagadoreal">
+        <div class='block-resumen'>total facturado: $ <span class='monto-resumen' id='tfacturado'>0</span></div>
+        <div class='block-resumen'>total pagado: $ <span class='monto-resumen' id='tpagado'>0</span></div>
+        <div class='block-resumen'>real pagado: <span class='monto-resumen' id='treal'>0</span> %</div>
+      </div>
+      <form action='default.php?page=pnllq' method='post' id='checkform'>
       <?php
       $remitos = search_remitos ($clue,
                                   $vendcx,
@@ -299,11 +304,14 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
                                   $_REQUEST['anolqh']);
       $procesar = 'imprimir';
       $remitox = array();
+      $total_facturado = 0;
       foreach ($resultados as $cx) {
+        $total_facturado += $cx['precio_venta'];
         if (!in_array ($cx['id_remito'], $remitox)) {
           $remitox[] = $cx['id_remito'];
         }
       }
+      $total_pagado = 0;
       foreach ($remitox as $remi) {
         $elegibles++;
         $data = detalle_remito ($remi);
@@ -348,70 +356,18 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
                 </td>
               </tr>
             </table>";
+        $total_pagado += $apagar;
       }
-      /*
-      $idoldrem = 'x';
-      $firstline = true;
-      $total_cx = 0;
-      $oldcx = '0';
-      foreach ($remitos as $resultado) {
-        if ($resultado['id_remito'] != $idoldrem) {
-          if (!$firstline) {
-            echo "<tr>
-                    <td class='subh' colspan='2'>SUBTOTAL: ".number_format($old_subtotal, 2, ',', '.')."</td>
-                    <td class='subh'>SALDO: ".number_format($old_saldo, 2, ',', '.')."</td>
-                    <td class='subh'>descuento: ".number_format($old_desc, 2, ',', '.')."</td>
-                    <td class='subh'>TOTAL REMITO: ".number_format($old_total, 2, ',', '.')."</td>
-                  </tr>
-                </table>";
-            //$total_cx = 0;
-          }
-          echo "<table class='results cx'><tr>
-                  <th colspan='3' class='goleft'>Remito ".$resultado['id_remito']." (".$resultado['fecha_preparado_h'].")</th>
-                  <th rowspan='3' colspan='2' class='goright'>
-                    <a href='default.php?page=pnlcx&sent=1&remito=".$resultado['id_remito']."' class='purple-link'>REMITO ".$resultado['id_remito']."</a><br><br>
-                    <input type='checkbox' id='chkr_".$resultado['id_remito']."' name='chkr_".$resultado['id_remito']."'>
-                    <label for='chkr_".$resultado['id_remito']."'>
-                    <span></span>".$procesar."</label>
-                  </th>
-                </tr>
-                <tr>
-                  <th colspan='3' class='goleft'>
-                    Acreedor: ".$resultado['acreedor']."
-                  </th>
-                </tr>
-                <tr>
-                  <th colspan='3' class='goleft'>
-                    Retira: ".$resultado['retira']."
-                  </th>
-                </tr>";
-          $idoldrem = $resultado['id_remito'];
-        }
-        if ($resultado['nro_cirugia'] != $oldcx) {
-          echo "<tr>
-                <td style='width:9rem;'>CX ".$resultado['nro_cirugia']."<br>(".$resultado['fecha_cx_h'].")</td>
-                <td colspan='2'>CIR: ".$resultado['cirujano']."<br>PAC: ".$resultado['paciente']."</td>
-                <td>INST: Clinica<br>FIN: ".$resultado['financiador']."</td>
-                <td class='goright'>TOTAL cx: $ ".number_format($total_cx, 2, ',', '.')."</td>
-              </tr>";
-          $oldcx = $resultado['nro_cirugia'];
-          $total_cx = 0;
-        }
-        $total_cx += $resultado['monto_a_pagar'];
-        $firstline = false;
-        $old_subtotal = 0;
-        $old_saldo = $resultado['saldo_pre'];
-        $old_desc = $resultado['monto_ctacte'];
-        $old_total = $resultado['total'];
-      }
-      echo "<tr>
-              <td class='subh' colspan='2'>SUBTOTAL: ".number_format($old_subtotal, 2, ',', '.')."</td>
-              <td class='subh'>SALDO: ".number_format($old_saldo, 2, ',', '.')."</td>
-              <td class='subh'>descuento: ".number_format($old_desc, 2, ',', '.')."</td>
-              <td class='subh'>TOTAL REMITO: ".number_format($old_total, 2, ',', '.')."</td>
-            </tr>
-          </table>";
-      */
+      $total_facturado = number_format($total_facturado, '2', ',', '.');
+      $total_pagado = number_format($total_pagado, '2', ',', '.');
+      $real = number_format((($total_pagado * 100) / $total_facturado), 2, ',', '.');
+      ?>
+      <script>
+      document.getElementById("tfacturado").innerHTML = '<?=$total_facturado?>';
+      document.getElementById("tpagado").innerHTML = '<?=$total_pagado?>';
+      document.getElementById("treal").innerHTML = '<?=$real?>';
+      </script>
+      <?php
     }
     else if ($_REQUEST['estado'] == '2') { // Ver solo preparadas
       $cantcx = 0;
