@@ -151,7 +151,7 @@ function search_cx ($medico = '',
 										$vendedor = '',
 										$institucion = '',
 										$acreedor = '',
-										$financiador = '',
+										$cliente = '',
 										$estado,
 										$mescxd,
 										$anocxd,
@@ -165,7 +165,7 @@ function search_cx ($medico = '',
 	$mysqli = mysqli_conn();
 	$cirugias = array();
 
-	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, med.medico, (cx.cantidad * cx.precio_venta) as subtotal, cli.cliente, rem.id_remito
+	$q = "SELECT cx.*, DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') as fecha_cx_h, cx.descripcion as producto, IFNULL(med.medico, 'Desconocido') AS medico, (cx.cantidad * cx.precio_venta) as subtotal, cli.cliente, rem.id_remito
 				FROM cirugias cx
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
@@ -173,10 +173,11 @@ function search_cx ($medico = '',
 				WHERE 1";
 	if ($medico != '') $q .= " AND med.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
-	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
+	if ($cliente != '') $q .= " AND cli.cliente LIKE '%".$cliente."%'";
 	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
 	if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
 	if ($acreedor != '') $q .= " AND med.medico LIKE '%".$acreedor."%'";
+	//if ($cliencx != '') $q .= " AND cli.cliente LIKE '%".$cliencx."%'";
 
 	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
 		// Leap year issue
@@ -397,7 +398,7 @@ function search_remitos ($medico = '',
 												$vendedor = '',
 												$institucion = '',
 												$acreedor = '',
-												$financiador = '',
+												$cliente = '',
 												$estado,
 												$mescxd,
 												$anocxd,
@@ -418,7 +419,7 @@ function search_remitos ($medico = '',
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
 				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente,
 				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.monto_a_pagar,
-				cx.nombre_vendedor as vendedor, cli.cliente as financiador
+				cx.nombre_vendedor as vendedor, cli.cliente
 				FROM remitos rem
 				INNER JOIN medicos med ON rem.id_acreedor = med.id_medico_sys
 				LEFT JOIN vendedores ven ON rem.id_portador = ven.id_vendedor_sys 
@@ -428,7 +429,7 @@ function search_remitos ($medico = '',
 				WHERE 1";
 	if ($medico != '') $q .= " AND cj.medico LIKE '%".$medico."%'";
 	if ($vendedor != '') $q .= " AND cx.nombre_vendedor LIKE '%".$vendedor."%'";
-	if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
+	if ($cliente != '') $q .= " AND cli.cliente LIKE '%".$cliente."%'";
 	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
 	if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
 	if ($acreedor != '') $q .= " AND med.medico LIKE '%".$acreedor."%'";
@@ -483,7 +484,7 @@ function detalle_remito ($id_remito) {
 				acr.medico AS acreedor, por.vendedor AS retira,
 				rem.id_remito, rem.monto_total AS total_remito, rem.monto_ctacte AS descuento,
 				rem.saldo_ctacte_previo AS saldo_previo,
-				med.medico, cli.cliente as financiador,
+				med.medico, cli.cliente,
 				DATE_FORMAT(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h,
 				DATE_FORMAT(rem.fecha_liquidado, '%d-%m-%Y') AS fecha_liquidado_h,
 				DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h

@@ -1,0 +1,14 @@
+By Maxim:
+
+- En cx texto predictivo en todos los campos.
+ok - Agregar cliente en panel de cxs.
+- Acreedor en preparar.
+- Eliminar el segundo imprimir (confirmación)
+ok - En la impresion de remito agregar disparador printer.
+- Nuevo estado: aprobada (Ariel) -> nuevo panel de aprobaciones, nuevo estado (aprobada).
+- Agregar asociación de clientes/empresas (3 aca saluid).
+  REQ: saber el id de empresa que trae el csv.
+
+Extras:
+
+- Se cambió el concepto de "financiador" por el clásico "cliente".

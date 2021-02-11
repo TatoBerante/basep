@@ -4,6 +4,7 @@ if (isset ($_REQUEST['sent'])) {
   $clue = sanitizeThis ($_REQUEST['srchcx']);
   $vendcx = sanitizeThis ($_REQUEST['vendcx']);
   $instcx = sanitizeThis ($_REQUEST['instcx']);
+  $cliencx = sanitizeThis ($_REQUEST['cliencx']);
   $acr = sanitizeThis ($_REQUEST['acr']);
   $fin = sanitizeThis ($_REQUEST['fin']);
   $remito = sanitizeThis ($_REQUEST['remito']);
@@ -130,7 +131,7 @@ else {
   </div>
   <div class="form-line">
     Acreedor: <input type="text" name="acr" id="acr" autocomplete="off" class="input-text" value="<?php echo $acr;?>">
-    <span class='left-margin'>Financiador:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>">
+    <span class='left-margin'>Cliente:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>">
     <span class='left-margin'>Mostrar:</span> <select name="estado" id="estado" class='input-text'>
       <!--<option value="0"<?php if ($_REQUEST['estado'] == '0') echo " selected"?>>TODAS</option>-->
       <option value="1"<?php if ($_REQUEST['estado'] == '1') echo " selected"?>>PENDIENTES</option>
@@ -157,7 +158,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
     $_REQUEST['meslqd'],
     $_REQUEST['anolqd'],
     $_REQUEST['meslqh'],
-    $_REQUEST['anolqh']
+    $_REQUEST['anolqh'],
   );
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
@@ -244,7 +245,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
                     <th colspan='3'class='goleft'>Vendedor: ".$resultado['nombre_vendedor']." / Paciente: ".$resultado['nombre_paciente']."</th>
                   </tr>
                   <tr>
-                    <th colspan='3'class='goleft'>Financiador: ".$resultado['cliente']."</th>
+                    <th colspan='3'class='goleft'>Cliente: ".$resultado['cliente']."</th>
                   </tr>
                   <tr>
                     <td class='subh'>PRODUCTOS</td>
@@ -340,7 +341,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           echo "<tr>
                   <td style='width:12%;'>CX ".$resultado['nro_cirugia']."<br>(".$resultado['fecha_cx_h'].")</td>
                   <td style='width:30%;'>CIR: ".$resultado['medico']."<br>PAC: ".$resultado['paciente']."</td>
-                  <td style='width:46%;' colspan='2'>INST: ".$resultado['institucion']."<br>FIN: ".$resultado['financiador']."</td>
+                  <td style='width:46%;' colspan='2'>INST: ".$resultado['institucion']."<br>CLI: ".$resultado['cliente']."</td>
                   <td class='goright' style='width:12%;'>$ ".number_format(total_cx($resultado['nro_cirugia']), 2, ',', '.')."</td>
                 </tr>";
         }
@@ -548,7 +549,7 @@ else if (isset ($_REQUEST['sent']) && $remito != '') {
             <tr>
               <th colspan='6' class='goleft'><p>
                 cx ".$cxx[0]['nro_cirugia']." (".$info['fecha_cx'].") MEDico: ".$medico." - PACiente: ".$info['paciente']."</p><p>
-                financiador: ".$info['cliente']." (".$info['aplicable']."%) - vendedor: ".$info['vendedor']."</p>
+                cliente: ".$info['cliente']." (".$info['aplicable']."%) - vendedor: ".$info['vendedor']."</p>
               </th>
             </tr>
             <tr>

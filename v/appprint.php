@@ -77,6 +77,7 @@ else {
       // End bloque
     }
     ?>
+    <script>window.print();</script>
   </body>
   </html>
   <?php
