@@ -355,6 +355,23 @@ function lista_vendedores () {
 	}
 }
 
+function lista_clientes () {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$clientes = array();
+	$q = "SELECT * FROM clientes ORDER BY cliente, empresa";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		while ($fila = mysqli_fetch_assoc($resultado)) {
+			$clientes[] = $fila;
+		}
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		return $clientes;
+	}
+}
+
 function cxs_en_remito ($id_remito) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
@@ -417,7 +434,7 @@ function search_remitos ($medico = '',
 				date_format(rem.fecha_liquidado, '%d-%m-%Y') AS fecha_liquidado_h,
 				rem.saldo_ctacte_previo as saldo_pre, cx.precio_venta,
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
-				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente,
+				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente, cx.institucion,
 				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.monto_a_pagar,
 				cx.nombre_vendedor as vendedor, cli.cliente
 				FROM remitos rem
@@ -521,6 +538,24 @@ function total_cx ($nro_cirugia) {
 		mysqli_close($mysqli);
 		
 		return $total;
+	}
+}
+function montos_cx($nro_cirugia) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$q = "SELECT DISTINCT cx.valor_total, rem.monto_total as monto_remito
+				FROM cirugias cx
+				LEFT JOIN remitos rem ON cx.id_remito = rem.id_remito
+				WHERE cx.nro_cirugia = '".$nro_cirugia."'";
+	$resultado = mysqli_query($mysqli , $q);
+	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$fila = mysqli_fetch_assoc($resultado);
+		//$total = $fila['total'];
+		mysqli_free_result($resultado);
+		mysqli_close($mysqli);
+		
+		return $fila;
 	}
 }
 ?>

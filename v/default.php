@@ -4,15 +4,47 @@ if (!isset ($_SESSION['basep'])) {
   header ('location: ../');
 }
 else {
+  include "../core/config.php";
+  require_once ('../c/funcs/common.php');
+  require_once ('../c/funcs/utilities.php');
+  if (isset ($_REQUEST['page']) && $_REQUEST['page'] == 'pnllq') {
+    // evaluar si es print para hacer header directo a impresión
+    $rems = array();
+    foreach ($_REQUEST as $key=>$dato) {
+      $dato = explode ('_', $key);
+      if ($dato[0] == 'chkb') {
+        $valstring .= "&".$key."=1";
+        $cxs[] = $dato[1];
+        $info = data_cx ($dato[1]);
+        if ($info['estado'] == 1) $pendientes++;
+        else if ($info['estado'] == 2) $preparadas++;
+        else if ($info['estado'] == 3) $liquidadas++;
+        $cantcx++;
+      }
+      if ($dato[0] == 'chkr') {
+        $rems[] = $dato[1];
+        $liquidadas++;
+        $cantrm++;
+      }
+    }
+    if ($liquidadas > 0) {
+      $estado = 'liquidada';
+      $proceso = "imprimir";
+      $stringpr = "location:../v/appprint.php?sent=1";
+      foreach ($rems as $key=>$value) {
+        $remito = data_remito ($value);
+        $stringpr .= "&rem_".$remito['id_remito']."=".$remito['id_remito'];
+      }
+      header ($stringpr);
+    }
+    // fin evaluación print
+  }
   ?>
   <!DOCTYPE html>
   <html lang="es">
   <head>
     <?php
     // App data for logo, favicon and title.
-    include "../core/config.php";
-    require_once ('../c/funcs/common.php');
-    require_once ('../c/funcs/utilities.php');
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -531,3 +531,28 @@ h4 {
   border-radius: 5px;
   */
 }
+.note {
+  text-align: center;
+  border: 1px solid var(--ok-dark);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--ok-light);
+  color: var(--ok-dark);
+  font-weight: bolder;;
+}
+
+/* Tabla aprobar pagos */
+.apr-pagos {
+  width: 100%;
+  margin: 2rem 0;
+  border-collapse: collapse;
+}
+.apr-pagos td {
+  border: 1px solid var(--dark-main-color);
+  padding: 0.5rem;
+}
+.flex-cont {
+  display: flex;
+  justify-content: space-between;
+}

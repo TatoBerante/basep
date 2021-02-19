@@ -20,9 +20,35 @@ else {
 <h2>Panel de cirugías</h2>
 <form action="default.php?page=pnlcx" method="post">
   <div class="form-line">
-    Profesional: <input type="text" name="srchcx" id="srchcx" autofocus autocomplete="off" class="input-text" value="<?php echo $clue;?>">
+    <?php
+    $medicos = lista_medicos();
+    $vendedores = lista_vendedores();
+    $clientes = lista_clientes();
+    ?>
+    <datalist id='medicos'>
+    <?php
+    foreach ($medicos as $medico) {
+      echo "<option value='".$medico['medico']."'>";
+    }
+    ?>
+    </datalist>
+    <datalist id='vendedores'>
+    <?php
+    foreach ($vendedores as $vendedor) {
+      echo "<option value='".$vendedor['vendedor']."'>";
+    }
+    ?>
+    </datalist>
+    <datalist id='clientes'>
+    <?php
+    foreach ($clientes as $cliente) {
+      echo "<option value='".$cliente['cliente']." (".$cliente['empresa'].")'>";
+    }
+    ?>
+    </datalist>
+    Profesional: <input type="text" name="srchcx" id="srchcx" autofocus autocomplete="off" class="input-text" value="<?php echo $clue;?>" list='medicos'>
     <span class='left-margin'>Institución:</span> <input type="text" name="instcx" id="instcx" autocomplete="off" class="input-text" value="<?php echo $instcx;?>">
-    <span class='left-margin'>Vendedor:</span> <input type="text" name="vendcx" id="vendcx" autocomplete="off" class="input-text" value="<?php echo $vendcx;?>">
+    <span class='left-margin'>Vendedor:</span> <input type="text" name="vendcx" id="vendcx" autocomplete="off" class="input-text" value="<?php echo $vendcx;?>" list='vendedores'>
   </div>
   <div class="form-line">
     Periodo CX desde: <select name='mescxd' id='mescxd' class='input-text'>
@@ -130,13 +156,14 @@ else {
     <span class='left-margin'>Remito N° (anula demás filtros):</span> <input type="text" name="remito" id="remito" autocomplete="off" class="input-text gocenter" style='width:5rem;' value="<?php echo $remito;?>"></span>
   </div>
   <div class="form-line">
-    Acreedor: <input type="text" name="acr" id="acr" autocomplete="off" class="input-text" value="<?php echo $acr;?>">
-    <span class='left-margin'>Cliente:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>">
+    Acreedor: <input type="text" name="acr" id="acr" autocomplete="off" class="input-text" value="<?php echo $acr;?>"  list='medicos'>
+    <span class='left-margin'>Cliente:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>" list='clientes'>
     <span class='left-margin'>Mostrar:</span> <select name="estado" id="estado" class='input-text'>
       <!--<option value="0"<?php if ($_REQUEST['estado'] == '0') echo " selected"?>>TODAS</option>-->
       <option value="1"<?php if ($_REQUEST['estado'] == '1') echo " selected"?>>PENDIENTES</option>
       <option value="2"<?php if ($_REQUEST['estado'] == '2') echo " selected"?>>PREPARADAS</option>
       <option value="3"<?php if ($_REQUEST['estado'] == '3') echo " selected"?>>FINALIZADAS</option>
+      <option value="4"<?php if ($_REQUEST['estado'] == '4') echo " selected"?>>APROBADAS</option>
     </select>
     <input type="hidden" name="sent" value="1">
     <input type="submit" value="BUSCAR" class='buttons-inline pnlcx-btn'>

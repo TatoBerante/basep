@@ -15,7 +15,8 @@ else {
       $remitos[] = $data[1];
     }
   }
-  $gohref = "default.php?page=pnllq".$extrastr."&filters=".$_REQUEST['filters'].$_REQUEST['return'];
+  //$gohref = "default.php?page=pnllq".$extrastr."&filters=".$_REQUEST['filters'].$_REQUEST['return'];
+  $goref = "default.php?page=pnlcx";
   ?>
   <!DOCTYPE html>
   <html lang="es">
@@ -36,7 +37,8 @@ else {
               <table style='width:100%;' class='remito'>
                 <tr class='header'>
                   <td>
-                    Comprobante de cirugías <a href='".$gohref."'>(".$remito.")</a> para ".$data['medico']."
+                    <!--Comprobante de cirugías <a href='".$gohref."'>(".$remito.")</a> para ".$data['medico']."-->
+                    Comprobante de cirugías <a href='default.php?page=pnlcx'>(".$remito.")</a> para ".$data['medico']."
                   </td>
                   <td rowspan='2' class='fecha'>
                     ".$data['fecha_lq_h']."
