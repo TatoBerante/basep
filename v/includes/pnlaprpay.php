@@ -183,7 +183,7 @@ echo "</pre></p>";
 </form>
 
 <?php
-if (isset ($_REQUEST['sent']) && $remito_pedido == '') {
+if (isset ($_REQUEST['sent'])) {
   $remitos = search_remitos ($clue,
                             $vendcx,
                             $instcx,
@@ -197,7 +197,8 @@ if (isset ($_REQUEST['sent']) && $remito_pedido == '') {
                             $_REQUEST['meslqd'],
                             $_REQUEST['anolqd'],
                             $_REQUEST['meslqh'],
-                            $_REQUEST['anolqh']);
+                            $_REQUEST['anolqh'],
+                            $remito_pedido);
   
   if (count ($remitos) > 0) { // Se encontraron resultados
     /*
@@ -210,7 +211,7 @@ if (isset ($_REQUEST['sent']) && $remito_pedido == '') {
     $first_record = true;
     foreach ($remitos as $remito) { // Recorrer resultados obtenidos
       if ($remito['id_remito'] != $remito_old && !$first_record) {
-        echo "<tr>
+        echo "<tr class='footr'>
                 <td colspan=4>
                   <div class='flex-cont'>
                     <span>SUBTOTAL: $ 11111</span>
@@ -223,13 +224,15 @@ if (isset ($_REQUEST['sent']) && $remito_pedido == '') {
       }
       if ($remito['id_remito'] != $remito_old) {
         echo "<table class='apr-pagos'>
-                <tr>
+                <tr class='headr'>
                   <td colspan='3'>
                     REMITO ".$remito['id_remito']." (PREP: ".$remito['fecha_preparado_h']." / LIQ: ".$remito['fecha_liquidado_h'].")<br>
                     ACREEDOR: ".$remito['acreedor']."<br>
                     RETIRA: ".$remito['retira']."
                   </td>
-                  <td class='goright' style='width:8rem;'>ACCIONES</td>
+                  <td class='goright' style='width:8rem;'>
+                    <a href='default.php?page=aprpay&idr=".$remito['id_remito']."' class='green-link'>APROBAR</a>
+                  </td>
                 </tr>";
         if ($remito['nro_cirugia'] != $cx_old) {
           $montos = montos_cx($remito['nro_cirugia']);
@@ -280,7 +283,7 @@ if (isset ($_REQUEST['sent']) && $remito_pedido == '') {
         $remito_old = $remito['id_remito'];
       }
     }
-    echo "<tr>
+    echo "<tr class='footr'>
             <td colspan=4>
               <div class='flex-cont'>
                 <span>SUBTOTAL: $ 33333</span>

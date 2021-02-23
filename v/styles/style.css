@@ -260,6 +260,7 @@ form {
   display: block;
   box-shadow: none;
   border: none;
+  text-align: center;
   
 }
 .buttons-inline {
@@ -547,6 +548,17 @@ h4 {
   width: 100%;
   margin: 2rem 0;
   border-collapse: collapse;
+  
+}
+.headr {
+  background-color: var(--dark-main-color);
+  color: var(--light-main-color);
+  font-weight: bolder;
+}
+.footr {
+  background-color: var(--dark-secondary-color);
+  color: var(--light-main-color);
+  font-weight: bolder;
 }
 .apr-pagos td {
   border: 1px solid var(--dark-main-color);

@@ -424,7 +424,8 @@ function search_remitos ($medico = '',
 												$meslqd,
 												$anolqd,
 												$meslqh,
-												$anolqh) {
+												$anolqh,
+												$remito = '') {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$remitos = array();
@@ -450,6 +451,7 @@ function search_remitos ($medico = '',
 	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
 	if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
 	if ($acreedor != '') $q .= " AND med.medico LIKE '%".$acreedor."%'";
+	if ($remito != '') $q .= " AND rem.id_remito = ".$remito;
 
 	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
 		// Leap year issue
