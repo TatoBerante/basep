@@ -437,7 +437,7 @@ function search_remitos ($medico = '',
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
 				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente, cx.institucion,
 				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.monto_a_pagar,
-				cx.nombre_vendedor as vendedor, cli.cliente
+				cx.nombre_vendedor as vendedor, cli.cliente, cx.valor_total
 				FROM remitos rem
 				INNER JOIN medicos med ON rem.id_acreedor = med.id_medico_sys
 				LEFT JOIN vendedores ven ON rem.id_portador = ven.id_vendedor_sys 
@@ -549,6 +549,7 @@ function montos_cx($nro_cirugia) {
 				FROM cirugias cx
 				LEFT JOIN remitos rem ON cx.id_remito = rem.id_remito
 				WHERE cx.nro_cirugia = '".$nro_cirugia."'";
+	$q = "SELECT SUM(cx.monto_a_pagar) as total_cx FROM cirugias cx WHERE cx.nro_cirugia = '".$nro_cirugia."'";
 	$resultado = mysqli_query($mysqli , $q);
 	if (!$resultado) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
 	else {

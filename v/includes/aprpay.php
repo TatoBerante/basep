@@ -49,7 +49,7 @@ if (isset ($_REQUEST['idr']) && $_REQUEST['idr'] != '' && $_REQUEST['idr'] != 0)
                   <td>DESCUENTO:</td><td class='goright'>$ ".number_format($cxx[0]['monto_ctacte'], 2, ',', '.')."</td>
                   <td class='separador'>TOTAL:</td><td class='goright'>$ ".number_format($cxx[0]['pagado'], 2, ',', '.')."</td>
                 </tr>
-              </table>";
+              </table><br><h3>Detalle :</h3>";
         $headok = true;
         $elegibles++;
       }
@@ -87,6 +87,7 @@ if (isset ($_REQUEST['idr']) && $_REQUEST['idr'] != '' && $_REQUEST['idr'] != 0)
               <td class='subh goright'>$ ".number_format ($total, 2, ',', '.')."</td>
             </tr>
           </table>";
+      $subtotal = 0;
     }
   }
   echo "<div class='gocenter'><a href='default.php?page=pnlaprpay&remito=".$remito."&sent=1&mescxd=NC&meslqd=NC' class='buttons'>APROBAR PAGO</a></div>";

@@ -209,33 +209,39 @@ if (isset ($_REQUEST['sent'])) {
     $remito_old = "";
     $cx_old = "";
     $first_record = true;
+    $subtotal = 0;
     foreach ($remitos as $remito) { // Recorrer resultados obtenidos
       if ($remito['id_remito'] != $remito_old && !$first_record) {
+        $total = $subtotal-$monto_ctacte;
         echo "<tr class='footr'>
-                <td colspan=4>
+                <td colspan=5>
                   <div class='flex-cont'>
-                    <span>SUBTOTAL: $ 11111</span>
-                    <span>SALDO: $ 999999</span>
-                    <span>DESCUENTO: $ 999999</span>
-                    <span>TOTAL: $ 999999</span>
+                    <span>SUBTOTAL: $ ".number_format($subtotal, 2, ',', '.')."</span>
+                    <span>SALDO PREVIO: $ ".number_format($saldo_pre, 2, ',', '.')."</span>
+                    <span>DESCUENTO: $ ".number_format($monto_ctacte, 2, ',', '.')."</span>
+                    <span>TOTAL: $ ".number_format($total, 2, ',', '.')."</span>
                   </div>
                 </td>
               </tr></table>";
+        $subtotal = 0;
       }
       if ($remito['id_remito'] != $remito_old) {
+        $saldo_pre = $remito['saldo_pre'];
+        $monto_ctacte = $remito['monto_ctacte'];
         echo "<table class='apr-pagos'>
                 <tr class='headr'>
-                  <td colspan='3'>
+                  <td colspan='4'>
                     REMITO ".$remito['id_remito']." (PREP: ".$remito['fecha_preparado_h']." / LIQ: ".$remito['fecha_liquidado_h'].")<br>
                     ACREEDOR: ".$remito['acreedor']."<br>
                     RETIRA: ".$remito['retira']."
                   </td>
                   <td class='goright' style='width:8rem;'>
-                    <a href='default.php?page=aprpay&idr=".$remito['id_remito']."' class='green-link'>APROBAR</a>
+                    <a href='default.php?page=aprpay&idr=".$remito['id_remito']."' class='buttons'>APROBAR</a>
                   </td>
                 </tr>";
         if ($remito['nro_cirugia'] != $cx_old) {
           $montos = montos_cx($remito['nro_cirugia']);
+          $percent = ($montos['total_cx']*100)/$remito['valor_total'];
           echo "<tr>
                   <td style='width:9rem;'>
                     CX ".$remito['nro_cirugia']."<br>
@@ -250,9 +256,13 @@ if (isset ($_REQUEST['sent'])) {
                     CLI: ".$remito['cliente']."<br>
                   </td>
                   <td class='goright'>
-                    $ ".number_format($montos['valor_total'], 2, ',', '.')."<br>
+                    $ ".number_format($remito['valor_total'], 2, ',', '.')."<br>
+                  </td>
+                  <td class='goright'>
+                    $ ".number_format($montos['total_cx'], 2, ',', '.')."<br>(".number_format($percent, 2, ',', '.')."%)
                   </td>
                 </tr>";
+                $subtotal += $montos['total_cx'];
           $cx_old = $remito['nro_cirugia'];
         }
         $remito_old = $remito['id_remito'];
@@ -261,6 +271,7 @@ if (isset ($_REQUEST['sent'])) {
       else {
         if ($remito['nro_cirugia'] != $cx_old) {
           $montos = montos_cx($remito['nro_cirugia']);
+          $percent = ($montos['total_cx']*100)/$remito['valor_total'];
           echo "<tr>
                   <td>
                     CX ".$remito['nro_cirugia']."<br>
@@ -275,21 +286,26 @@ if (isset ($_REQUEST['sent'])) {
                     CLI: ".$remito['cliente']."<br>
                   </td>
                   <td class='goright'>
-                    $ ".number_format($montos['valor_total'], 2, ',', '.')."<br>
+                    $ ".number_format($remito['valor_total'], 2, ',', '.')."<br>
+                  </td>
+                  <td class='goright'>
+                    $ ".number_format($montos['total_cx'], 2, ',', '.')."<br>(".number_format($percent, 2, ',', '.')."%)
                   </td>
                 </tr>";
+                $subtotal += $montos['total_cx'];
           $cx_old = $remito['nro_cirugia'];
         }
         $remito_old = $remito['id_remito'];
       }
     }
+    $total = $subtotal-$monto_ctacte;
     echo "<tr class='footr'>
-            <td colspan=4>
+            <td colspan=5>
               <div class='flex-cont'>
-                <span>SUBTOTAL: $ 33333</span>
-                <span>SALDO: $ 999999</span>
-                <span>DESCUENTO: $ 999999</span>
-                <span>TOTAL: $ 999999</span>
+              <span>SUBTOTAL: $ ".number_format($subtotal, 2, ',', '.')."</span>
+              <span>SALDO PREVIO: $ ".number_format($saldo_pre, 2, ',', '.')."</span>
+              <span>DESCUENTO: $ ".number_format($monto_ctacte, 2, ',', '.')."</span>
+              <span>TOTAL: $ ".number_format($total, 2, ',', '.')."</span>
               </div>
             </td>
           </tr></table>";
