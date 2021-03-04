@@ -9,21 +9,18 @@ else {
   require_once ('../c/funcs/utilities.php');
   if (isset ($_REQUEST['page']) && $_REQUEST['page'] == 'pnllq') {
     // evaluar si es print para hacer header directo a impresión
+    $liquidadas = 0;
     $rems = array();
     foreach ($_REQUEST as $key=>$dato) {
       $dato = explode ('_', $key);
-      if ($dato[0] == 'chkb') {
-        $valstring .= "&".$key."=1";
-        $cxs[] = $dato[1];
-        $info = data_cx ($dato[1]);
-        if ($info['estado'] == 1) $pendientes++;
-        else if ($info['estado'] == 2) $preparadas++;
-        else if ($info['estado'] == 3) $liquidadas++;
-        $cantcx++;
-      }
+
       if ($dato[0] == 'chkr') {
-        $rems[] = $dato[1];
-        $liquidadas++;
+        $info = data_remito($dato[1]);
+        
+        if ($info['estado'] == 3) {
+          $liquidadas++;
+          $rems[] = $dato[1];
+        }
         $cantrm++;
       }
     }

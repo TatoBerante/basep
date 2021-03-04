@@ -90,7 +90,9 @@ if (isset ($_REQUEST['idr']) && $_REQUEST['idr'] != '' && $_REQUEST['idr'] != 0)
       $subtotal = 0;
     }
   }
-  echo "<div class='gocenter'><a href='default.php?page=pnlaprpay&remito=".$remito."&sent=1&mescxd=NC&meslqd=NC' class='buttons'>APROBAR PAGO</a></div>";
+  // ../c/appusr-validate.php
+  //echo "<div class='gocenter'><a href='default.php?page=pnlaprpay&remito=".$remito."&sent=1&mescxd=NC&meslqd=NC' class='buttons'>APROBAR PAGO</a></div>";
+  echo "<div class='gocenter'><a href='../c/aprpay-validate.php?remito=".$remito."&sent=1&mescxd=NC&meslqd=NC' class='buttons'>APROBAR PAGO</a></div>";
 }
 else {
   echo "<div class='error-msg'>NO SE RECIBIÓ UN REMITO</div>";

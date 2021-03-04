@@ -269,7 +269,7 @@ function data_cx_detalle ($nro_cx) {
 				cx.cantidad, cx.precio_venta, med.medico, cli.cliente, cli.aplicable,
 				(cx.cantidad * cx.precio_venta) AS subtotal,
 				(((cx.cantidad * cx.precio_venta) * cli.aplicable) / 100) AS pagable, cx.monto_a_pagar,
-				(rem.monto_total - rem.monto_ctacte) as pagado
+				(rem.monto_total - rem.monto_ctacte) as pagado, cx.estado
 				FROM cirugias cx
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
@@ -307,7 +307,8 @@ function data_remito ($id_remito) {
 	$remito = array();
 	$q = "SELECT r.*, m.id_medico_sys, m.medico, DATE_FORMAT(r.fecha_preparado, '%d-%m-%Y') as fecha_prep_h,
 				v.vendedor as retira, c.nro_cirugia, DATE_FORMAT(c.fecha_cx, '%d-%m-%Y') as fecha_cx_h,
-				c.nombre_paciente as paciente, DATE_FORMAT(r.fecha_liquidado, '%d/%m/%y') as fecha_lq_h
+				c.nombre_paciente as paciente, DATE_FORMAT(r.fecha_liquidado, '%d/%m/%y') as fecha_lq_h,
+				c.estado
 				FROM remitos r
 				INNER JOIN medicos m ON r.id_acreedor = m.id_medico_sys
 				LEFT JOIN vendedores v ON r.id_portador = v.id_vendedor_sys

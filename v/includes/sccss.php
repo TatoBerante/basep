@@ -12,4 +12,7 @@ if ($_REQUEST['org'] == 'prep') {
 if ($_REQUEST['org'] == 'liq') {
   echo "<p class='sccss-msg'>Liquidación finalizada correctamente.</p>";
 }
+if ($_REQUEST['org'] == 'deliv') {
+  echo "<p class='sccss-msg'>Entrega de pagos finalizada correctamente.</p>";
+}
 ?>

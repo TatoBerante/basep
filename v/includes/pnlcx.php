@@ -164,6 +164,7 @@ else {
       <option value="2"<?php if ($_REQUEST['estado'] == '2') echo " selected"?>>PREPARADAS</option>
       <option value="3"<?php if ($_REQUEST['estado'] == '3') echo " selected"?>>FINALIZADAS</option>
       <option value="4"<?php if ($_REQUEST['estado'] == '4') echo " selected"?>>APROBADAS</option>
+      <option value="5"<?php if ($_REQUEST['estado'] == '5') echo " selected"?>>ENTREGADAS</option>
     </select>
     <input type="hidden" name="sent" value="1">
     <input type="submit" value="BUSCAR" class='buttons-inline pnlcx-btn'>
@@ -216,6 +217,14 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
           // Preparada
           $procesar = "liquidar";
         }
+        else if ($resultado['estado'] == '4') {
+          // Aprobada
+          $procesar = "entregar";
+        }
+        else if ($resultado['estado'] == '5') {
+          // Entregada
+          $procesar = "auditar";
+        }
         else {
           // Liquidada
           $procesar = "imprimir";
@@ -256,6 +265,13 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
             
           }
           else if ($resultado['estado'] == '3') {
+            echo "<input type='checkbox' id='chkr_".$resultado['id_remito']."' name='chkr_".$resultado['id_remito']."'>
+                      <label for='chkr_".$resultado['id_remito']."'>
+                        <span></span>
+                        ".$procesar."
+                      </label> ";
+          }
+          else if ($resultado['estado'] == '4') {
             echo "<input type='checkbox' id='chkr_".$resultado['id_remito']."' name='chkr_".$resultado['id_remito']."'>
                       <label for='chkr_".$resultado['id_remito']."'>
                         <span></span>
@@ -353,6 +369,100 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
                     <label for='chkr_".$data[0]['id_remito']."'>
                     <span></span>".$procesar."</label>
                   </th>
+                </tr>
+                <tr>
+                  <th class='goleft' colspan='4'>
+                    Acreedor: ".$data[0]['acreedor']."
+                  </th>
+                </tr>
+                <tr>
+                  <th class='goleft' colspan='4'>
+                    Retira: ".$data[0]['retira']."
+                  </th>
+                </tr>";
+        foreach ($data as $resultado) {
+          echo "<tr>
+                  <td style='width:12%;'>CX ".$resultado['nro_cirugia']."<br>(".$resultado['fecha_cx_h'].")</td>
+                  <td style='width:30%;'>CIR: ".$resultado['medico']."<br>PAC: ".$resultado['paciente']."</td>
+                  <td style='width:46%;' colspan='2'>INST: ".$resultado['institucion']."<br>CLI: ".$resultado['cliente']."</td>
+                  <td class='goright' style='width:12%;'>$ ".number_format(total_cx($resultado['nro_cirugia']), 2, ',', '.')."</td>
+                </tr>";
+        }
+        $apagar = $data[0]['total_remito'] - $data[0]['descuento'];
+        echo "<tr>
+                <td colspan='5' class='subh'>
+                  <div class='fsb'>
+                    <span>SUBTOTAL: $ ".number_format($data[0]['total_remito'], 2, ',', '.')."</span>
+                    <span>SALDO: $ ".number_format($data[0]['saldo_previo'], 2, ',', '.')."</span>
+                    <span>DESCUENTO: $ ".number_format($data[0]['descuento'], 2, ',', '.')."</span>
+                    <span>TOTAL: $ ".number_format($apagar, 2, ',', '.')."</span>
+                  </div>
+                </td>
+              </tr>
+            </table>";
+        $total_pagado += $apagar;
+      }
+      $total_facturado = number_format($total_facturado, '2', ',', '.');
+      $total_pagado = number_format($total_pagado, '2', ',', '.');
+      $real = number_format((($total_pagado * 100) / $total_facturado), 2, ',', '.');
+      ?>
+      <script>
+      document.getElementById("tfacturado").innerHTML = '<?=$total_facturado?>';
+      document.getElementById("tpagado").innerHTML = '<?=$total_pagado?>';
+      document.getElementById("treal").innerHTML = '<?=$real?>';
+      </script>
+      <?php
+    }
+    else if ($_REQUEST['estado'] == '4' || $_REQUEST['estado'] == '5') { // Ver solo aprobadas o entregadas
+      ?>
+        <!--<form action='appprint.php' method='post' id='checkform'>-->
+      <div class="pagadoreal">
+        <div class='block-resumen'>total facturado: $ <span class='monto-resumen' id='tfacturado'>0</span></div>
+        <div class='block-resumen'>total pagado: $ <span class='monto-resumen' id='tpagado'>0</span></div>
+        <div class='block-resumen'>real pagado: <span class='monto-resumen' id='treal'>0</span> %</div>
+      </div>
+      <form action='default.php?page=pnllq' method='post' id='checkform'>
+      <?php
+      $remitos = search_remitos ($clue,
+                                  $vendcx,
+                                  $instcx,
+                                  $acr,
+                                  $fin,
+                                  $_REQUEST['estado'],
+                                  $_REQUEST['mescxd'],
+                                  $_REQUEST['anocxd'],
+                                  $_REQUEST['mescxh'],
+                                  $_REQUEST['anocxh'],
+                                  $_REQUEST['meslqd'],
+                                  $_REQUEST['anolqd'],
+                                  $_REQUEST['meslqh'],
+                                  $_REQUEST['anolqh']);
+      $procesar = 'entregar';
+      $remitox = array();
+      $total_facturado = 0;
+      foreach ($resultados as $cx) {
+        $total_facturado += $cx['precio_venta'];
+        if (!in_array ($cx['id_remito'], $remitox)) {
+          $remitox[] = $cx['id_remito'];
+        }
+      }
+      $total_pagado = 0;
+      foreach ($remitox as $remi) {
+        $elegibles++;
+        $data = detalle_remito ($remi);
+        
+        echo "<table class='results cx'>
+                <tr>
+                  <th class='goleft' colspan='4'>Remito N° ".$data[0]['id_remito']." (Prep: ".$data[0]['fecha_preparado_h']." - Liq: ".$data[0]['fecha_liquidado_h'].")</th>
+                  <th class='goright' rowspan='3'>
+                    <a href='default.php?page=pnlcx&sent=1&remito=".$data[0]['id_remito']."' class='purple-link'>VER REMITO</a><br>";
+                    if ($_REQUEST['estado'] == '4') {
+                      echo "<br>
+                      <input type='checkbox' id='chkr_".$data[0]['id_remito']."' name='chkr_".$data[0]['id_remito']."'>
+                      <label for='chkr_".$data[0]['id_remito']."'>
+                      <span></span>".$procesar."</label>";
+                    }
+                  echo "</th>
                 </tr>
                 <tr>
                   <th class='goleft' colspan='4'>
@@ -522,7 +632,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
               </td>
             </tr></table>";
     }
-    if ($elegibles > 0) {
+    if ($elegibles > 0 && $_REQUEST['estado'] != '5') {
       echo "<input type='hidden' name='filters' value='".$filterstring."'>
       <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>CONTINUAR</a></div></form>";
     }
@@ -546,10 +656,18 @@ else if (isset ($_REQUEST['sent']) && $remito != '') {
       $total += $pagable;
       $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
       $cod_vendedor =  $info['cod_vendedor'];
+
+      $aprobada = ($info['estado'] == 4) ? true : false;
       
       if (!$headok) {
         $liquidado = ($cxx[0]['fecha_liq_h'] != '') ? $cxx[0]['fecha_liq_h'] : 'N/A';
-        echo "<br><table class='data-remito'>
+        if ($info['estado'] == 5) $txt_estado = 'pago entregado';
+        else if ($info['estado'] == 4) $txt_estado = 'pago aprobado esperando entrega';
+        else if ($info['estado'] == 3) $txt_estado = 'liquidación finalizada esperando aprobación';
+        else if ($info['estado'] == 2) $txt_estado = 'remito preparado esperando liquidación';
+        echo "<br>
+              <div class='flex-cont'>
+              <table class='data-remito'>
                 <tr>
                   <td>PREPARADO:</td><td class='goright'>".$cxx[0]['fecha_prep_h']."</td>
                   <td class='separador'>LIQUIDADO:</td><td class='goright'>".$liquidado."</td>
@@ -568,7 +686,14 @@ else if (isset ($_REQUEST['sent']) && $remito != '') {
                   <td>DESCUENTO:</td><td class='goright'>$ ".number_format($cxx[0]['monto_ctacte'], 2, ',', '.')."</td>
                   <td class='separador'>TOTAL:</td><td class='goright'>$ ".number_format($cxx[0]['pagado'], 2, ',', '.')."</td>
                 </tr>
+                <tr>
+                  <td colspan='4'>
+                    ESTADO: ".$txt_estado."
+                  </td>
+                </tr>
               </table>";
+        if ($aprobada) echo "<img src='img/aprobado.png' style='width:20rem;margin-right:15rem;'>";
+        echo "</div>";
         $headok = true;
         $elegibles++;
       }

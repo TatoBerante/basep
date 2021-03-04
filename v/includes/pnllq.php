@@ -3,11 +3,9 @@ require_once ('../c/funcs/utilities.php');
 $filtros = explode ('!?', $_REQUEST['filters']);
 
 $returnstring = "&sent=1&srchcx=".$filtros[0]."&vendcx=".$filtros[1]."&instcx=".$filtros[2]."&acr=".$filtros[3]."&fin=".$filtros[4]."&estado=".$filtros[5]."&mescxd=".$filtros[6]."&anocxd=".$filtros[7]."&mescxh=".$filtros[8]."&anocxh=".$filtros[9]."&meslqd=".$filtros[10]."&anolqd=".$filtros[11]."&meslqh=".$filtros[12]."&anolqh=".$filtros[13];
-/*
-echo "<p><pre>";
-print_r ($_REQUEST);
-echo "</pre></p>";
-*/
+
+//showall ($_REQUEST);
+
 ?>
 <?php
 $cantcx = 0;
@@ -17,6 +15,7 @@ $rems = array();
 $preparadas = 0;
 $pendientes = 0;
 $liquidadas = 0;
+$aprobadas = 0;
 $valstring = '';
 foreach ($_REQUEST as $key=>$dato) {
   $dato = explode ('_', $key);
@@ -27,11 +26,18 @@ foreach ($_REQUEST as $key=>$dato) {
     if ($info['estado'] == 1) $pendientes++;
     else if ($info['estado'] == 2) $preparadas++;
     else if ($info['estado'] == 3) $liquidadas++;
+    else if ($info['estado'] == 4) $aprobadas++;
     $cantcx++;
   }
   if ($dato[0] == 'chkr') {
+    $info = data_remito($dato[1]);
+        
+    if ($info['estado'] == 4) {
+      $aprobadas++;
+    }
+    $cantrm++;
     $rems[] = $dato[1];
-    $liquidadas++;
+    //$liquidadas++;
     $cantrm++;
   }
 }
@@ -54,12 +60,21 @@ else {
     $estado = 'liquidada';
     $proceso = "imprimir";
   }
+  else if ($aprobadas > 0) {
+    $estado = 'aprobada';
+    $proceso = "entregar";
+  }
   else {
     $estado = 'preparada';
     $proceso = "liquidar";
   }
   echo "<h2>".$proceso."</h2>";
-  echo "<div class='simple-line gocenter warning'>Puede detener este proceso haciendo click en el botón CANCELAR y retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+  if ($aprobadas > 0) {
+    echo "<div class='simple-line gocenter warning'>Revise la información presentada antes de proceder, este paso no tiene rectificación. Ante cualquier duda presione cancelar.<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+  }
+  else {
+    echo "<div class='simple-line gocenter warning'>Puede detener este proceso haciendo click en el botón CANCELAR y retornar al Panel de Cirugías (no se perderán los filtros previamente utilizados)<br><a href='default.php?page=pnlcx".$returnstring."' class='buttons-warning'>CANCELAR</a></div>";
+  }
 
   if (isset ($_REQUEST['error'])) {
     if ($_REQUEST['error'] == '1') $msg = "algo salió mal";
@@ -209,6 +224,61 @@ else {
           </tr>
         </table>";
     
+  }
+  else if ($proceso == 'entregar') { // Entrega de pagos (aprobadas)
+    $total = 0;
+    $remitos = array();
+    //showall ($_REQUEST);
+    ?>
+    <form autocompĺete='off' action="../c/pnllq-deliver-validate.php" method="post" id="checkform">
+    <input type="hidden" name="estado" id="estado" value="<?=$estado;?>">
+    <input type="hidden" name="valstring" id="valstring" value="<?=$valstring;?>">
+    <?php
+    echo "<table class='results cx'>
+            <tr>
+              <th>REMITO</th>
+              <th>cirugías</th>
+              <th>acreedor</th>
+              <th>retira</th>
+              <th>monto</th>
+              <th>cta/cte</th>
+              <th>subtotal</th>
+            </tr>";
+    $total = 0;
+    foreach ($rems as $key=>$value) {
+      $remito = data_remito ($value);
+      $subtotal = $remito['monto_total'] - $remito['monto_ctacte'];
+      $retira = $remito['retira'];
+      echo "<tr>
+              <td class='goleft'>
+                <input type='hidden' name='rem_".$remito['id_remito']."' value='".$remito['id_remito']."'>
+                N° ".$remito['id_remito']."<br>PREP: ".$remito['fecha_prep_h']."
+              </td>
+              <td>";
+      $cxsr = cxs_en_remito ($remito['id_remito']);
+      foreach ($cxsr as $cr) {
+        echo $cr['nro_cirugia']." (".$cr['fecha_cx_h']." pac. ".$cr['nombre_paciente'].")<br>";
+      }
+              /*
+                ".$remito['nro_cirugia']." (".$remito['fecha_cx_h'].")<br>
+                Dr. ".$remito['medico']."<br>
+                pac. ".$remito['paciente']."<br>
+              
+              */
+      echo "</td>
+            <td>".$remito['medico']."</td>
+              <td>".$remito['retira']."</td>
+              <td class='goright'>$ ".number_format ($remito['monto_total'], 2, ',', '.')."</td>
+              <td class='goright'>$ ".number_format ($remito['monto_ctacte'], 2, ',', '.')."</td>
+              <td class='goright'>$ ".number_format ($subtotal, 2, ',', '.')."</td>
+            </tr>";
+      $total += $subtotal;
+    }
+    echo "<tr>
+            <td colspan='6' class='goright'>TOTAL:</td>
+            <td class='goright'>$ ".number_format ($total, 2, ',', '.')."</td>
+          </tr>
+        </table>";
   }
   else { // Impresión de remitos (liquidadas)
     $total = 0;
