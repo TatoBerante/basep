@@ -19,8 +19,9 @@ else {
 }
 
 ?>
+
 <h2>Panel de cirugías</h2>
-<form action="default.php?page=pnlcx" method="post">
+<form action="default.php?page=pnlcx2" method="post">
   <div class="form-line">
     <?php
     $medicos = lista_medicos();
@@ -175,6 +176,8 @@ else {
 
 <?php
 if (isset ($_REQUEST['sent']) && $remito == '') {
+  //$resultados = dummy ();
+  
   $resultados = search_cx (
     $clue,
     $vendcx,
@@ -191,6 +194,7 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
     $_REQUEST['meslqh'],
     $_REQUEST['anolqh']
   );
+  
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
     $filterstring = $clue."!?".$vendcx."!?".$instcx."!?".$acr."!?".$fin."!?".$_REQUEST['estado']."!?".$_REQUEST['mescxd']."!?".$_REQUEST['anocxd']."!?".$_REQUEST['mescxh']."!?".$_REQUEST['anocxh']."!?".$_REQUEST['meslqd']."!?".$_REQUEST['anolqd']."!?".$_REQUEST['meslqh']."!?".$_REQUEST['anolqh'];
@@ -635,110 +639,11 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
               </td>
             </tr></table>";
     }
+    
     if ($elegibles > 0 && $_REQUEST['estado'] != '5') {
       echo "<input type='hidden' name='filters' value='".$filterstring."'>
       <div class='goright'><a href='#' onclick=\"document.getElementById('checkform').submit()\" class='buttons'>CONTINUAR</a></div></form>";
     }
+    
   }
 }
-else if (isset ($_REQUEST['sent']) && $remito != '') {
-  $cxs = cxs_en_remito ($remito);
-  if (count ($cxs) < 1) echo "<div class='error-msg'>No se encontraron resultados</div>";
-  else {
-    echo "<br><div class='mostrandores'>Mostrando detalle de remito n° ".$remito.":</div>";
-    $headok = false;
-    foreach ($cxs as $cir) {
-      $cxx = data_cx_detalle ($cir['nro_cirugia']);
-      /*
-      echo "<pre>";
-      print_r ($cxx);
-      echo "</pre>";
-      */
-      $info = data_cx ($cir['nro_cirugia']);
-      $pagable = ($info['monto'] * $info['aplicable']) / 100;
-      $total += $pagable;
-      $medico = ($info['medico'] != '') ? $info['medico'] : 'N/A';
-      $cod_vendedor =  $info['cod_vendedor'];
-
-      $aprobada = ($info['estado'] == 4) ? true : false;
-      
-      if (!$headok) {
-        $liquidado = ($cxx[0]['fecha_liq_h'] != '') ? $cxx[0]['fecha_liq_h'] : 'N/A';
-        if ($info['estado'] == 5) $txt_estado = 'pago entregado';
-        else if ($info['estado'] == 4) $txt_estado = 'pago aprobado esperando entrega';
-        else if ($info['estado'] == 3) $txt_estado = 'liquidación finalizada esperando aprobación';
-        else if ($info['estado'] == 2) $txt_estado = 'remito preparado esperando liquidación';
-        echo "<br>
-              <div class='flex-cont'>
-              <table class='data-remito'>
-                <tr>
-                  <td>PREPARADO:</td><td class='goright'>".$cxx[0]['fecha_prep_h']."</td>
-                  <td class='separador'>LIQUIDADO:</td><td class='goright'>".$liquidado."</td>
-                </tr>
-                <tr>
-                  <td colspan='4'>ACREEDOR: ".$cxx[0]['acreedor']."</td>
-                </tr>
-                <tr>
-                  <td colspan='4'>RETIRA: ".$cxx[0]['portador']."</td>
-                </tr>
-                <tr>
-                  <td>SALDO:</td><td class='goright'>$ ".number_format($cxx[0]['saldo_ctacte_previo'], 2, ',', '.')."</td>
-                  <td class='separador'>SUBTOTAL:</td><td class='goright'>$ ".number_format($cxx[0]['monto_total'], 2, ',', '.')."</td>
-                </tr>
-                <tr>
-                  <td>DESCUENTO:</td><td class='goright'>$ ".number_format($cxx[0]['monto_ctacte'], 2, ',', '.')."</td>
-                  <td class='separador'>TOTAL:</td><td class='goright'>$ ".number_format($cxx[0]['pagado'], 2, ',', '.')."</td>
-                </tr>
-                <tr>
-                  <td colspan='4'>
-                    ESTADO: ".$txt_estado."
-                  </td>
-                </tr>
-              </table>";
-        if ($aprobada) echo "<img src='img/aprobado.png' style='width:20rem;margin-right:15rem;'>";
-        echo "</div>";
-        $headok = true;
-        $elegibles++;
-      }
-      echo "<table class='results cx'>
-            <tr>
-              <th colspan='6' class='goleft'><p>
-                cx ".$cxx[0]['nro_cirugia']." (".$info['fecha_cx'].") MEDico: ".$medico." - PACiente: ".$info['paciente']."</p><p>
-                cliente: ".$info['cliente']." (".$info['aplicable']."%) - vendedor: ".$info['vendedor']."</p>
-              </th>
-            </tr>
-            <tr>
-              <td class='subh gocenter' style='width:2rem;'>cant</td>
-              <td class='subh gocenter'>producto</td>
-              <td class='subh gocenter' style='width:8rem;'>valor</td>
-              <td class='subh gocenter' style='width:8rem;'>subtotal</td>
-              <td class='subh gocenter' style='width:8rem;'>sugerido</td>
-              <td class='subh gocenter' style='width:8rem;'>pagado</td>
-            </tr>";
-      $total = 0;
-      foreach ($cxx as $cxy) {
-        echo "<tr>
-                <td class='gocenter'>".$cxy['cantidad']."</td>
-                <td>".$cxy['producto']."</td>
-                <td class='goright'>$ ".number_format ($cxy['precio_venta'], 2, ',', '.')."</td>
-                <td class='goright'>$ ".number_format ($cxy['subtotal'], 2, ',', '.')."</td>
-                <td class='goright'>$ ".number_format ($cxy['pagable'], 2, ',', '.')."</td>
-                <td class='goright'>$ ".number_format ($cxy['monto_a_pagar'], 2, ',', '.')."</td>
-              </tr>";
-        $subtotal += $cxy['pagable'];
-        $total += $cxy['monto_a_pagar'];
-      }
-      echo "<tr>
-              <td colspan='4' class='subh gocenter'></td>
-              <td class='subh goright'>$ ".number_format ($subtotal, 2, ',', '.')."</td>
-              <td class='subh goright'>$ ".number_format ($total, 2, ',', '.')."</td>
-            </tr>
-          </table>";
-    }
-  }
-}
-?>
-
-<script>
-  document.getElementById("cantcx").innerHTML = <?=$cantcx;?>
-</script>

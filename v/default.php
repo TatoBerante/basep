@@ -77,9 +77,16 @@ else {
         </ul>
       </div>
       <?php
+
       if (isset ($_REQUEST['page'])) {
-        if (file_exists ('includes/'.$_REQUEST['page'].'.php')) include ('includes/'.$_REQUEST['page'].'.php');
-        else include ('includes/404.php');
+        
+        if (file_exists ("includes/".$_REQUEST['page'].".php")) {
+          include ("includes/".$_REQUEST['page'].".php");
+        }
+        else {
+          include ('includes/404.php');
+        }
+        
       }
       else {
         include ('includes/home.php');

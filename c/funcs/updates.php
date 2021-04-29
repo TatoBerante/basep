@@ -8,6 +8,7 @@ function updateClientes () {
   array_shift($rows); // Quita el primer valor del array (evita fila de nombres)
   $errors = 0;
   $new = 0;
+  $mod = 0;
   foreach($rows as $row => $data) {
     if ($row > 0) { // Evita la segunda línea (+-----+-----+)
       //get row data
@@ -21,35 +22,57 @@ function updateClientes () {
         $condicion_pago = trim ($row_data[5]);
         $condicion = trim ($row_data[6]);
 
-        $sql = "INSERT INTO clientes (id_csv, id_cliente, empresa, cliente, tipo_cliente, condicion_pago, condicion)
-                  VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init ($mysqli);
-        if (!mysqli_stmt_prepare ($stmt, $sql)) {
-            // error report:
-            echo "<p>";
-            print_r (mysqli_stmt_error($stmt));
-            echo " Cliente (mysqli_stmt_prepare): ".$cliente."</p>*****";
-            $errors++;
-        }
-        else {
-          mysqli_stmt_bind_param ($stmt, "sssssss", $id_csv, $id_cliente, $empresa, $cliente, $tipo_cliente, $condicion_pago, $condicion);
-          if (mysqli_stmt_execute ($stmt)) {
-            $new++;
-            mysqli_stmt_close($stmt);
+        // Verificar si existe el cliente:
+        $q = "SELECT id_cliente_sys, cliente FROM clientes WHERE id_csv = '".$id_csv."'";
+        //echo "<p>$q</p>";
+        $r = mysqli_query($mysqli, $q);
+        if (mysqli_num_rows ($r) < 1) { // El medico no existe en BD
+          $sql = "INSERT INTO clientes (id_csv, id_cliente, empresa, cliente, tipo_cliente, condicion_pago, condicion)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+          $stmt = mysqli_stmt_init ($mysqli);
+          if (!mysqli_stmt_prepare ($stmt, $sql)) {
+              // error report:
+              echo "<p>";
+              print_r (mysqli_stmt_error($stmt));
+              echo " Cliente (mysqli_stmt_prepare): ".$cliente."</p>*****";
+              $errors++;
           }
           else {
-            // error report (fallo por cliente ya registrado previamente):
-            /*
-            echo "<p>";
-            echo "<p>Cliente ".$cliente.": ".mysqli_stmt_error($stmt)."</p>";
-            */
+            mysqli_stmt_bind_param ($stmt, "sssssss", $id_csv, $id_cliente, $empresa, $cliente, $tipo_cliente, $condicion_pago, $condicion);
+            if (mysqli_stmt_execute ($stmt)) {
+              $new++;
+              mysqli_stmt_close($stmt);
+            }
+            else {
+              $errors++;
+            }
+          }
+        }
+        else { // El cliente existe, revisar si se debe actualizar por edición en Totvs
+          $w = mysqli_fetch_assoc($r);
+          if ($w['cliente'] != $cliente) { // El cliente fue editado, actualizar
+            $qup = "UPDATE clientes SET cliente = ? WHERE id_cliente_sys = ?";
+            $stmt2 = mysqli_stmt_init ($mysqli);
+            if (!mysqli_stmt_prepare ($stmt2, $qup)) {
+              echo "<p>No se pudo preparar stmt (".$w['cliente']." por ".$cliente.")</p>";
+              print_r (mysqli_stmt_error($stmt2));
+              $errors++;
+            }
+            else {
+              if (!mysqli_stmt_bind_param ($stmt2, "si", $cliente, $w['id_cliente_sys'])) echo "ERROR bind_param";
+              if (!mysqli_stmt_execute ($stmt2)) echo "ERROR execute";
+              $mod++;
+              mysqli_stmt_close($stmt2);
+            }
+          }
+          else {
             $errors++;
           }
         }
       }
     }
   }
-  echo "<p>🔒 ".$errors." clientes omitidos.</p>";
+  echo "<p>🔒 ".$errors." clientes omitidos.</p><p>✍🏼 ".$mod." clientes actualizados.</p>";
   mysqli_close($mysqli);
   return $new;
 }
@@ -61,43 +84,66 @@ function updateProfesionales () {
   array_shift($rows); // Quita el primer valor del array (evita fila de nombres)
   $errors = 0;
   $new = 0;
+  $mod = 0;
   foreach($rows as $row => $data) {
     if ($row > 0) { // Evita la segunda línea (+-----+-----+)
       //get row data
       $row_data = explode('|', $data);
       if (count($row_data) > 1) {
-        $id_medico = trim ($row_data[0]);
-        $medico = trim ($row_data[1]);
+        $id_medico = trim ($row_data[0]); // id del csv (unique en hm2, pero no primary [primary se autogenera])
+        $medico = trim ($row_data[1]); // datos médico, pueden haber siodo editados en Totvs
 
-        $sql = "INSERT INTO medicos (id_medico, medico)
+        // Verificar si el médico ya existe en hm2:
+        $q = "SELECT id_medico_sys, medico FROM medicos WHERE id_medico = '".$id_medico."'";
+        //echo "<p>$q</p>";
+        $r = mysqli_query($mysqli, $q);
+        if (mysqli_num_rows ($r) < 1) { // El medico no existe en BD
+          $sql = "INSERT INTO medicos (id_medico, medico)
                   VALUES (?, ?)";
-        $stmt = mysqli_stmt_init ($mysqli);
-        if (!mysqli_stmt_prepare ($stmt, $sql)) {
-            // error report:
-            echo "<p>";
-            print_r (mysqli_stmt_error($stmt));
-            echo " Cliente (mysqli_stmt_prepare): ".$cliente."</p>*****";
-            $errors++;
-        }
-        else {
-          mysqli_stmt_bind_param ($stmt, "ss", $id_medico, $medico);
-          if (mysqli_stmt_execute ($stmt)) {
-            $new++;
-            mysqli_stmt_close($stmt);
+          $stmt = mysqli_stmt_init ($mysqli);
+          if (!mysqli_stmt_prepare ($stmt, $sql)) {
+              // error report:
+              echo "<p>";
+              print_r (mysqli_stmt_error($stmt));
+              echo " Cliente (mysqli_stmt_prepare): ".$cliente."</p>*****";
+              $errors++;
           }
           else {
-            // error report (fallo por cliente ya registrado previamente):
-            /*
-            echo "<p>";
-            echo "<p>Cliente ".$cliente.": ".mysqli_stmt_error($stmt)."</p>";
-            */
+            mysqli_stmt_bind_param ($stmt, "ss", $id_medico, $medico);
+            if (mysqli_stmt_execute ($stmt)) {
+              $new++;
+              mysqli_stmt_close($stmt);
+            }
+            else {
+              $errors++;
+            }
+          }
+        }
+        else { // El médico existe, revisar si se debe actualizar por edición en Totvs
+          $w = mysqli_fetch_assoc($r);
+          if ($w['medico'] != $medico) { // El medico fue editado, actualizar
+            $qup = "UPDATE medicos SET medico = ? WHERE id_medico_sys = ?";
+            $stmt2 = mysqli_stmt_init ($mysqli);
+            if (!mysqli_stmt_prepare ($stmt2, $qup)) {
+              echo "<p>No se pudo preparar stmt (".$w['medico']." por ".$medico.")</p>";
+              print_r (mysqli_stmt_error($stmt2));
+              $errors++;
+            }
+            else {
+              if (!mysqli_stmt_bind_param ($stmt2, "si", $medico, $w['id_medico_sys'])) echo "ERROR bind_param";
+              if (!mysqli_stmt_execute ($stmt2)) echo "ERROR execute";
+              $mod++;
+              mysqli_stmt_close($stmt2);
+            }
+          }
+          else {
             $errors++;
           }
         }
       }
     }
   }
-  echo "<p>🔒 ".$errors." médicos omitidos.</p>";
+  echo "<p>🔒 ".$errors." médicos omitidos.</p><p>✍🏼 ".$mod." médicos actualizados.</p>";
   mysqli_close($mysqli);
   return $new;
 }
@@ -108,6 +154,7 @@ function updateVendedores () {
   array_shift($rows); // Quita el primer valor del array (evita fila de nombres)
   $errors = 0;
   $new = 0;
+  $mod = 0;
   foreach($rows as $row => $data) {
     if ($row > 0) { // Evita la segunda línea (+-----+-----+)
       //get row data
@@ -116,33 +163,57 @@ function updateVendedores () {
         $id_vendedor = trim ($row_data[0]);
         $vendedor = trim ($row_data[1]);
 
-        $sql = "INSERT INTO vendedores (id_vendedor, vendedor)
-                  VALUES (?, ?)";
-        $stmt = mysqli_stmt_init ($mysqli);
-        if (!mysqli_stmt_prepare ($stmt, $sql)) {
-            // error report:
-            echo "<p>";
-            print_r (mysqli_stmt_error($stmt));
-            echo " Cliente (mysqli_stmt_prepare): ".$cliente."</p>*****";
-            $errors++;
-        }
-        else {
-          mysqli_stmt_bind_param ($stmt, "ss", $id_vendedor, $vendedor);
-          if (mysqli_stmt_execute ($stmt)) {
-            $new++;
-            mysqli_stmt_close($stmt);
+        // Verificar si el vendedor ya existe en hm2:
+        $q = "SELECT id_vendedor_sys, vendedor FROM vendedores WHERE id_vendedor = '".$id_vendedor."'";
+        //echo "<p>$q</p>";
+        $r = mysqli_query($mysqli, $q);
+        if (mysqli_num_rows ($r) < 1) { // El vendedor no existe en BD
+          $sql = "INSERT INTO vendedores (id_vendedor, vendedor)
+                    VALUES (?, ?)";
+          $stmt = mysqli_stmt_init ($mysqli);
+          if (!mysqli_stmt_prepare ($stmt, $sql)) {
+              // error report:
+              echo "<p>";
+              print_r (mysqli_stmt_error($stmt));
+              echo " Cliente (mysqli_stmt_prepare): ".$cliente."</p>*****";
+              $errors++;
           }
           else {
-            // error report (fallo por cliente ya registrado previamente):
-            // echo "<p>Data:  ".$empresa." / ".$id_producro." / ".$descripcion.": ".mysqli_stmt_error($stmt)."</p>";
+            mysqli_stmt_bind_param ($stmt, "ss", $id_vendedor, $vendedor);
+            if (mysqli_stmt_execute ($stmt)) {
+              $new++;
+              mysqli_stmt_close($stmt);
+            }
+            else {
+              $errors++;
+            }
+          }
+        }
+        else { // El vendedor existe, revisar si se debe actualizar por edición en Totvs
+          $w = mysqli_fetch_assoc($r);
+          if ($w['vendedor'] != $vendedor) { // El vendedor fue editado, actualizar
+            $qup = "UPDATE vendedores SET vendedor = ? WHERE id_vendedor_sys = ?";
+            $stmt2 = mysqli_stmt_init ($mysqli);
+            if (!mysqli_stmt_prepare ($stmt2, $qup)) {
+              echo "<p>No se pudo preparar stmt (".$w['vendedor']." por ".$vendedor.")</p>";
+              print_r (mysqli_stmt_error($stmt2));
+              $errors++;
+            }
+            else {
+              if (!mysqli_stmt_bind_param ($stmt2, "si", $vendedor, $w['id_vendedor_sys'])) echo "ERROR bind_param";
+              if (!mysqli_stmt_execute ($stmt2)) echo "ERROR execute";
+              $mod++;
+              mysqli_stmt_close($stmt2);
+            }
+          }
+          else {
             $errors++;
-            
           }
         }
       }
     }
   }
-  echo "<p>🔒 ".$errors." vendedores omitidos.</p>";
+  echo "<p>🔒 ".$errors." vendedores omitidos.</p><p>✍🏼 ".$mod." vendedores actualizados.</p>";
   mysqli_close($mysqli);
   return $new;
 }

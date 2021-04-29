@@ -37,7 +37,7 @@ id_medico|medico
 000036   |SALAMONE, HECTOR                                                   
 000037   |OCAMPOS, LEANDRO                                                   
 000038   |SIMONETTI, LUIS                                                    
-000039   |SCATTOLARO LOVATTO, FLAVIO                                         
+000039   |SCATTOLARO, FLAVIO                                                 
 000040   |ALFIERI, FERNANDO                                                  
 000041   |PEREZ, JAVIER                                                      
 000042   |MUZZIO, ALBERTO                                                    
@@ -254,7 +254,7 @@ id_medico|medico
 000253   |CARUCCA, JESUS                                                     
 000254   |RODRIGUEZ, LETICIA                                                 
 000255   |LOPEZ GARCIA, MARIELA                                              
-000256   |√ëUNEZ, ALEJANDRO                                                   
+000256   |•UNEZ, ALEJANDRO                                                   
 000257   |IRAPORDA, GONZALO                                                  
 000258   |VELERO, JOAQUIN                                                    
 000259   |LOPEZ, JUAN MANUEL                                                 
@@ -281,7 +281,7 @@ id_medico|medico
 000287   |IGNACIO, JUAN                                                      
 000288   |ROMAGNOLI, MARTIN                                                  
 000289   |ALVAREZ, VICTORIA                                                  
-000290   |IBA√ëEZ, MAXIMILIANO                                                
+000290   |IBA•EZ, MAXIMILIANO                                                
 000291   |RONI, ROCIO                                                        
 000292   |BONIFACIO, FABIAN ADELIO                                           
 000293   |CHAHLA, JORGE                                                      
@@ -412,7 +412,7 @@ id_medico|medico
 000432   |ALMADA LANFRANCHI, JUAN VALENTI                                    
 000433   |GOMEZ, FERNANDO GABRIEL                                            
 000435   |CASAS, GINO LEONEL                                                 
-000436   |PATI√ëO, PABLO MARTIN                                               
+000436   |PATI—O, PABLO MARTIN                                               
 000437   |MAHFUD MILED, ANTONIO                                              
 000438   |ALVAREZ, JUAN CARLOS                                               
 000439   |DEGANO, FERNANDO                                                   
@@ -491,7 +491,7 @@ id_medico|medico
 000518   |ABAN IRAHOLA, MERALDO JAIME                                        
 000519   |ABBATE, PEDRO IGNACIO                                              
 000521   |ABDALA PALACIOS, SEBASTIAN JORGE                                   
-000522   |ABELDA√ëO, VICTOR HUGO MARIA                                        
+000522   |ABELDA—O, VICTOR HUGO MARIA                                        
 000523   |ABELLA, DIEGO MARTIN                                               
 000524   |OLIVETTO, ADRIAN LUIS                                              
 000525   |ABELLA, ERNESTO LUIS                                               
@@ -512,7 +512,7 @@ id_medico|medico
 000540   |BABBINI, RAFAEL MIGUEL                                             
 000541   |BABBINI, SANTIAGO MIGUEL                                           
 000542   |BACA, MATIAS TOMAS                                                 
-000543   |NU√ëEZ PE√ëALOZA, JAIME                                              
+000543   |NU•EZ PE•ALOZA, JAIME                                              
 000544   |FORESI, EDGARDO ANIBAL                                             
 000545   |FADON, HUGO ALFREDO                                                
 000546   |SINCOSKY, DARDO ALEJANDRO                                          
@@ -584,9 +584,9 @@ id_medico|medico
 000615   |BANEGAS, PAOLA DAIANA                                              
 000616   |POZZI, JOAQUIN                                                     
 000617   |ACOSTA, XIOMARA                                                    
-000618   |ACU√ëA, ANIBAL JULIO                                                
-000619   |ACU√ëA, GUSTAVO FABIAN                                              
-000620   |ACU√ëA, KUNZ EMILIANO                                               
+000618   |ACU—A, ANIBAL JULIO                                                
+000619   |ACU—A, GUSTAVO FABIAN                                              
+000620   |ACU—A, KUNZ EMILIANO                                               
 000621   |ADAD JULIO, JULIO0341-432-6399 CESAR ADRIAN                        
 000622   |ADAME, JORGE ALBERTO                                               
 000623   |ADORNETTO, JUAN ESTEBAN                                            
@@ -628,7 +628,7 @@ id_medico|medico
 000662   |LUPOTTI, CARLOS                                                    
 000664   |ROSAS SARMIENTO, PABLO NICOLAS                                     
 000666   |TRABB, DANIEL OSCAR                                                
-000667   |IBA√ëEZ, IGNACIO ALEJANDRO                                          
+000667   |IBA•EZ, IGNACIO ALEJANDRO                                          
 000668   |GUZMAN, MIGUEL MAXIMILIANO                                         
 000669   |AMPRINO, ALEJANDRO                                                 
 000670   |CASTRO, NESTOR                                                     
@@ -710,7 +710,7 @@ id_medico|medico
 000749   |ALARCON, ALBERTO OSCAR                                             
 000750   |ALARCON GUTIERREZ, FELIX EDGAR                                     
 000751   |ALARCON, MARIO DANIEL                                              
-000752   |ALARCON MU√ëOZ, CRISTINA                                            
+000752   |ALARCON MU•OZ, CRISTINA                                            
 000753   |ALBA, CARLOS EDMUNDO                                               
 000754   |ALBA, GABRIEL HERNAN                                               
 000756   |ALBANO, PABLO CRISTIAN                                             
@@ -744,7 +744,7 @@ id_medico|medico
 000787   |BARRAGAN, BERNARDO LUIS                                            
 000788   |BARRAGAN, ROBERTO RAMIRO                                           
 000789   |PASTOR, DANIEL HORACIO                                             
-000790   |VILDOZO ORTU√ëO, JUAN JOSE                                          
+000790   |VILDOZO ORTU•O, JUAN JOSE                                          
 000791   |MAGRINI, LEONARDO                                                  
 000792   |GORDILLO, FRANCISCO JAVIER                                         
 000793   |MAS GRIMALT, JUAN CARLOS                                           
@@ -766,7 +766,7 @@ id_medico|medico
 000810   |ALBERTENGO, DIEGO JUAN                                             
 000812   |ALBICORO, DALMACIO ANGEL                                           
 000813   |BARRERA, RAMIRO MANUEL                                             
-000814   |CABA√ëEZ, SAUL SILVIO                                               
+000814   |CABA•EZ, SAUL SILVIO                                               
 000815   |BARRERA, VICTOR MANUEL                                             
 000816   |CABAS GEAT, ANGELES EUGENIA                                        
 000817   |ALBORNOZ, PATRICIA ROXANA                                          
@@ -837,7 +837,7 @@ id_medico|medico
 000885   |ALFARO RODRIGUEZ, ERNESTO JAVIER                                   
 000886   |BATTANI, DANIEL ADALBERTO                                          
 000887   |CARBONETTI, MARCELO                                                
-000888   |BAUDANO C¬µCERES, NESTOR DANIEL                                     
+000888   |BAUDANO CµCERES, NESTOR DANIEL                                     
 000889   |BAUDINO, DIEGO ANDRES                                              
 000890   |BAUDINO, HECTOR RICARDO                                            
 000892   |BAUDUCCO, JORGE PABLO                                              
@@ -862,7 +862,7 @@ id_medico|medico
 000911   |MAKENAIZA, -                                                       
 000912   |ALCARAZ, FERNANDO                                                  
 000913   |CASTRO, JOSE                                                       
-000914   |RODRIGUEZ HOYA, DIEGO HERN√ÅN                                       
+000914   |RODRIGUEZ HOYA, DIEGO HERN¡N                                       
 000915   |PARADA, LUIS MARIA                                                 
 000917   |CACERES SAGLIO, CLAUDIA ALEJANDRA                                  
 000918   |CACERES, VICTOR GUILLERMO                                          
@@ -928,14 +928,14 @@ id_medico|medico
 000982   |ALMANDOZ, MATIAS IGNACIO                                           
 000983   |ALMANZA, GUILLERMO                                                 
 000984   |ALMEIDA, JULIO FEDERICO                                            
-000985   |ALMIRALL, ADRIANA M√†NICA                                           
+000985   |ALMIRALL, ADRIANA M‡NICA                                           
 000986   |ALONSO, CLAUDIO FABIAN                                             
 000987   |ALONSO, DANIEL                                                     
 000988   |ALONSO, EDUARDO OMAR                                               
 000990   |ALONSO, MARCOS FEDERICO                                            
 000991   |ALONSO, MARCOS GABRIEL                                             
 000992   |ALONSO, RODOLFO HORACIO                                            
-000993   |ALONSO, RODRIGO HERN√ÅN                                             
+000993   |ALONSO, RODRIGO HERN¡N                                             
 000995   |BOYD, GUSTAVO ADOLFO                                               
 000996   |BRUNI, MAXIMILIANO EZEQUIEL                                        
 000997   |VELEZ, MANUEL ALEJANDRO                                            
@@ -946,7 +946,7 @@ id_medico|medico
 001002   |PANZUTO, MARCO                                                     
 001003   |CERUTI, ROBERTO                                                    
 001004   |CERVIGNI, FERNANDO JOSE                                            
-001005   |CERVI√ëO, OSCAR                                                     
+001005   |CERVI—O, OSCAR                                                     
 001007   |CESETTI, PABLO DANIEL                                              
 001008   |CHACON, MARIANO ANDRES                                             
 001010   |DUPIN, MARCELO OSCAR                                               
@@ -975,7 +975,7 @@ id_medico|medico
 001033   |ALVAREZ FLORES, MARIA ALEJANDRA                                    
 001034   |ALVARES, GERMAN                                                    
 001035   |CAMPILLO, FRANCISCO RODOLFO                                        
-001036   |ALVAREZ, JOSE LUIS                                                 
+001036   |ALVAREZ, JOSê LUIS A.                                              
 001037   |CAMPIOTTI, CARLOS ADRIAN                                           
 001038   |ALVAREZ, JUAN JOSE                                                 
 001040   |CAMPORA, NIDIA NORA                                                
@@ -1002,10 +1002,10 @@ id_medico|medico
 001063   |RODRIGUEZ, ELIAS DANIEL                                            
 001064   |CANTEROS, MARIA BELEN                                              
 001065   |CANTISANO, GABRIEL IGNACIO                                         
-001066   |CA√ëAS, JAVIER ABEL                                                 
-001067   |CA√ëAS, MARIANO VICENTE                                             
+001066   |CA•AS, JAVIER ABEL                                                 
+001067   |CA•AS, MARIANO VICENTE                                             
 001068   |CANAS, PABLO JAVIER                                                
-001069   |CANETE, MATIAS PABLO                                               
+001069   |CA—ETE, MATIAS PABLO                                               
 001070   |CAPELL, FEDERICO LUIS                                              
 001071   |CAPELLA, MARIA EMILIA                                              
 001072   |CAPELLAN, RODRIGO EXEQUIEL                                         
@@ -1035,7 +1035,7 @@ id_medico|medico
 001097   |CABRERA, MARCOS NAHUEL                                             
 001099   |GUEDE, HERNAN MAURICIO                                             
 001101   |ZAIDENBERG, CARLOS RODOLFO                                         
-001102   |YA√ëEZ ARAUZ, JUAN MANUEL                                           
+001102   |YA•EZ ARAUZ, JUAN MANUEL                                           
 001103   |AMADOR, PABLO GUILLERMO                                            
 001104   |AMALLO, JOSE MANUEL                                                
 001105   |AMAR, EZEQUIEL                                                     
@@ -1049,7 +1049,7 @@ id_medico|medico
 001113   |AMBROSIS, AGUSTIN IGNACIO                                          
 001114   |AMELONG, VALERIA                                                   
 001115   |AMERISO, GUIDO ANDRES                                              
-001116   |AMERISO, NICOL√ÅS                                                   
+001116   |AMERISO, NICOL¡S                                                   
 001117   |AMITRANO, GUSTAVO ALEJANDRO                                        
 001118   |AMOR CURTI, RICARDO A.                                             
 001119   |AMOR, RICARDO TITO                                                 
@@ -1090,7 +1090,7 @@ id_medico|medico
 001156   |WESSOLOVSKI, SERGIO HERNAN                                         
 001157   |YEDRO, ERNESTO DANIEL                                              
 001158   |DE AGOSTINO, HOMERO AMILCAR                                        
-001159   |VAZQUEZ, GUSTAVO                                                   
+001159   |VAZQUEZ, GUSTAVO ALEJANDRO                                         
 001160   |CAPUOZZO, ATILIO MARIO                                             
 001161   |CAPURRO CORFIELD, JORGE LIONEL                                     
 001162   |CILIBERTO, FRANCISCO                                               
@@ -1098,8 +1098,8 @@ id_medico|medico
 001164   |CAPUTO, GERMAN AUGUSTO                                             
 001165   |CAPUTO, JUAN CARLOS                                                
 001166   |SERE TEDIN, IGNACIO ALFREDO                                        
-001167   |OZCOIDI, MARIA EVANGELINA                                          
-001168   |NI√ëO GOMEZ, DANIEL R.                                              
+001167   |OZCOIDI, MAR÷A EVANGELINA                                          
+001168   |NI—O GOMEZ, DANIEL R.                                              
 001169   |CARABAJAL, JOSE RAUL                                               
 001170   |CARABAJAL, JUAN CARLOS                                             
 001171   |CARABANTES, ANDRES OMAR                                            
@@ -1124,7 +1124,7 @@ id_medico|medico
 001190   |CARDENAS AZCUE, YTSVAN                                             
 001191   |CARDINALLI, GUILLERMO                                              
 001192   |CARDOSO, MARIO                                                     
-001193   |CARDOZO I√ëIGUEZ, MARIA LORENA                                      
+001193   |CARDOZO I•IGUEZ, MARIA LORENA                                      
 001194   |CARDOZO MENDEZ, DIEGO RAMON                                        
 001195   |CARICH, BARBARA                                                    
 001196   |CARIOLA, LUIS                                                      
@@ -1141,7 +1141,7 @@ id_medico|medico
 001207   |CARRASCO, MAURICIO                                                 
 001208   |CARRASCO, MIGUEL ANGEL                                             
 001209   |CARRASCO, NICOLAS ANTONIO                                          
-001210   |JHONNY ELIECER, CARRE¬•O SANCHEZ                                    
+001210   |JHONNY ELIECER, CARRE•O SANCHEZ                                    
 001212   |CARREON ROJAS, RENE OSCAR                                          
 001213   |BAYON, FLAVIO HERNAN                                               
 001214   |BAZAN, GABRIEL                                                     
@@ -1164,7 +1164,7 @@ id_medico|medico
 001231   |CARRIZO, DIEGO JOSE IGNACIO                                        
 001232   |CARRIZO GONZALEZ, JUAN ALBERTO                                     
 001233   |CARRIZO, NESTOR EDUARDO                                            
-001234   |BECKER, SEBASTIAN ALEJANDRO                                        
+001234   |BEKER, SEBASTIAN ALEJANDRO                                         
 001235   |CARRIZO, RICARDO JORGE                                             
 001239   |CARUSO, ROBERTO CARLOS                                             
 001240   |CARUSO, SEBASTIAN DANIEL                                           
@@ -1189,7 +1189,7 @@ id_medico|medico
 001259   |ANTUNEZ, GERMAN ESTEBAN                                            
 001260   |ANZE, CARDOZO PEDRO                                                
 001261   |BELLUZZO, MARIA VALERIA                                            
-001262   |A√ëON, MATIAS HUGO                                                  
+001262   |A—ON, MATIAS HUGO                                                  
 001263   |BELTRAME, ALEJANDRO JOSE                                           
 001264   |APARICIO AMPUERO, RODRIGO D.                                       
 001265   |APARICIO, JOSE LUIS                                                
@@ -1215,8 +1215,8 @@ id_medico|medico
 001290   |REINARES, FEDERICO MANUEL                                          
 001291   |SANTANNA, CARLOS DANIEL                                            
 001292   |MACRI, JORGE RICARDO                                               
-001293   |VELASCO CERVI√ëO, GUSTAVO OSCAR                                     
-001294   |CASTA√ëON, JORGE ARMANDO                                            
+001293   |VELASCO CERVI•O, GUSTAVO OSCAR                                     
+001294   |CASTA•ON, JORGE ARMANDO                                            
 001295   |CASTELLA, MARIA AGUSTINA                                           
 001296   |CASTELLAN, FABIAN JULIO                                            
 001298   |AQUINO, RICARDO HORACIO                                            
@@ -1269,7 +1269,7 @@ id_medico|medico
 001347   |CAYOJA HUANCA, JUAN A                                              
 001348   |CEA, IGNACIO                                                       
 001349   |CECI, JUAN CARLOS                                                  
-001350   |CEDE¬•O MOSQUERA, JULIO C                                           
+001350   |CEDE•O MOSQUERA, JULIO C                                           
 001351   |CEJAS GARCIA, SERGIO                                               
 001352   |CELERI, PEDRO P                                                    
 001353   |CELIA, GUILLERMO                                                   
@@ -1351,7 +1351,7 @@ id_medico|medico
 001437   |ARGENTE, SEBASTIAN                                                 
 001438   |ARGIBAY, GUSTAVO A.                                                
 001439   |ARGIBAY, JUAN CRUZ                                                 
-001440   |ARG√úELLES, SANTIAGO                                                
+001440   |ARG‹ELLES, SANTIAGO                                                
 001441   |GUARDIA MOYANO, GABRIELA                                           
 001443   |CENTENO, DIEGO                                                     
 001444   |CENTENO, JULIO                                                     
@@ -1473,11 +1473,11 @@ id_medico|medico
 001571   |BOGLIACINO, MARCELO EDUARDO                                        
 001573   |BOIANELLI, ANALIA CLAUDIA                                          
 001574   |BOIERO, JUAN PABLO                                                 
-001575   |BOLA√ëO BARRAZA, LUDWING ARMANDO                                    
+001575   |BOLA—O BARRAZA, LUDWING ARMANDO                                    
 001576   |ARIAS, ARIEL ANTONIO                                               
-001577   |BOLA√ëO JIMENEZ, JOSE LUIS                                          
-001578   |ARIAS, GUILLERMO JES√©S                                             
-001579   |BOLA√ëOS SOLARES, MARCO ANTONIO                                     
+001577   |BOLA—O JIMENEZ, JOSE LUIS                                          
+001578   |ARIAS, GUILLERMO JESÈS                                             
+001579   |BOLA—OS SOLARES, MARCO ANTONIO                                     
 001580   |ARIAS, JORGE EDUARDO                                               
 001581   |ARIAS, OSCAR RAMON                                                 
 001582   |BOLDRINI, GUSTAVO ALBERTO                                          
@@ -1488,9 +1488,9 @@ id_medico|medico
 001587   |ARIGOSSI, CARLOS RUBEN                                             
 001588   |ARINA, OSCAR ERNESTO                                               
 001589   |BOLOGNESI, JUAN EUGENIO                                            
-001590   |ARI√ëEZ BURGOA, RICHARD JOSE                                        
+001590   |ARI—EZ BURGOA, RICHARD JOSE                                        
 001591   |BONADEO, GONZALO                                                   
-001592   |ARMANDO, EDUARDO ANDRES                                            
+001592   |ARMANDO, EDUARDO ANDRêS                                            
 001593   |BONELL, ADRIAN FEDERICO                                            
 001594   |BONELLI, DANIEL HUGO                                               
 001595   |BONELLI, RODOLFO JESUS                                             
@@ -1538,7 +1538,7 @@ id_medico|medico
 001643   |LAURET, MAXIMILIANO                                                
 001644   |CARBALLADA, DANIEL                                                 
 001645   |TONELLI, ENZO RENE                                                 
-001646   |PI√ëERO, ALFONSO                                                    
+001646   |PI•ERO, ALFONSO                                                    
 001648   |DIAZ, CARLOS EDUARDO                                               
 001649   |RAMACCIOTTI, ALEJANDRO ROBERTO                                     
 001650   |PERNINI, CARLOS                                                    
@@ -1723,8 +1723,8 @@ id_medico|medico
 001846   |CZARNITZKI, TOMAS G                                                
 001847   |CZERNIECKI, ALFREDO                                                
 001848   |D`AMORE, MELISADAMORE@HOTMAIL.COM                                  
-001849   |D√ØONOFRIO, GERMAN M                                                
-001850   |D√ØAMICO, LEANDRO                                                   
+001849   |DÔONOFRIO, GERMAN M                                                
+001850   |DÔAMICO, LEANDRO                                                   
 001851   |DAMICO, PABLO OSVALDO                                              
 001852   |DAMOR, HERNAN P                                                    
 001854   |DELIA, MARTIN                                                      
@@ -1734,8 +1734,8 @@ id_medico|medico
 001858   |DABBAH, GUILLERMO                                                  
 001859   |PERROTTO, CHRISTIAN                                                
 001861   |SUAREZ, MARIANO                                                    
-001862   |D√ØASSARO, OSCAR                                                    
-001863   |D√ØELIA, MARTIN                                                     
+001862   |DÔASSARO, OSCAR                                                    
+001863   |DÔELIA, MARTIN                                                     
 001864   |DAFFUNCHIO, CARLA                                                  
 001865   |CRIFASI, NICOLAS MARCOS                                            
 001866   |DAGLIO, FERNANDO                                                   
@@ -1755,8 +1755,8 @@ id_medico|medico
 001880   |DALLO, IGNACIO                                                     
 001881   |DAMICO, RAFAEL S                                                   
 001882   |DAMONTE, MAXIMILIANO                                               
-001883   |D√ØANGELA, ALIDA J                                                  
-001884   |D√ØANGELO MOLINARI, FRANCISCO                                       
+001883   |DÔANGELA, ALIDA J                                                  
+001884   |DÔANGELO MOLINARI, FRANCISCO                                       
 001886   |BOSIO, SANTIAGO TOMAS                                              
 001887   |DANIELI, JAVIER                                                    
 001888   |BOTTA, JUAN MARTIN                                                 
@@ -1793,7 +1793,7 @@ id_medico|medico
 001921   |MIQUELARENA, AMADEO                                                
 001922   |ZARCON, JOSE ALBERTO                                               
 001923   |VERA BERTUCCIOLI, GERMAN ALBERTO                                   
-001924   |FRUTOS, GONZALO JOSE                                               
+001924   |FRUTOS, GONZALO JOSê                                               
 001925   |ESPINOSA, DIEGO                                                    
 001926   |GONZALEZ, MARCOS                                                   
 001928   |ARNAUDO, DANIEL ALBERTO                                            
@@ -1814,7 +1814,7 @@ id_medico|medico
 001946   |ARROYO CHOQUE, ALDO EMERZON                                        
 001947   |ARSEL, NICOLAS                                                     
 001948   |ARTUCIO, ANDRES JAVIER                                             
-001949   |ART√©S, DIEGO MIGUEL                                                
+001949   |ARTÈS, DIEGO MIGUEL                                                
 001950   |ARTUSI, LUIS MARIO                                                 
 001951   |MENVIELLE, FERNANDO                                                
 001952   |PANGARO, PEDRO                                                     
@@ -1850,7 +1850,7 @@ id_medico|medico
 001987   |AVALOS, WALTER HERNAN                                              
 001988   |AVANZI, ROBERTO                                                    
 001989   |AVEIRO, EDGARDO JEREMIAS                                           
-001990   |AVENDA√ëO LLAVE, JOS√â OSCAR                                         
+001990   |AVENDA—O LLAVE, JOS… OSCAR                                         
 001991   |AVERO GONZALEZ, RICHARD A.                                         
 001992   |AVIGLIANO, NESTOR                                                  
 001993   |AVILA, LEONARDO MIGUEL                                             
@@ -1869,7 +1869,7 @@ id_medico|medico
 002007   |AYERZA, MIGUEL ANGEL                                               
 002008   |AYMALE, CARLOS                                                     
 002009   |AYRE, ADRIAN MARCELO                                               
-002010   |AZA√ëERO ANAYA, RAFAEL LENIN                                        
+002010   |AZA—ERO ANAYA, RAFAEL LENIN                                        
 002012   |AZCOAGA, PABLO ALEJANDRO                                           
 002013   |AZCONA, ANTONIO JOSE                                               
 002014   |PAGES, ANDRES                                                      
@@ -1878,7 +1878,7 @@ id_medico|medico
 002017   |SCHIAROLI, HECTOR                                                  
 002018   |BOVE, GUILLERMO OSVALDO                                            
 002019   |GONZALEZ, JORGE OSCAR                                              
-002020   |MU√ëOZ, MARCELO                                                     
+002020   |MU•OZ, MARCELO                                                     
 002021   |SCHMIDT, ROMINA VIVIAN                                             
 002022   |TORRE, MARIA CANDELARIA                                            
 002023   |FROMAGET, MARTIN RICARDO                                           
@@ -1966,7 +1966,7 @@ id_medico|medico
 002118   |BRITEZ, PAULA MARINA                                               
 002119   |MARINARO, DANIEL EDUARDO                                           
 002120   |DEGROSSI, FERNANDO PABLO                                           
-002121   |DEHTER, GABRIEL                                                    
+002121   |DEHETER, GABRIEL                                                   
 002122   |DEL BUONO, CARLOS MARCELO                                          
 002123   |LEIVA SERSING, WALTER ENRIQUE                                      
 002125   |BULOS, CLAUDIO                                                     
@@ -1994,7 +1994,7 @@ id_medico|medico
 002148   |DEL TUFO, JUAN IGNACIO                                             
 002149   |DEL VAL, JORGE JAVIER                                              
 002150   |DEL VALLE, ANDRES OSVALDO                                          
-002153   |D≈ΩELIA, MARIANO CARLOS                                             
+002153   |DÔELIA, MARIANO CARLOS                                             
 002154   |DELLA ROSA, LUCIANO ANTONIO                                        
 002155   |DELLA VEDOVA, FRANCO                                               
 002156   |DELLE DONNE, JOSE ALBERTO                                          
@@ -2043,7 +2043,7 @@ id_medico|medico
 002206   |MENUTTI, MARCELO MARTIN                                            
 002207   |PARODI, RAUL EDUARDO                                               
 002208   |MUGNAINI, ROBERTO ANGEL                                            
-002209   |PI√ëERO, MARCELO                                                    
+002209   |PI•ERO, MARCELO                                                    
 002210   |PAEZ VEGA, DAVID ALEJANDRO                                         
 002211   |VALDEZ, MARIANO                                                    
 002212   |RACCA, MARCELO                                                     
@@ -2087,7 +2087,7 @@ id_medico|medico
 002250   |DIAZ, ALBERTO EZEQUIEL                                             
 002251   |DIAZ BANCALARI, LEONARDO SEBASTIAN                                 
 002252   |DIAZ, CARLOS EDUARDO                                               
-002253   |DIAZ CARRE√ëO, RODRIGO ANIBAL                                       
+002253   |DIAZ CARRE•O, RODRIGO ANIBAL                                       
 002254   |DIAZ CORDOBA, NERI RUBEN                                           
 002255   |DIAZ, CRISTIAN                                                     
 002256   |DIAZ, FACUNDO RODOLFO                                              
@@ -2108,7 +2108,7 @@ id_medico|medico
 002272   |EDELBERG, FERNANDO JORGE                                           
 002273   |EDER, CLAUDIO EDGARDO                                              
 002274   |MONTENEGRO, MARTIN DANIEL                                          
-002275   |PATI√ëO, JUAN MARTIN                                                
+002275   |PATI—O, JUAN MARTIN                                                
 002276   |QUIROGA, REYNALDO MARTIN                                           
 002277   |MUSSINI, DANIEL                                                    
 002278   |DUCA, JUAN IGNACIO                                                 
@@ -2166,8 +2166,8 @@ id_medico|medico
 002333   |BUGNONE, GUILLERMO                                                 
 002334   |REQUENA, RODRIGO                                                   
 002335   |BULACIOS, ADOLFO                                                   
-002336   |BULACIOS MU√ëIZ, GRISELDA IRENE                                     
-002337   |BULFARO, CARLOS DANIEL                                             
+002336   |BULACIOS MU•IZ, GRISELDA IRENE                                     
+002337   |BULFARO, CARLOS                                                    
 002338   |BUNIVA, JERONIMO OSCAR                                             
 002339   |BURGER, MARTIN                                                     
 002340   |BURGO, FEDERICO JOSE                                               
@@ -2188,7 +2188,7 @@ id_medico|medico
 002355   |BUTTARO, MARTIN ALEJANDRO                                          
 002356   |BUTTERI, ANA INES                                                  
 002357   |BUXEDA, JAVIER                                                     
-002359   |BARZALLO NU√ëEZ, JAVIER EDUARDO                                     
+002359   |BARZALLO NU—EZ, JAVIER EDUARDO                                     
 002360   |BASSO, ENRIQUE                                                     
 002361   |EGEA, GUILLERMO SANTIAGO                                           
 002362   |FA, ENRIQUE                                                        
@@ -2208,7 +2208,7 @@ id_medico|medico
 002376   |FADEL, JULIO                                                       
 002377   |ELJURE, GASTON VICTOR MANUEL                                       
 002379   |FADEL, PABLO EZEQUIEL                                              
-002380   |ELLENBERG, FEDERICO NICOL¬µS                                        
+002380   |ELLENBERG, FEDERICO NICOLµS                                        
 002381   |ELLI, MARIO ALBERTO                                                
 002382   |ELVERDIN, MARCOS ALFREDO                                           
 002383   |ENCINAS FERNANDEZ, JUAN CARLOS                                     
@@ -2258,7 +2258,7 @@ id_medico|medico
 002428   |DUARTE, NICOLAS SEBASTIAN                                          
 002429   |DUCA, JUAN IGNACIO                                                 
 002430   |DUELLA, JULIO                                                      
-002431   |BUE√ëAS PALACIOS, LUIS ANDRES                                       
+002431   |DUE•AS PALACIOS, LUIS ANDRES                                       
 002432   |FEDERICO, EDGARDO                                                  
 002433   |DUFOUR, EDUARDO                                                    
 002434   |DUHALDE, CARLOS HORACIO                                            
@@ -2325,7 +2325,7 @@ id_medico|medico
 002506   |FERNANDEZ VALLS, FACUNDO                                           
 002507   |FERNANDEZ, VICTOR RICARDO                                          
 002508   |GABRIELE, FABIO ALEJANDRO                                          
-002509   |FERNANDEZ VI√ëA, SEBASTIAN LORENZO                                  
+002509   |FERNANDEZ VI•A, SEBASTIAN LORENZO                                  
 002510   |GAGGERO, JAVIER                                                    
 002511   |FERNANDEZ, WALTER ABEL                                             
 002512   |FERNANDEZ ZAVALIA, MARTIN                                          
@@ -2493,7 +2493,7 @@ id_medico|medico
 002683   |GARFUNKEL, CARLOS                                                  
 002684   |FONT, MARTIN ADOLFO                                                
 002685   |GARMA COCITTO, MANUEL ANTONIO                                      
-002686   |FONTE¬•EZ, RODRIGO MARTIN                                           
+002686   |FONTE•EZ, RODRIGO MARTIN                                           
 002687   |GARNICA, FRANCO RAFAEL                                             
 002688   |GARRAFA, CARLOS EMILIO                                             
 002689   |FORCONI, JORGE JULIAN                                              
@@ -2523,20 +2523,20 @@ id_medico|medico
 002713   |FORTIER, PEDRO CEFERINO                                            
 002714   |FOSCOLO, ADRIAN GABRIEL                                            
 002715   |ESLAVA, SANTIAGO ERNESTO                                           
-002716   |SPAGNOLO, ROBERTO                                                  
+002716   |ESPAGNOL, ROBERTO                                                  
 002717   |ESPAIN, JOAQUIN                                                    
-002718   |ESPA√ëA JACOME, JOSE ANDRES                                         
+002718   |ESPA—A JACOME, JOSE ANDRES                                         
 002719   |MARINARO, FRANCISCO                                                
 002720   |ESPARTARO, RODRIGO EDUARDO                                         
 002721   |ESPECHE, ALEJANDRO FEDERICO                                        
 002722   |ESPECHE, CARLOS EDUARDO                                            
 002723   |ESPECHE, MARTIN GUSTAVO                                            
 002724   |ESPIL, GUILLERMO ANDRES                                            
-002725   |ESP√ñNDOLA, LUCIANA                                                 
+002725   |ESP÷NDOLA, LUCIANA                                                 
 002726   |ESPINOLA, CAMILO JUAN JOSE                                         
 002728   |ESPINOSA, JOSE MARIA                                               
 002729   |ESPINOZA ROJAS, JAIME ALFREDO                                      
-002730   |ESPI√ëA, JUDITH ANALIA                                              
+002730   |ESPI•A, JUDITH ANALIA                                              
 002731   |ESPOSITO, CARLOS NORBERTO                                          
 002732   |ESPOSITO, JORGE ALEJANDRO                                          
 002733   |ESPOSITO, JULIO ALBERTO                                            
@@ -2546,9 +2546,9 @@ id_medico|medico
 002737   |COSCOIOLLA, MATIAS                                                 
 002738   |ESQUIVEL, JULIO HOSWARD                                            
 002739   |ESQUIVEL, LUCIANO                                                  
-002740   |ESTENSORO, MIGUEL RAM√†N                                            
+002740   |ESTENSORO, MIGUEL RAM‡N                                            
 002741   |ESTEVEZ, ARIEL ALBERTO                                             
-002742   |ESTEVEZ, HUANACU HECTOR                                            
+002742   |ESTêVEZ, HUANACU HêCTOR                                            
 002743   |GAUNA, JUAN JOSE                                                   
 002744   |ESTEVEZ, MARTIN RODRIGO                                            
 002745   |GAUNA, PEDRO HECTOR                                                
@@ -2666,7 +2666,7 @@ id_medico|medico
 002864   |GIMENEZ, MARIA VIRGINIA                                            
 002865   |HERNANDEZ ALVARO, DOMINGO                                          
 002866   |HERNANDEZ, DIEGO                                                   
-002867   |HERN¬µNDEZ, EDGARDO JAVIER                                          
+002867   |HERNµNDEZ, EDGARDO JAVIER                                          
 002869   |IANNINO, MERCEDES BEATRIZ                                          
 002870   |HERNANDEZ, EMILIO DAVID                                            
 002871   |IAPALUCCI, GUSTAVO HERNAN                                          
@@ -2676,12 +2676,12 @@ id_medico|medico
 002878   |HERNANDEZ RUBIO, ARIEL MARIANO                                     
 002879   |GIMENEZ, MARTIN ALEJANDRO                                          
 002880   |GIMENEZ, MATIAS RICARDO                                            
-002881   |IBA√ëEZ, JOSE ROLANDO                                               
+002881   |IBA•EZ, JOSE ROLANDO                                               
 002882   |HERRADOR, MARIANA                                                  
 002883   |GIMENEZ NAVARRO, JUAN IGNACIO                                      
-002884   |IBA√ëEZ, LUIS ALBERTO                                               
+002884   |IBA•EZ, LUIS ALBERTO                                               
 002887   |GIMENEZ, ROQUE DANIEL                                              
-002888   |IBA√ëEZ SIERRA, MARTIN ARIEL                                        
+002888   |IBA•EZ SIERRA, MARTIN ARIEL                                        
 002889   |GINGILLI, HERNAN FAUSTO                                            
 002890   |IBARRA, LUIS                                                       
 002891   |GINI, MARTIN                                                       
@@ -2728,7 +2728,7 @@ id_medico|medico
 002938   |IHLENFELD, CLAUDIA ALEJANDRA                                       
 002939   |HORTAL, GUSTAVO ORLANDO                                            
 002940   |GLIKSON, ANDRES PEDRO                                              
-002941   |HORUE PONTORIERO, GAST√†N                                           
+002941   |HORUE PONTORIERO, GAST‡N                                           
 002942   |HORVATH, JUAN PABLO                                                
 002943   |HOURCADE, LUCIANA VANINA                                           
 002944   |HOUSSAY, ROBERTO EMILIO                                            
@@ -2755,13 +2755,13 @@ id_medico|medico
 002966   |GLOAZZO, ALDANA LIA                                                
 002968   |IRAPORDA, HORACIO                                                  
 002969   |GLOWAKRZYWO, DANIEL ADRIAN                                         
-002972   |IBA√ëEZ, ANALIA HILDA                                               
+002972   |IBA•EZ, ANALIA HILDA                                               
 002973   |GOBBATO, JUAN                                                      
 002974   |IRIARTE, CLAUDIO MARTIN                                            
 002975   |GOBBI, ENRIQUE AUGUSTO                                             
 002976   |IRIBERRY, ANGELES MARIA                                            
 002977   |GOBBI, GUILLERMO JULIO                                             
-002978   |IBA√ëEZ, FEDERICO                                                   
+002978   |IBA•EZ, FEDERICO                                                   
 002979   |GODOY ALDARO, ALFREDO OSVALDO                                      
 002980   |ISCARO BRAVO, FERNANDO GABRIEL                                     
 002981   |GODOY, ALEJANDRO GERMAN                                            
@@ -3180,7 +3180,7 @@ id_medico|medico
 003422   |LIZARAZU, ALEJANDRO FABIAN                                         
 003423   |LLANOS, ROBERTO OSCAR                                              
 003424   |LLODRA, RAUL FRANCISCO                                             
-003425   |LLORENTE MART√ñNEZ, DIONISIO                                        
+003425   |LLORENTE MART÷NEZ, DIONISIO                                        
 003426   |LLORENTE PESTANA, HUGO NELSON                                      
 003427   |OVIEDO, PATRICIO                                                   
 003430   |LA VILLA, MARCELA                                                  
@@ -3230,7 +3230,7 @@ id_medico|medico
 003477   |LOPEZ, DARIO ALBERTO                                               
 003478   |LOPEZ, DAVID ALFREDO                                               
 003479   |LOPEZ, DIEGO                                                       
-003480   |L√†PEZ, FRANCO GONZALO                                              
+003480   |L‡PEZ, FRANCO GONZALO                                              
 003481   |LOPEZ FRIERA, MARIA ARNELIX                                        
 003482   |LOPEZ GONZALEZ, JORGE ESTEBAN                                      
 003483   |LOPEZ, JIMENEZ HERNAN                                              
@@ -3250,7 +3250,7 @@ id_medico|medico
 003497   |LOPEZ, MARTIN GUSTAVO                                              
 003498   |LOPEZ MILLAN, LUCAS MATIAS                                         
 003499   |LOPEZ, OSCAR JULIO                                                 
-003500   |LAPEZ PEREZ, JUAN MANUEL                                           
+003500   |L‡PEZ PêREZ, JUAN MANUEL                                           
 003501   |LOPEZ PROUMEN, IGNACIO                                             
 003502   |LOPEZ, RAMON SEBASTIAN                                             
 003503   |LOPEZ, ROBERTO                                                     
@@ -3294,8 +3294,8 @@ id_medico|medico
 003547   |LUCERO, SAA FRANCISCO                                              
 003548   |LUCHETTI, MARIANA ANGELA                                           
 003549   |LUCHINI, MARCELO ABEL                                              
-003550   |LUCIONI, FLORENCIA MARIA                                           
-003551   |LUDUE√ëA, REYNALDO ALDO                                             
+003550   |LUCIONI, FLORENCIA MAR÷A                                           
+003551   |LUDUE•A, REYNALDO ALDO                                             
 003552   |LUENGO, MARTA ALICIA                                               
 003554   |LUGO ACEVEDO, 4434020                                              
 003555   |LUGONES, ANDRES RICARDO                                            
@@ -3379,7 +3379,7 @@ id_medico|medico
 003643   |GUINDER, ARIEL ALFREDO                                             
 003644   |GUINZBURG, PABLO JOSE                                              
 003645   |GUITIAN, DANIEL ESTEBAN                                            
-003646   |GUMPEL, GUSTAVO ANDRES                                             
+003646   |GUMPEL, GUSTVO ANDRES                                              
 003647   |GUNTERN CHEMES, PABLO SEBASTIAN                                    
 003648   |GUOLO, CAROLINA                                                    
 003649   |GUTIERREZ COLOMBRES, BENJAMIN                                      
@@ -3579,7 +3579,7 @@ id_medico|medico
 003856   |MICHELLI, MYRIAN                                                   
 003857   |GUINCHET, DIEGO                                                    
 003858   |ZABALZA, HUGO DAVID                                                
-003859   |MU√ëOZ, JORGE CEFERINO                                              
+003859   |MU•OZ, JORGE CEFERINO                                              
 003860   |ULLOQUE, FERNANDO                                                  
 003861   |BARBATTI, HERNAN                                                   
 003862   |TRUSSI, FERNANDO                                                   
@@ -3616,7 +3616,7 @@ id_medico|medico
 003894   |PAVIA, MARIANO                                                     
 003895   |MANZONE BARRANCO, SILVIA VERONI                                    
 003896   |MANZONE, PATRICIO PABLO                                            
-003897   |MA√ëERO, LUCIANO MARTIN                                             
+003897   |MA—ERO, LUCIANO MARTIN                                             
 003898   |MAQUIRRIAIN, JAVIER                                                
 003899   |MARABINI, JAVIER MARIO                                             
 003900   |GONZALBEZ, VICENTE                                                 
@@ -3629,7 +3629,7 @@ id_medico|medico
 003908   |PESSIO, FELIX DANIEL                                               
 003909   |MARCHISSIO, JORGE ANTONIO                                          
 003910   |TRONCONI, SEBASTIAN                                                
-003911   |MARC√†, BERNARDO MART√ñN                                             
+003911   |MARC‡, BERNARDO MART÷N                                             
 003914   |MARCOS, ROBERTO                                                    
 003915   |MARCOS, RUBEN DARIO                                                
 003916   |MARECO CEVER, IVAN                                                 
@@ -3648,7 +3648,7 @@ id_medico|medico
 003932   |MARINO RODRIGUEZ, LORENA BETIA                                     
 003933   |YERMANOS, VALERIA                                                  
 003934   |MARINUCCI, IGNACIO SEBASTIAN                                       
-003935   |MARI√ëO AVALOS, EDUARDO                                             
+003935   |MARI•O AVALOS, EDUARDO                                             
 003936   |MARKARIAN, EDUARDO ALEXIS                                          
 003937   |MARKAUSKAS, SERGIO JOSE                                            
 003939   |MAROTTA BORRELLI, CARLOS                                           
@@ -3671,7 +3671,7 @@ id_medico|medico
 003959   |KRAWIEC, ALBERTO                                                   
 003960   |SALA, JULIO LUIS                                                   
 003961   |RAMACIOTTI, PABLO                                                  
-003962   |MULC, MARIO IV¬µN                                                   
+003962   |MULC, MARIO IVµN                                                   
 003963   |RAMOS, DAMIAN                                                      
 003964   |DOMINGUEZ, RODRIGO                                                 
 003965   |MARTIN, AGUSTIN                                                    
@@ -3783,25 +3783,25 @@ id_medico|medico
 004076   |MONGES LUCES, MIGUEL ANGEL                                         
 004078   |MONTALTO, JOSE                                                     
 004079   |NOVOA, JOSE LUIS                                                   
-004080   |MONTA√ëO TORO, ALVARO HERNAN                                        
-004081   |MONTA√ëO URNA, MARCELO                                              
+004080   |MONTA•O TORO, ALVARO HERNAN                                        
+004081   |MONTA•O URNA, MARCELO                                              
 004082   |NUMATA, PABLO SEBASTIAN                                            
 004083   |MONTELEONE, HUGO ALBERTO                                           
-004084   |NU√ëEZ, ALEJANDRO ANDRES                                            
+004084   |NU•EZ, ALEJANDRO ANDRêS                                            
 004085   |MONTELLANO, NESTOR EDUARDO                                         
-004086   |NU√ëEZ CERVANTES, GASPAR ENRIQUE                                    
-004087   |NU√ëEZ IBA√ëEZ, LEANDRO OSCAR                                        
+004086   |NU—EZ CERVANTES, GASPAR ENRIQUE                                    
+004087   |NU•EZ IBA•EZ, LEANDRO OSCAR                                        
 004088   |MONTENEGRO, AGUSTIN ALBERTO                                        
-004089   |NU√ëEZ, JAVIER EDUARDO                                              
+004089   |NU•EZ, JAVIER EDUARDO                                              
 004090   |MONTENEGRO, DANTE SEBASTIAN                                        
-004091   |NU√ëEZ, LEANDRO VICTOR                                              
+004091   |NU•EZ, LEANDRO VICTOR                                              
 004092   |MONTENEGRO, FERNANDO FABIAN                                        
-004093   |NU√ëEZ, LEONARDO ANDRES                                             
-004095   |NU√ëEZ, OSVALDO DANIEL                                              
-004096   |NU√ëEZ, PABLO DANIEL                                                
+004093   |NU•EZ, LEONARDO ANDRES                                             
+004095   |NU•EZ, OSVALDO DANIEL                                              
+004096   |NU•EZ, PABLO DANIEL                                                
 004097   |MONTENEGRO, NESTOR MARCELO                                         
-004098   |NU√ëEZ PE√ëALOZA, ALVARO CARLOS                                      
-004099   |NU√ëEZ, ROBERTO EDGAR                                               
+004098   |NU•EZ PE•ALOZA, ALVARO CARLOS                                      
+004099   |NU•EZ, ROBERTO EDGAR                                               
 004100   |NUOVA, PABLO JOSE                                                  
 004101   |NUSFAMER, JUAN ANGEL                                               
 004102   |OTEGUI CALZADA, LUIS PABLO                                         
@@ -3964,7 +3964,7 @@ id_medico|medico
 004269   |OCHOA PALACIOS GALO, ANDRES                                        
 004270   |OCHOA PEREZ, CESAR CEFERINO                                        
 004271   |ODA, SAKURAKO                                                      
-004273   |OJEDA S¬öLZLE, MICHAEL                                              
+004273   |OJEDA SöLZLE, MICHAEL                                              
 004274   |OLAZABAL, ALFREDO                                                  
 004275   |OLAZARRI, FEDERICO EMMANUEL                                        
 004276   |OLEGO, FABRICIO ARIEL                                              
@@ -3974,11 +3974,11 @@ id_medico|medico
 004280   |OLIVA, CESAR MAURICIO                                              
 004281   |OLIVA, GUILLERMO                                                   
 004282   |OLIVA, MARIA FERNANDA                                              
-004283   |OLIVEIRA, LOPES ANDRE                                              
+004283   |OLIVEIRA, LOPES ANDRê                                              
 004284   |OLIVERA, JUAN MANUEL                                               
 004285   |OLIVERA, MARIO CESAR                                               
 004286   |OLIVEROS, MELGAREJO JAIME                                          
-004287   |OLIVEROS, OSCAR RA√©L                                               
+004287   |OLIVEROS, OSCAR RAÈL                                               
 004288   |OLIVETTO, JAVIER MARTIN                                            
 004289   |OLIVETTO, ROBERTO                                                  
 004290   |OLIVETTO, SUSANA AIDEE                                             
@@ -3993,8 +3993,8 @@ id_medico|medico
 004299   |OLMOS, MANUEL IGNACIO                                              
 004300   |OLMOS, WALTER PABLO                                                
 004301   |ONGAY, JUAN MANUEL                                                 
-004302   |O√ëA, VALENT√ñN                                                      
-004303   |O√ëATIVA, JOSE IGNACIO                                              
+004302   |O•A, VALENT÷N                                                      
+004303   |O•ATIVIA, JOSê IGNACIO                                             
 004304   |ORDENAVIA, MARCELO RUBEN                                           
 004305   |PINO, MONICA DEL CARMEN                                            
 004306   |STEFANI, FABIO DANIEL                                              
@@ -4002,7 +4002,7 @@ id_medico|medico
 004308   |TOMAS, GUILLERMO                                                   
 004309   |URIA, HECTOR                                                       
 004310   |ZECCHINI DEL VALLE, LORENA                                         
-004311   |ORDO√ëEZ, DIEGO RAMIRO                                              
+004311   |ORDO•EZ, DIEGO RAMIRO                                              
 004313   |ORELLANA, MARIA                                                    
 004315   |ORELLANA SADIR, JORGE MARTIN                                       
 004316   |ORELLANO, ARMANDO                                                  
@@ -4028,7 +4028,7 @@ id_medico|medico
 004336   |OSCANOA GUTIERREZ, ORLANDO                                         
 004337   |OSORIO FERNANDEZ, SEBASTIAN                                        
 004338   |OSORIO SARMIENTO, LUIS ALBERTO                                     
-004339   |OTA√ëO SAHORES, ARTURO                                              
+004339   |OTA•O SAHORES, ARTURO                                              
 004340   |OTERO, ADALI SOL                                                   
 004341   |OTERO, DAMIAN FERNANDO                                             
 004342   |OTERO GARCIA, ALVARO                                               
@@ -4046,7 +4046,7 @@ id_medico|medico
 004354   |OVIEDO, HECTOR                                                     
 004355   |OVIEDO, JUAN PATRICIO                                              
 004356   |OVIEDO, MARIO ESTEBAN                                              
-004357   |OZCOIDI, MAR√ñA EVANGELINA                                          
+004357   |OZCOIDI, MAR÷A EVANGELINA                                          
 004358   |OZOLS, ANDRESC                                                     
 004359   |SCHEVERIN, NICOLAS ALEJANDRO                                       
 004360   |STASI, JOSE OCTAVIO                                                
@@ -4096,7 +4096,7 @@ id_medico|medico
 004406   |OCAMPO, .                                                          
 004407   |PATERNO, DANIEL                                                    
 004408   |CEJAS, ELVIO                                                       
-004409   |QUINTELA DANIEL, ANTONIO LUIS                                      
+004409   |QUINTELA DA•HEL, ANTONIO LUIS                                      
 004410   |ZARZON, -                                                          
 004411   |SAPALCHUT, DANIEL                                                  
 004412   |VERON, JOSE                                                        
@@ -4109,7 +4109,7 @@ id_medico|medico
 004419   |FRACARO, DANIEL                                                    
 004420   |LOPEZ, HUGO                                                        
 004422   |SILBERMAN, FERNANDO ANDRES                                         
-004423   |ACU√ëA, DANIEL                                                      
+004423   |ACU—A, DANIEL                                                      
 004424   |PERONA, SEBASTIAN                                                  
 004425   |DOINO, PABLO                                                       
 004426   |ALCARAZ, ALVARO                                                    
@@ -4167,7 +4167,7 @@ id_medico|medico
 004478   |VARVELLO, EDAGARDO                                                 
 004479   |SAROTTI, ROBERTO                                                   
 004480   |LAVIGNE, FERNANDO                                                  
-004481   |TAMA¬•O, ARIEL                                                      
+004481   |TAMA•O, ARIEL                                                      
 004482   |MORELLI, HECTOR                                                    
 004484   |RODRIGUEZ, MAXIMILIANO                                             
 004485   |ALESIO, JAVIER                                                     
@@ -4269,9 +4269,9 @@ id_medico|medico
 004587   |PENER, ENRIQUE                                                     
 004588   |PENICO, EDUARDO                                                    
 004589   |PENIDO, GUSTAVO                                                    
-004591   |PE√ëA, ELISEO                                                       
-004592   |PE√ëA MARTINEZ, SANTIAGO IGNACIO                                    
-004593   |PE√ëAFORT, RAMON                                                    
+004591   |PE•A, ELISEO                                                       
+004592   |PE•A MARTINEZ, SANTIAGO IGNACIO                                    
+004593   |PE•AFORT, RAMON                                                    
 004594   |PERALTA, CARLOS A                                                  
 004595   |PERALTA, CARLOS ALBERTO                                            
 004596   |PERALTA, CLAUDIO MARCELO                                           
@@ -4285,7 +4285,7 @@ id_medico|medico
 004604   |PEREA, AGUSTIN OSCAR                                               
 004605   |PEREDO, CLAUDIO                                                    
 004606   |PEREIRA, ALEJANDRO MANUEL                                          
-004607   |PEREIRA AVENDA√ëO, MANUEL ALBERT                                    
+004607   |PEREIRA AVENDA—O, MANUEL ALBERT                                    
 004608   |PEREIRA DUARTE, CARLOS HORACIO                                     
 004609   |PEREIRA DUARTE, MATIAS                                             
 004611   |PEREIRA, FRANCISCO JAVIER                                          
@@ -4379,7 +4379,7 @@ id_medico|medico
 004704   |PATALANO, LUIS ALBERTO                                             
 004706   |PATERNO, MARTIN MIGUEL                                             
 004708   |PATETTA, VICTORIA ELENA                                            
-004709   |PATI√ëO, OSVALDO                                                    
+004709   |PATI—O, OSVALDO                                                    
 004710   |PATRUCCO, HECTOR                                                   
 004711   |PATTHAUER, LUCIANO                                                 
 004712   |PATTI, LEONARDO SALVADOR                                           
@@ -4397,7 +4397,7 @@ id_medico|medico
 004724   |PAZ, BALKA ADAM                                                    
 004725   |PAZ, CLAUDIO GERARDO                                               
 004726   |PAZ, EDUARDO AGUSTIN                                               
-004727   |PAZ, GERARDO MART√ñN                                                
+004727   |PAZ, GERARDO MART÷N                                                
 004728   |PAZ, JULIO                                                         
 004729   |PAZ, MIGUEL JUSTO MARIANO                                          
 004730   |PIANA, CARLOS ALBERTO                                              
@@ -4426,8 +4426,8 @@ id_medico|medico
 004755   |PINTO, MIGUEL ANGEL                                                
 004756   |PINTOS, ANDRES HONORIO                                             
 004757   |PINTOS, LUIS FERNANDO                                              
-004758   |PI√ëERO, JOSE ANTONIO                                               
-004760   |PI√ëERO, GUSTAVO MARCELO                                            
+004758   |PI•EIRO, JOSE ANTONIO                                              
+004760   |PI•ERO, GUSTAVO MARCELO                                            
 004762   |PIQUE COVONE, FERNANDO                                             
 004763   |POLIMENI, FEDERICO SEBASTIAN                                       
 004764   |POLINI, ALVARO CARLOS                                              
@@ -4443,7 +4443,7 @@ id_medico|medico
 004774   |PIUZZI, NICOLAS SANTIAGO                                           
 004775   |PIVATO, DIEGO HERNAN                                               
 004776   |PIZARRO, NESTOR JAVIER                                             
-004777   |YA√ëEZ, MARCELO                                                     
+004777   |YA•EZ, MARCELO                                                     
 004778   |RONDON, LUIS EDUARDO                                               
 004779   |AGUDO, JORGE                                                       
 004780   |CLAVERO, -                                                         
@@ -4582,7 +4582,7 @@ id_medico|medico
 004922   |QUESADA, JAVIER JOSE                                               
 004923   |QUEVEDO, OSVALDO ERNESTO                                           
 004924   |QUINTEROS, ROBERTO FERNANDO                                        
-004925   |QUI√ëONES, NESTOR ARIEL                                             
+004925   |QUI•ONES, NESTOR ARIEL                                             
 004926   |QUIROGA, JORGE RAUL                                                
 004928   |QUIROZ ESCOBAR, BASILIO EBERT                                      
 004929   |QUIROZ, LEONARDO JAVIER                                            
@@ -4615,7 +4615,7 @@ id_medico|medico
 004957   |RAMOS, JORGE                                                       
 004958   |RAMOS, LUCIO ADRIAN                                                
 004959   |RAMOS OVIEDO, JORGE MIGUEL                                         
-004960   |RAMOS VERTIZ, ALEJANDRO JOSE                                       
+004960   |RAMOS VERTIZ, ALEJANDRO JOSê                                       
 004962   |RANALLI, SANTIAGO                                                  
 004964   |RANEA, FRANCISCO                                                   
 004965   |RANEA, PABLO AUGUSTO                                               
@@ -4700,7 +4700,7 @@ id_medico|medico
 005048   |LOPEZ, LEONARDO                                                    
 005049   |GOMEZ, GONZALO                                                     
 005050   |PASCUAL, ADRIAN                                                    
-005051   |CARRE√ëO, GABRIEL                                                   
+005051   |CARRE•O, GABRIEL                                                   
 005052   |DAVID, MARIO M                                                     
 005053   |ZALAFIA, -                                                         
 005054   |BIANCHI, GISELA                                                    
@@ -4711,7 +4711,7 @@ id_medico|medico
 005059   |ABRAHAM, VICTOR                                                    
 005060   |REGIANNI, .                                                        
 005061   |SCANDOLA, FEDERICO                                                 
-005062   |MARU√ëAK, MATHIAS                                                   
+005062   |MARU•AK, MATHIAS                                                   
 005063   |ALMADA, LUIS MARCELO                                               
 005064   |BASTARD, MARTIN                                                    
 005065   |BEQUER, SEBASTIAN                                                  
@@ -4766,7 +4766,7 @@ id_medico|medico
 005115   |CRESPI, MARIA ELIZABETH                                            
 005116   |NICOLAS, VARELA                                                    
 005117   |ALONSO, MARCOS                                                     
-005118   |BA√ëOS, HECTOR                                                      
+005118   |BA•OS, HECTOR                                                      
 005119   |ACCOTTO, ARIEL                                                     
 005120   |GOMEZ, ARIEL                                                       
 005121   |MONTEVERDE, ALBERTO                                                
@@ -4802,7 +4802,7 @@ id_medico|medico
 005151   |MARCHEGIANI, NORA                                                  
 005152   |MORERE, JORGE                                                      
 005153   |STAUDT, CESAR MARTIN                                               
-005154   |NU√ëEZ, GUSTAVO                                                     
+005154   |NU•EZ, GUSTAVO                                                     
 005155   |ASCHIERI, MARCELO                                                  
 005156   |BERTONA, CARLOS                                                    
 005157   |SIRI, MARTIN                                                       
@@ -4835,7 +4835,7 @@ id_medico|medico
 005185   |KAIRUS, ALEJANDRO                                                  
 005186   |SOTO, GERARDO                                                      
 005187   |ZAPICO, LUIS                                                       
-005188   |VILARI√ëO, JUAN MARTIN                                              
+005188   |VILARI•O, JUAN MARTIN                                              
 005189   |VALS, RODRIGO                                                      
 005190   |BUSTAMANTE, LUIS                                                   
 005191   |RISMA, LEONARDO                                                    
@@ -4978,7 +4978,7 @@ id_medico|medico
 005333   |COSTA, IVAN                                                        
 005334   |MANTARAS, GUILLERMO                                                
 005335   |RIVA, MARCELO                                                      
-005336   |MA√ëERO, LUCIANO                                                    
+005336   |MA•ERO, LUCIANO                                                    
 005337   |BARRIOS, GUSTAVO                                                   
 005338   |HUACHIQUEO, VICTOR                                                 
 005339   |ALTAMIRANDA, JOSE                                                  
@@ -5053,11 +5053,11 @@ id_medico|medico
 005415   |PICO, RODRIGO                                                      
 005416   |REBOIRAS, JUAN LUCAS                                               
 005417   |SANGUINETTI, JONAS                                                 
-005418   |SARABIA SALAS, FREDDY                                              
+005418   |SARABIA SALIAS, FREDDY                                             
 005419   |SCHENONE, GRISELDA                                                 
 005420   |ZANARDO, GUILLERMO                                                 
 005421   |VILA, SERGIO                                                       
-005422   |MURUA, LUIS                                                        
+005422   |MURUA, ßLUIS                                                       
 005423   |MAITA, IVAN ESCOBAR                                                
 005424   |VERON, OSCAR                                                       
 005426   |DIAZ VENTURO, WALTER                                               
@@ -5135,7 +5135,7 @@ id_medico|medico
 005504   |BOSSHARDT, AUGUSTO                                                 
 005505   |KOHAN, SERGIO                                                      
 005506   |VICO, JOSE                                                         
-005508   |A CORNERO, CARLOS                                                  
+005508   |ACCORNERO, CARLOS                                                  
 005509   |URPI, JUAN                                                         
 005510   |CEJAS, MANUEL                                                      
 005511   |SANDER, DARIO                                                      
@@ -5171,7 +5171,7 @@ id_medico|medico
 005553   |ROSALES, RICARDO                                                   
 005555   |COPPOLA, ESTEBAN                                                   
 005557   |MOCHEN, PABLO                                                      
-005562   |PI√ëEIRO, LEANDRO                                                   
+005562   |PI•EIRO, LEANDRO                                                   
 005575   |LUQUE, GUSTAVO                                                     
 005576   |LLAVER, GERMAN                                                     
 005590   |GERINI, DANIEL                                                     
@@ -5223,7 +5223,7 @@ id_medico|medico
 005642   |GUTIERREZ MENDIONDO, TRISTAN                                       
 005644   |MANCUSO, CRISTIAN                                                  
 005645   |MARTINEZ, MARCELO                                                  
-005646   |SANTOYO RUIZ MORRIS, AXEL                                          
+005646   |MORRIS N SANTOYO RUIZ, AXEL                                        
 005647   |PARDO, DANIEL                                                      
 005648   |PEDROZA, JAVIER                                                    
 005649   |ROJAS GARNICA, MABEL                                               
@@ -5274,7 +5274,7 @@ id_medico|medico
 005695   |DORIGATTI, DANIEL                                                  
 005696   |CONSTANTINO, CLAUDIO                                               
 005697   |GEREME, GUSTAVO                                                    
-005698   |GUI√ëAZU, JORGE L                                                   
+005698   |GUI•AZU, JORGE L                                                   
 005700   |SALA, MATIAS                                                       
 005701   |CAMPOLONGO, -                                                      
 005702   |RUCHELLI, LUIS                                                     
@@ -5299,7 +5299,7 @@ id_medico|medico
 005724   |SALUM, SERGIO                                                      
 005725   |SANTINELLI, ALEJANDRO                                              
 005726   |ESPIL, JUAN JOSE                                                   
-005727   |GUI√ëAZU RUIZ, PABLO                                                
+005727   |GUI—AZU RUIZ, PABLO                                                
 005728   |ROVIRA, RICARDO                                                    
 005729   |SKELLORN, ALAN                                                     
 005730   |DOMINGUEZ, CAROLINA                                                
@@ -5371,7 +5371,7 @@ id_medico|medico
 005796   |VENTURELLI, EMILIO                                                 
 005797   |MARTINEZ, DIEGO                                                    
 005798   |RIZZO, RICARDO                                                     
-005799   |PE√ëALOZA, MARCOS                                                   
+005799   |PE•ALOZA, MARCOS                                                   
 005800   |SORIA, JOSE                                                        
 005801   |AGUILERA, ANGEL                                                    
 005802   |RUIZ, ANTONIO                                                      
@@ -5419,7 +5419,7 @@ id_medico|medico
 005846   |SALA, JUAN                                                         
 005847   |THOUET, JUAN PABLO                                                 
 005848   |ARCE, LUIS HERNAN                                                  
-005849   |MU√ëOZ, ROSENDO                                                     
+005849   |MU•OZ, ROSENDO                                                     
 005850   |SCARCELLA, ANDRES                                                  
 005851   |VALLEJOS ARCE, MARIA SELVA                                         
 005852   |LAREU, -                                                           
@@ -5551,7 +5551,7 @@ id_medico|medico
 005984   |SOLESSIO, JORGE A.                                                 
 005985   |FERNANDEZ, CARLOS ALBERTO                                          
 005986   |SPESOT, PABLINO                                                    
-005987   |RIVAROLA, ETCHETO HORACIO                                          
+005987   |RIVAROLA, ECHETO                                                   
 005988   |SOLITO, DANIEL                                                     
 005989   |VILLEGAS, PABLO                                                    
 005990   |ROJAS, DANIEL                                                      
@@ -5608,9 +5608,9 @@ id_medico|medico
 006042   |OLGUIN, FERNANDO                                                   
 006043   |RODRIGUEZ, ALEJANDRO                                               
 006044   |YOSIHARA, MARCELO                                                  
-006045   |MU√ëOZ, PEDRO                                                       
+006045   |MU•OZ, PEDRO                                                       
 006046   |PLANA SALAS, MARIO                                                 
-006047   |FERNANDEZ COUTI√ëO, MARCELO                                         
+006047   |FERNANDEZ COUTINHO, MARCELO                                        
 006048   |MOLINA, JORGE                                                      
 006049   |VERA, GUSTAVO ADOLFO                                               
 006050   |GALLINA, MARCELO                                                   
@@ -5730,7 +5730,7 @@ id_medico|medico
 006169   |CASTRO GOMEZ, CRISTIAN                                             
 006170   |SAENZ, RAMIRO                                                      
 006171   |SILVILA, MARTI                                                     
-006172   |NU√ëEZ, RAUL                                                        
+006172   |NU•EZ, RAUL                                                        
 006173   |RAMIREZ AGUILAR, JUAN                                              
 006174   |FRANK, SOFIA                                                       
 006175   |GOITEA, DANIEL                                                     
@@ -5858,7 +5858,7 @@ id_medico|medico
 006303   |BATISTA, ALBERTO                                                   
 006304   |SANSALONE, PABLO                                                   
 006305   |SAVALL, GUSTAVO                                                    
-006306   |VILLAFA√ëE, GONZALO                                                 
+006306   |VILLAFA•E, GONZALO                                                 
 006307   |LOPEZ, SEBASTIAN                                                   
 006308   |BILBAO, SUSANA                                                     
 006309   |DEMORE, MELISA                                                     
@@ -5922,7 +5922,7 @@ id_medico|medico
 006369   |RIPAMONTI, DIEGO                                                   
 006370   |KYBYSZ, MARIA ANGELICA                                             
 006371   |CALZONE, CESAR                                                     
-006372   |PI√ëEIRO, NAHUEL                                                    
+006372   |PI•EIRO, NAHUEL                                                    
 006373   |TIANO, ANDREA                                                      
 006374   |MARAINIO, JAVIER                                                   
 006375   |BORSANI, WALTER                                                    
@@ -5980,7 +5980,7 @@ id_medico|medico
 006433   |MODENA, RAMIRO                                                     
 006434   |VARELA, MARIO                                                      
 006435   |ORTIZ, ALEJANDRO                                                   
-006436   |GONZ¬µLEZ, PATRICIO                                                 
+006436   |GONZµLEZ, PATRICIO                                                 
 006437   |GARCIA, MANUEL                                                     
 006438   |SALVANESCHI, GUILLERMO                                             
 006439   |D' ONOFRIO, GERMAN                                                 
@@ -5993,7 +5993,7 @@ id_medico|medico
 006446   |VARONE, ERNESTO                                                    
 006448   |BILBAO, FACUNDO                                                    
 006449   |BREPPE, PABLO                                                      
-006450   |CA√ëETE, MATIAS PABLO                                               
+006450   |CA—ETE, MATIAS PABLO                                               
 006451   |LAMARQUE, CARLOS                                                   
 006452   |SALIM, JUAN SEBASTIAN                                              
 006453   |WATTERS, ADHEMAR                                                   
@@ -6008,7 +6008,7 @@ id_medico|medico
 006462   |JUNGBERG, GABRIEL                                                  
 006463   |MALDONADO, HECTOR MARTIN                                           
 006464   |MOUNIER, CARLOS                                                    
-006465   |VILARI√ëO, AUGUSTO                                                  
+006465   |VILARI—O, AUGUSTO                                                  
 006466   |ALTUNA, JUAN PABLO                                                 
 006467   |GABBI, LEONEL                                                      
 006468   |GAVITO FIRPO, JERONIMO TOMAS                                       
@@ -6108,7 +6108,7 @@ id_medico|medico
 006564   |VERON, JAVIER                                                      
 006565   |VIDAL, PABLO DANIEL                                                
 006566   |VILA, LISANDRO                                                     
-006567   |VILARI√ëO, MANUEL                                                   
+006567   |VILARI—O, MANUEL                                                   
 006568   |VILLA, ANDRES                                                      
 006569   |ALANIS, ALEJANDRO                                                  
 006570   |ALBARRACIN, NICOLAS                                                
@@ -6133,8 +6133,8 @@ id_medico|medico
 006589   |VALENZIANO, DAMIAN                                                 
 006590   |VILLADA, ANDRES FELIPE                                             
 006591   |WAHNSCHAFFE, GERMAN                                                
-006592   |YA√ëEZ, RODRIGO                                                     
-006594   |ACU√ëA, MARTIN GABRIEL                                              
+006592   |YA—EZ, RODRIGO                                                     
+006594   |ACU—A, MARTIN GABRIEL                                              
 006595   |ARECO, RODOLFO                                                     
 006596   |CASTILLO, DENIS                                                    
 006597   |COGLIANDRO, PABLO                                                  
@@ -6207,7 +6207,7 @@ id_medico|medico
 006665   |FERNANDEZ PARMA, JORGE ALEJANDRO                                   
 006666   |FERRANDO, ALEJANDRO                                                
 006667   |FUERTES, SEBASTIAN ALEJANDRO                                       
-006668   |GAGO, ELIZABETH CARINA                                             
+006668   |GAGO, CARINA                                                       
 006669   |GAMES, MARTIN HONORIO                                              
 006670   |GARAT, DIEGO                                                       
 006671   |GARDINO, EMILIANO                                                  
@@ -6257,7 +6257,7 @@ id_medico|medico
 006715   |PEREZ MENVIELLE, LIONEL                                            
 006716   |PERLASCO, CAMILO NICOLAS                                           
 006717   |PESCE, GUSTAVO DANIEL                                              
-006718   |PI√ëIEIRO, LEANDRO                                                  
+006718   |PI—IEIRO, LEANDRO                                                  
 006719   |POLI, JOSE LUIS                                                    
 006720   |PONCE MOLINA, JOAQUIN                                              
 006721   |QUIROGA, PABLO ADRIAN                                              
@@ -6328,7 +6328,7 @@ id_medico|medico
 006787   |TORRESEL, CARLOS                                                   
 006788   |TORTEROLA, IVAN                                                    
 006789   |VEDANI, ALEJANDRO                                                  
-006790   |VILARI√ëO, BRUNO                                                    
+006790   |VILARI—O, BRUNO                                                    
 006791   |VIOLA, VICENTE                                                     
 006792   |ZENTENO, RONALD                                                    
 006793   |ZITO, HERNAN ROBERTO                                               
@@ -6346,17 +6346,17 @@ id_medico|medico
 006808   |FILADORO, MARIA ELENA                                              
 006809   |ABAGIANOS, EMILIO                                                  
 006810   |ZULIANI, MAXIMILIANO                                               
-006811   |CA√ëAS, PABLO                                                       
+006811   |CA—AS, PABLO                                                       
 006812   |COGO, MATIAS                                                       
 006813   |AROVICH, DAMIAN                                                    
 006814   |GOMEZ, GASPAR                                                      
 006815   |IRAHOLA, MIGUEL                                                    
-006816   |O√ëATIVA, JOSE IGNACIO                                              
+006816   |O—ATIVA, JOSE IGNACIO                                              
 006817   |REYNA, AUGUSTO                                                     
 006818   |GARRONE, PABLO                                                     
-006819   |MU√ëOZ, GONZALO                                                     
+006819   |MU—OZ, GONZALO                                                     
 006820   |CALABRECE, MARCELO                                                 
-006821   |MU√ëOZ, FABIAN                                                      
+006821   |MU—OZ, FABIAN                                                      
 006822   |AGUILAR, AGUSTIN                                                   
 006823   |RIBIES, GONZALO                                                    
 006824   |REINOSO, MARTIN                                                    
@@ -6378,7 +6378,7 @@ id_medico|medico
 006840   |SKOREPA, GUILLERMO                                                 
 006841   |TORRES, JOAQUIN                                                    
 006842   |NORIEGA, TOMAS                                                     
-006843   |FACHINETTI, ENRIQUE JOS√â                                           
+006843   |FACHINETTI, ENRIQUE JOS…                                           
 006844   |ROJAS, DAVID                                                       
 006845   |ANDREOZZI, ROBERTO                                                 
 006846   |MANATTA, MARCELO                                                   
@@ -6417,9 +6417,9 @@ id_medico|medico
 006879   |CEDERMAS, MARIELA                                                  
 006880   |ISSA, CLAUDIA                                                      
 006881   |SAMBRAN, PABLO                                                     
-006882   |NU√ëEZ, DANIEL                                                      
+006882   |NU—EZ, DANIEL                                                      
 006883   |MON FARA, PATRICIO                                                 
-006884   |MU√ëOZ, MATIAS                                                      
+006884   |MU—OZ, MATIAS                                                      
 006885   |AZCUENAGA, MARTIN                                                  
 006886   |CRISTALDI, MARTIN                                                  
 006887   |MARTINEZ, GERMAN ARIEL                                             
@@ -6428,9 +6428,9 @@ id_medico|medico
 006890   |ALE SUAREZ, SILVIO                                                 
 006891   |MARECOS, RODRIGO                                                   
 006892   |ZELAYA, JORGE                                                      
-006893   |GUI√ëAZU ROSSO, EMANUEL                                             
+006893   |GUI—AZU ROSSO, EMANUEL                                             
 006894   |NASIF, EDUARDO                                                     
-006895   |MU√ëOS GINES, AGUSTIN                                               
+006895   |MU—OS, AGUSTIN                                                     
 006896   |BESERMAN, KEVIN                                                    
 006897   |REBORA, VICTORIO                                                   
 006898   |A, CONFIRMAR                                                       
@@ -6444,7 +6444,7 @@ id_medico|medico
 006906   |MALDONADO, ANGEL                                                   
 006908   |ALCAZER, MIGUEL                                                    
 006909   |ONTIVERO, JORGE                                                    
-006910   |ARGA√ëARAZ, LUIS                                                    
+006910   |ARGA—ARAZ, LUIS                                                    
 006911   |ZAVALIA, MARTIN                                                    
 006912   |TABORRO, BETINA                                                    
 006913   |MUYAL, ERNESTO                                                     
@@ -6464,7 +6464,7 @@ id_medico|medico
 006927   |TREVISAN, GUIDO                                                    
 006928   |DERIMAIS, MARIO                                                    
 006929   |MAGOIA, -                                                          
-006930   |MA√ëERO, LUCIANO                                                    
+006930   |MA—ERO, LUCIANO                                                    
 006931   |REDRUELLO, EMILIANO                                                
 006932   |CIRANO, ALBERTO                                                    
 006933   |COISSON, ABEL                                                      
@@ -6489,7 +6489,7 @@ id_medico|medico
 006952   |HEBER GONZALEZ, GERMAN                                             
 006953   |SOLORZANO, RUBEN                                                   
 006954   |KAUFELLER, GERMAN                                                  
-006955   |RODRIGUEZ PATIN√ëO, LUCAS                                           
+006955   |RODRIGUEZ PATIN—O, LUCAS                                           
 006956   |SORIA SIMANOF, LUIS                                                
 006957   |ARBIOS, PABLO                                                      
 006958   |SUAREZ, CRISTIAN                                                   
@@ -6505,7 +6505,7 @@ id_medico|medico
 006968   |GIUGGIA, GABRIEL                                                   
 006969   |VERA, GERMAN                                                       
 006970   |CASTILLO, ARMANDO                                                  
-006971   |ORELLANA SARAVIA, EMANUEL                                          
+006971   |ORELLANA, EMANUEL                                                  
 006972   |ALE, SANDRA                                                        
 006973   |VACCALLUZZO, ROMINA                                                
 006974   |PERALTA, JULIETA                                                   
@@ -6516,7 +6516,7 @@ id_medico|medico
 006979   |ADHEMAR, MERIDA                                                    
 006980   |WERNICKE, BRIAN                                                    
 006981   |DE TURRIS, FRANCO                                                  
-006982   |MORET¬øYRA, JULIAN                                                  
+006982   |MORETøYRA, JULIAN                                                  
 006983   |MOREYRA, JULIAN                                                    
 006984   |RAMIREZ LUCERO, PABLO                                              
 006985   |MARTINEZ, TEDESCO                                                  
@@ -6560,7 +6560,7 @@ id_medico|medico
 007023   |FERNANDEZ, JUAN MANUEL                                             
 007024   |PEPER, AGUSTIN                                                     
 007025   |GARAVAGLIA D ERCOLE, MAXIMILIANO                                   
-007026   |PATI√ëO, LUCAS                                                      
+007026   |PATI—O, LUCAS                                                      
 007027   |FILIPELLI, VICENTE                                                 
 007028   |SANCHEZ, GONZALO                                                   
 007029   |GONZALEZ, MARIANO                                                  
@@ -6575,7 +6575,7 @@ id_medico|medico
 007038   |FROELINCH, -                                                       
 007039   |KAIRUZ, FERNANDO ADRIAN                                            
 007040   |VARELA, NICOLAS                                                    
-007041   |ORDO√ëEZ, DIEGO                                                     
+007041   |ORDO—EZ, DIEGO                                                     
 007042   |CORONEL, CLAUDIA                                                   
 007043   |MESA, MARTIN                                                       
 007044   |ROSALES, FERNANDO                                                  
@@ -6587,7 +6587,7 @@ id_medico|medico
 007050   |HANZING, PEDRO                                                     
 007051   |BABICK, GUILLERMO                                                  
 007052   |ROCHESSE, MAURO                                                    
-007053   |NU√ëEZ PE√ëALOZA, ALVARO                                             
+007053   |NU—EZ PE—ALOZA, ALVARO                                             
 007054   |BUENADER, GUSTAVO HORACIO                                          
 007055   |HEREDIA, ROBERTO                                                   
 007056   |PALLINI, SERGIO                                                    
@@ -6606,7 +6606,7 @@ id_medico|medico
 007070   |MERITANO, ALEJANDRO                                                
 007071   |LLANO, CRISTIAN                                                    
 007072   |PESIO, DANIEL                                                      
-007073   |MI√ëO, DARIO                                                        
+007073   |MI—O, DARIO                                                        
 007074   |VENARIA, ALEJANDRO                                                 
 007075   |BENDERSKY, DAMIAN CLAUDIO                                          
 007076   |ROCHA, ANA                                                         
@@ -6635,7 +6635,7 @@ id_medico|medico
 007099   |LAGOS, JORGE                                                       
 007100   |LA RIVA, -                                                         
 007101   |CORONADO, JULIETA                                                  
-007102   |CAI√ëA, DANIEL                                                      
+007102   |CAI—A, DANIEL                                                      
 007103   |ROMANO, MATIAS                                                     
 007104   |RAMOS, RONALD                                                      
 007105   |PALOMINO, JORGE                                                    
@@ -6663,7 +6663,7 @@ id_medico|medico
 007127   |TURCO, CLAUDIO JAVIER                                              
 007128   |DEFILIPPANTONIO, CESAR                                             
 007129   |AVILA POSADA, SANTIAGO                                             
-007130   |SILVA MU√ëOZ, SEBASTIAN                                             
+007130   |SILVA MU—OZ, SEBASTIAN                                             
 007131   |DAINOTTO, TAMARA                                                   
 007132   |DE GIANO, JUAN IGNACIO                                             
 007133   |GARCIA OSSO, LAUTARO                                               
@@ -6677,7 +6677,7 @@ id_medico|medico
 007141   |QUIROGA, GONZALO                                                   
 007142   |TALEB, JUAN PABLO                                                  
 007143   |IGLESIAS, SANTIAGO                                                 
-007144   |ALONSO, MANUEL I√ëAKI                                               
+007144   |ALONSO, MANUEL I—AKI                                               
 007145   |ALTAMIRANO, NICOLAS                                                
 007146   |GIL, CARLOS                                                        
 007147   |CAMES, JUAN MANUEL                                                 
@@ -6693,7 +6693,7 @@ id_medico|medico
 007157   |SANABRIA, LIONEL                                                   
 007158   |TORRES, AGUSTIN                                                    
 007159   |CIFONE, JOSE                                                       
-007160   |RIOS MA√ëAY, RICARDO JAVIER                                         
+007160   |RIOS MA—AY, RICARDO JAVIER                                         
 007161   |SALAS, FERNANDO MAXIMILIANO                                        
 007162   |UGALDE, JAVIER                                                     
 007163   |VARGAS, ESTEBAN DAVID                                              
@@ -6712,7 +6712,7 @@ id_medico|medico
 007176   |SALA SARMIENTO, KARINA                                             
 007177   |VENEZIA, JUAN                                                      
 007178   |YAMAGO, DAISAKU                                                    
-007179   |MU√ëOZ, CEFERINO                                                    
+007179   |MU—OZ, CEFERINO                                                    
 007180   |BESSONE, DAVID                                                     
 007181   |FREIXA, MAGALI                                                     
 007182   |LAMBRE, JORGE                                                      
@@ -6758,7 +6758,7 @@ id_medico|medico
 007222   |OLGUERA, .                                                         
 007223   |ORELLANA, PABLO                                                    
 007224   |PACHECO ROJAS, JAVIER ISAIAS                                       
-007225   |PE√ëALVA, .                                                         
+007225   |PE—ALVA, .                                                         
 007226   |RYAN, JUAN                                                         
 007227   |URPI, JOAQUIN                                                      
 007228   |URPI, JOSE                                                         
@@ -6796,7 +6796,7 @@ id_medico|medico
 007262   |TERRAZA, SERGIO                                                    
 007263   |TORRE, ROMINA                                                      
 007264   |VYMAZAL, GUILLERMO                                                 
-007265   |O√ëATIVIA, IGNACIO                                                  
+007265   |O—ATIVIA, IGNACIO                                                  
 007266   |RENDICZ, ALEJANDRO                                                 
 007267   |DE LA ROCA VARGAS, -                                               
 007268   |MANCINI, PABLO                                                     
@@ -6837,15 +6837,15 @@ id_medico|medico
 007303   |NARVAEZ, FATIMA                                                    
 007304   |OCANTO, JULIAN                                                     
 007305   |OJEDA, DIEGO                                                       
-007306   |PATI√ëO, JUAN MANUEL                                                
+007306   |PATI—O, JUAN MANUEL                                                
 007307   |SABBIONE, VICTORIA                                                 
 007308   |SAISI, JORGE                                                       
 007309   |SISNEROS, RICARDO SORIA                                            
 007310   |VERGER, SERGIO                                                     
 007311   |DE LA TORRE, GONZALO                                               
 007312   |FERNANDEZ, JOSE MANUEL                                             
-007313   |GANA, DIEGO                                                        
-007314   |GOMEZ MAGABRA√ëA, GALA                                              
+007313   |GANA, DEIGO                                                        
+007314   |GOMEZ MAGABRA—A, GALA                                              
 007315   |MARTINO, GUSTAVO                                                   
 007316   |MULLER, ERWIN                                                      
 007317   |PEDDINA, PABLO                                                     
@@ -6866,185 +6866,13 @@ id_medico|medico
 007332   |VICTORERO, CORA                                                    
 007333   |ZAPOZKO, DANIEL                                                    
 007334   |KARGER, JUAN JOSE                                                  
-007335   |NU√ëEZ, LEONARDO                                                    
+007335   |NU—EZ, LEONARDO                                                    
 007336   |TELESCA, PATRICIO                                                  
 007337   |TOSCANO, MAXIMILIANO                                               
 007338   |SILVA, ADOLFO JOAQUIN                                              
-007339   |PI√ëERO, NAHUEL                                                     
+007339   |PI—ERO, NAHUEL                                                     
 007340   |AGUIRRE, DIEGO MARIANO                                             
 007341   |FEDUN RODRIGUEZ, EMANUEL                                           
 007342   |MOMBELLO, FRANCO                                                   
-007343   |SERNA, LUCIA                                                       
-007344   |ESCALADA, GUILLERMO ARIEL                                          
-007345   |SANCHEZ CASALONGUE, MANUEL ANGEL                                   
-007346   |LOTTI, FRANCISCO                                                   
-007347   |TURINI, ENRIQUE SERGIO                                             
-007348   |ROJAS CAVIGLIA, MAURICIO                                           
-007349   |QUIROGA, ALEJANDRO                                                 
-007350   |MOYA, CARLOS                                                       
-007351   |BELTRAN, HECTOR                                                    
-007352   |CRISTOFANETI, PABLO                                                
-007353   |GAYTAN, LAURA                                                      
-007354   |LARROCA, JESUS                                                     
-007355   |BACHINO, ANDRES                                                    
-007356   |SAVASTANO CANTONI, CARLOS                                          
-007357   |OVANDO, ELISABETH                                                  
-007358   |MURIAS, RICARDO                                                    
-007359   |NU√ëEZ, PABLO DANIEL                                                
-007360   |PROTO, HERNAN                                                      
-007361   |SARDI, JUAN JOSE                                                   
-007362   |LULIANO, SEBASTIAN                                                 
-007363   |VICH, LUCAS                                                        
-007364   |GABRIELLI, TOMAS                                                   
-007365   |CRISTOBO, NICOLAS                                                  
-007366   |TABOADELA, FERNANDO                                                
-007367   |ESPAIN, JOAQUIN                                                    
-007368   |SILVA, JUAN CARLOS                                                 
-007369   |SANTUCHO, FRANCISCO                                                
-007370   |GALIZZI, JUAN                                                      
-007371   |ZUCHINI MIRANDA, PEDRO                                             
-007372   |BENEDETTI, ESTEBAN LIONEL                                          
-007373   |GONZALEZ, JUAN FRANCISCO                                           
-007374   |REINA, SERGIO                                                      
-007375   |D ANGELA, ALIDA JULIANA                                            
-007376   |CANDERMO, GISELA ALFONSI                                           
-007377   |PORTAS, MERCEDES                                                   
-007378   |TRENTO, JORGE                                                      
-007379   |CORDERI, KATE                                                      
-007380   |GASPARRU, PAULA                                                    
-007381   |ALFRIERI, ROBERTO                                                  
-007382   |DE SALAS, SANTIAGO                                                 
-007383   |GALLARDO, JOSE LUIS                                                
-007384   |VALIENTE, RUBEM                                                    
-007385   |PALMIERI, MARIANELA                                                
-007386   |OSUNA, CAROLINA                                                    
-007387   |BELLI, SILVINA                                                     
-007388   |GALLO, CLAUDIO                                                     
-007389   |MAUTONE, PATRICIO                                                  
-007390   |GUIBERTI, MARIANA                                                  
-007391   |GEISY, MILA                                                        
-007392   |CLIMACO, FEDERICO                                                  
-007393   |TOPASINI, -                                                        
-007394   |BURGOS, LINDOR                                                     
-007395   |COSINI, FACUNDO                                                    
-007396   |OLONDO, GONZALO                                                    
-007397   |BIRMAN, ALEJANDRO                                                  
-007398   |IVE, NICOLAS                                                       
-007399   |TOGNERI, LAURA                                                     
-007400   |MOLINA, ADRIANA                                                    
-007401   |CARRIO, MABEL                                                      
-007402   |DI GUILMI, JULIAN                                                  
-007403   |CONTRERAS, JORGE                                                   
-007404   |CELAYA, JUAN MANUEL                                                
-007405   |BALLESTEROS, RAFAEL CAMILO                                         
-007406   |CARBALLO SANJINEZ, EDUARDO                                         
-007407   |QUESADA, AGUSTIN                                                   
-007408   |CRAGNULINI, ALAN                                                   
-007410   |ACOSTA, NAHUEL                                                     
-007411   |ARIAS, FRANCISCO                                                   
-007412   |FERREIRA, ELIANA                                                   
-007413   |ALAZRAQUI, GABRIEL                                                 
-007414   |GRINSTEIN, JULIAN                                                  
-007415   |GARCIA CESPEDES, ENRIQUE CARLOS                                    
-007416   |DE GIUSEPPE, NICOLAS                                               
-007417   |GRANDE, SANTIAGO                                                   
-007418   |JAIME, ADRIAN                                                      
-007419   |BERMEO, CHRISTOPHER                                                
-007420   |CUCALON, GENARO                                                    
-007421   |MARIAMAR, SAN ROQUE                                                
-007422   |PEREZ, ADRIAN                                                      
-007423   |IMPOSITI, FELIZ                                                    
-007424   |IRIGOITIA, NICOLAS                                                 
-007429   |GAMBOA, MARCELO ROJAS                                              
-007430   |GONZALEZ, MARTIN                                                   
-007431   |BERRUTI, MAXIMO                                                    
-007432   |KHAL, GUILLERMO                                                    
-007433   |GAMON, LUIS                                                        
-007434   |MATTACHEO, ADRIAN                                                  
-007435   |SERRES, ALBERTO MARIO                                              
-007436   |FRACHIA, JOSE FRANCISCO                                            
-007437   |VASALLO, BELEN                                                     
-007438   |ROCHESSE, MAURO                                                    
-007439   |FEIBERG, JUAN                                                      
-007440   |LOPEZ, ELVIRA                                                      
-007441   |BASSERNAN, KEVIN                                                   
-007442   |ISSA, CLAUDIA                                                      
-007443   |MONICA, JORGE                                                      
-007444   |SILVA CROOME, JULIIO CESAR                                         
-007445   |VARGAS, NICOLAS                                                    
-007446   |LAVAGNINO, MARTIN                                                  
-007447   |PEIRANO, FAVIO                                                     
-007448   |MARTINEZ MALUGE, FRANCISCO                                         
-007449   |BEATTI, MATIAS                                                     
-007450   |ZUBLIN, MIGUEL                                                     
-007451   |MOSQUERA, JUAN FRANCISCO                                           
-007452   |TIROTTA, MARCELO                                                   
-007453   |BARRACHINA, HERNAN                                                 
-007454   |BELAVITA, AUGUSTO                                                  
-007455   |MATTACHEO, ADRIAN                                                  
-007456   |AMORE, MIGUEL                                                      
-007457   |CONTI, LEONARDO                                                    
-007458   |ROVERE, PEDRO                                                      
-007459   |ARIAS, MARCELO                                                     
-007460   |ICETA, GONZALO                                                     
-007461   |PEPE, MARTIN                                                       
-007462   |PALACIOS LEDEZMA, JONNATHAN                                        
-007463   |DRAGNEFF, MORTCHEEF                                                
-007464   |GALVIRA, MARCELO                                                   
-007465   |SANDOVAL GARCIA, RUBY                                              
-007466   |WIERMA, ALEJANDRO                                                  
-007467   |ROJAS, MARCELO                                                     
-007468   |LOPEZ, TAVERNA                                                     
-007469   |ROJAS, MATIAS                                                      
-007471   |RATTO, MARCOS NICOLAS                                              
-007472   |ANDRADA, JUAN                                                      
-007473   |ROBLES, EUGENIA                                                    
-007474   |COLOMBO, NICOLAS                                                   
-007475   |OCCHIONERO, LEONARDO GASTON                                        
-007476   |BILBAO, BENJAMIN                                                   
-007477   |PEREZ GARCIA, MANUEL                                               
-007478   |MARCOVECCHIO, LUIS DANIEL                                          
-007479   |CHOQUE DARWIN, AVILA                                               
-007480   |BROVELLI, ADOLFO                                                   
-007481   |FIRRARELLO, FERNANDO                                               
-007482   |BRIGNONE, CARLOS                                                   
-007483   |MONTERO, LUIS                                                      
-007484   |ARENA, ANABELLA                                                    
-007485   |LARRAMENDI, JUAN                                                   
-007486   |ABRAHAM, AGUSTIN                                                   
-007487   |VANZINI, DIEGO                                                     
-007488   |ORTIZ, MAURICIO                                                    
-007489   |PEREZ, SILVANA                                                     
-007490   |PASTRAN, MAURICIO                                                  
-007491   |PAZ, JUAN IGNACIO                                                  
-007492   |POLI, CRISTIAN                                                     
-007493   |SILVA, SALOMON                                                     
-007494   |GALLEGUILLO, RODOLFO                                               
-007495   |ALBERGO, IGNACIO                                                   
-007496   |ORTIZ, LAURA                                                       
-007497   |RIOS, JUAN MARTIN                                                  
-007498   |LOGIA, -                                                           
-007499   |DEL SE√ëOR, GERMAN                                                  
-007500   |DEFAGOTT, EMILIANO                                                 
-007501   |BORGIA, EMILIANO                                                   
-007502   |MIRO GIMENEZ, FEDERICO EZEQUIEL                                    
-007503   |MUGURUZA, MARTIN                                                   
-007504   |ARREGUI, AGUSTIN                                                   
-007505   |LOPEZ, CRISTOBAL                                                   
-007506   |LEVIN, SEBASTIAN ALE                                               
-007507   |SCAFATI, CELIA                                                     
-007508   |MENDEZ, JUAN ALFREDO                                               
-007509   |FERNANDEZ, ALEXIS                                                  
-007510   |GODOY, MAURO                                                       
-007511   |FERRO, JULIO HORACIO                                               
-007512   |MIRO, FEDERICO EZEQUIEL                                            
-007513   |ABRAZO, EDGARDO                                                    
-007514   |PAUBA, DANIEL GERMAN                                               
-007515   |MASIN, MARTIN                                                      
-007516   |NORBERTO, OLVALDO BERNARDO                                         
-007517   |AZER, LAMOUR                                                       
-007518   |GARCIA, EUGENIA                                                    
-007519   |ZABALZA, EZEQUIEL                                                  
-007520   |ROVETTA NATOLI, LUCIANO                                            
 
-(7046 rows affected)
+(6874 rows affected)
