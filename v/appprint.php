@@ -1,6 +1,7 @@
 <?php
 // https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/
 session_start();
+error_reporting(E_ERROR | E_PARSE);
 if (false) {
   echo "error";
 }
