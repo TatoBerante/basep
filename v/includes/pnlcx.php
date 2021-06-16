@@ -153,6 +153,58 @@ else {
     }
     ?>
     </select>
+  </div>
+  <div class="form-line">
+    Entregado desde: <select name='mesend' id='mesend' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['mesend'] == 'NC') echo " selected"?>>NC</option>
+      <option value="01"<?php if ($_REQUEST['mesend'] == '1') echo " selected"?>>Enero</option>
+      <option value="02"<?php if ($_REQUEST['mesend'] == '2') echo " selected"?>>Febrero</option>
+      <option value="03"<?php if ($_REQUEST['mesend'] == '3') echo " selected"?>>Marzo</option>
+      <option value="04"<?php if ($_REQUEST['mesend'] == '4') echo " selected"?>>Abril</option>
+      <option value="05"<?php if ($_REQUEST['mesend'] == '5') echo " selected"?>>Mayo</option>
+      <option value="06"<?php if ($_REQUEST['mesend'] == '6') echo " selected"?>>Junio</option>
+      <option value="07"<?php if ($_REQUEST['mesend'] == '7') echo " selected"?>>Julio</option>
+      <option value="08"<?php if ($_REQUEST['mesend'] == '8') echo " selected"?>>Agosto</option>
+      <option value="09"<?php if ($_REQUEST['mesend'] == '9') echo " selected"?>>Septiembre</option>
+      <option value="10"<?php if ($_REQUEST['mesend'] == '10') echo " selected"?>>Octubre</option>
+      <option value="11"<?php if ($_REQUEST['mesend'] == '11') echo " selected"?>>Noviembre</option>
+      <option value="12"<?php if ($_REQUEST['mesend'] == '12') echo " selected"?>>Diciembre</option>
+    </select>
+    <select name='anoend' id="anoend" class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['anoend'] == 'NC') echo " selected"?>>NC</option>
+    <?php
+    for ($ap=date('Y'); $ap>(date('Y')-2); $ap--) {
+      echo "<option value='".$ap."'";
+      if ($_REQUEST['anoend'] == $ap) echo " selected";
+      echo ">".$ap."</option>";
+    }
+    ?>
+    </select>
+    <span class='left-margin'>hasta: </span><select name='mesenh' id='mesenh' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['mesenh'] == 'NC') echo " selected"?>>NC</option>
+      <option value="01"<?php if ($_REQUEST['mesenh'] == '1') echo " selected"?>>Enero</option>
+      <option value="02"<?php if ($_REQUEST['mesenh'] == '2') echo " selected"?>>Febrero</option>
+      <option value="03"<?php if ($_REQUEST['mesenh'] == '3') echo " selected"?>>Marzo</option>
+      <option value="04"<?php if ($_REQUEST['mesenh'] == '4') echo " selected"?>>Abril</option>
+      <option value="05"<?php if ($_REQUEST['mesenh'] == '5') echo " selected"?>>Mayo</option>
+      <option value="06"<?php if ($_REQUEST['mesenh'] == '6') echo " selected"?>>Junio</option>
+      <option value="07"<?php if ($_REQUEST['mesenh'] == '7') echo " selected"?>>Julio</option>
+      <option value="08"<?php if ($_REQUEST['mesenh'] == '8') echo " selected"?>>Agosto</option>
+      <option value="09"<?php if ($_REQUEST['mesenh'] == '9') echo " selected"?>>Septiembre</option>
+      <option value="10"<?php if ($_REQUEST['mesenh'] == '10') echo " selected"?>>Octubre</option>
+      <option value="11"<?php if ($_REQUEST['mesenh'] == '11') echo " selected"?>>Noviembre</option>
+      <option value="12"<?php if ($_REQUEST['mesenh'] == '12') echo " selected"?>>Diciembre</option>
+    </select>
+    <select name='anoenh' id="anoenh" class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['anoenh'] == 'NC') echo " selected"?>>NC</option>
+    <?php
+    for ($ap=date('Y'); $ap>(date('Y')-2); $ap--) {
+      echo "<option value='".$ap."'";
+      if ($_REQUEST['anoenh'] == $ap) echo " selected";
+      echo ">".$ap."</option>";
+    }
+    ?>
+    </select>
     <span class='left-margin'>Remito N° (anula demás filtros):</span> <input type="text" name="remito" id="remito" autocomplete="off" class="input-text gocenter" style='width:5rem;' value="<?php echo $remito;?>"></span>
   </div>
   <div class="form-line">
@@ -187,6 +239,10 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
     $_REQUEST['anolqd'],
     $_REQUEST['meslqh'],
     $_REQUEST['anolqh'],
+    $_REQUEST['mesend'],
+    $_REQUEST['anoend'],
+    $_REQUEST['mesenh'],
+    $_REQUEST['anoenh']
   );
   if (count ($resultados) < 1) echo "<p class='error-msg'>no se encontraron resultados</p>";
   else {
@@ -450,10 +506,10 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
       foreach ($remitox as $remi) {
         $elegibles++;
         $data = detalle_remito ($remi);
-        
+        $data_entregado = ($data[0]['fecha_entregado_h'] != '') ? $data[0]['fecha_entregado_h'] : 'N/A';
         echo "<table class='results cx'>
                 <tr>
-                  <th class='goleft' colspan='4'>Remito N° ".$data[0]['id_remito']." (Prep: ".$data[0]['fecha_preparado_h']." - Liq: ".$data[0]['fecha_liquidado_h'].")</th>
+                  <th class='goleft' colspan='4'>Remito N° ".$data[0]['id_remito']." (Prep: ".$data[0]['fecha_preparado_h']." - Liq: ".$data[0]['fecha_liquidado_h']." - Ent: ".$data_entregado.")</th>
                   <th class='goright' rowspan='3'>
                     <a href='default.php?page=pnlcx&sent=1&remito=".$data[0]['id_remito']."' class='purple-link'>VER REMITO</a><br>";
                     if ($_REQUEST['estado'] == '4') {

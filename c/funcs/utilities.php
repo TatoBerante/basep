@@ -148,19 +148,23 @@ function user_by_id ($id) {
 }
 
 function search_cx ($medico = '',
-										$vendedor = '',
-										$institucion = '',
-										$acreedor = '',
-										$cliente = '',
-										$estado,
-										$mescxd,
-										$anocxd,
-										$mescxh,
-										$anocxh,
-										$meslqd,
-										$anolqd,
-										$meslqh,
-										$anolqh) {
+					$vendedor = '',
+					$institucion = '',
+					$acreedor = '',
+					$cliente = '',
+					$estado,
+					$mescxd,
+					$anocxd,
+					$mescxh,
+					$anocxh,
+					$meslqd,
+					$anolqd,
+					$meslqh,
+					$anolqh,
+					$mesend,
+					$anoend,
+					$mesenh,
+					$anoenh) {
 	require_once "conn.php";
 	$mysqli = mysqli_conn();
 	$cirugias = array();
@@ -206,6 +210,20 @@ function search_cx ($medico = '',
 		$lqd = $anolqd."-".$meslqd."-01";
 		$lqh = $anolqh."-".$meslqh."-".$lastdh;
 		$q .= " AND rem.fecha_liquidado BETWEEN '".$lqd."' AND '".$lqh."'";
+	}
+	if ($mesend != 'NC' && $anoend != 'NC' && $mesenh != 'NC' && $anoenh != 'NC') {
+		// Leap year issue
+		if ($mesenh == '01' || $mesenh == '03' || $mesenh == '05' || $mesenh == '07' || $mesenh == '08' || $mesenh == '10' || $mesenh == '12') $lastdh = '31';
+		else {
+			if ($mesenh != '02') $lastdh = '30';
+			else { // Feb
+				$leap = date('L', mktime(0, 0, 0, 1, 1, $anoend));
+				$lastdh = ($leap) ? '29' : '28';
+			}
+		}
+		$end = $anoend."-".$mesend."-01";
+		$enh = $anoenh."-".$mesenh."-".$lastdh;
+		$q .= " AND rem.fecha_entregado BETWEEN '".$end."' AND '".$enh."'";
 	}
 	$q .= " ORDER BY cx.fecha_cx, cx.nro_cirugia";
 	//showall($q);
@@ -507,6 +525,7 @@ function detalle_remito ($id_remito) {
 				med.medico, cli.cliente,
 				DATE_FORMAT(rem.fecha_preparado, '%d-%m-%Y') AS fecha_preparado_h,
 				DATE_FORMAT(rem.fecha_liquidado, '%d-%m-%Y') AS fecha_liquidado_h,
+				DATE_FORMAT(rem.fecha_entregado, '%d-%m-%Y') AS fecha_entregado_h,
 				DATE_FORMAT(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h
 				FROM remitos rem
 				INNER JOIN cirugias cx ON rem.id_remito = cx.id_remito
