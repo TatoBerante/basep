@@ -152,9 +152,13 @@ function search_cx ($medico = '',
 					$institucion = '',
 					$acreedor = '',
 					$cliente = '',
+					$paciente,
+					$codcx,
 					$estado,
+					$diacxd,
 					$mescxd,
 					$anocxd,
+					$diacxh,
 					$mescxh,
 					$anocxh,
 					$meslqd,
@@ -181,9 +185,11 @@ function search_cx ($medico = '',
 	if ($estado != '0') $q .= " AND cx.estado = ".$estado;
 	if ($institucion != '') $q .= " AND cx.institucion LIKE '%".$institucion."%'";
 	if ($acreedor != '') $q .= " AND med.medico LIKE '%".$acreedor."%'";
+	if ($paciente != '') $q .= " AND cx.nombre_paciente LIKE '%".$paciente."%'";
+	if ($codcx != '') $q .= " AND cx.nro_cirugia LIKE '%".$codcx."%'";
 	//if ($cliencx != '') $q .= " AND cli.cliente LIKE '%".$cliencx."%'";
 
-	if ($mescxd != 'NC' && $anocxd != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
+	if ($diacxd != 'NC' && $mescxd != 'NC' && $anocxd != 'NC' && $diacxh != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
 		// Leap year issue
 		if ($mescxh == '01' || $mescxh == '03' || $mescxh == '05' || $mescxh == '07' || $mescxh == '08' || $mescxh == '10' || $mescxh == '12') $lastdh = '31';
 		else {
@@ -193,7 +199,8 @@ function search_cx ($medico = '',
 				$lastdh = ($leap) ? '29' : '28';
 			}
 		}
-		$cxd = $anocxd."-".$mescxd."-01";
+		$lastdh = ($diacxh != 'NC') ? $diacxh : $lastdh;
+		$cxd = $anocxd."-".$mescxd."-".$diacxd;
 		$cxh = $anocxh."-".$mescxh."-".$lastdh;
 		$q .= " AND cx.fecha_cx BETWEEN '".$cxd."' AND '".$cxh."'";
 	}

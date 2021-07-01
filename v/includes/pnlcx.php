@@ -8,6 +8,8 @@ if (isset ($_REQUEST['sent'])) {
   $acr = sanitizeThis ($_REQUEST['acr']);
   $fin = sanitizeThis ($_REQUEST['fin']);
   $remito = sanitizeThis ($_REQUEST['remito']);
+  $codcx = sanitizeThis ($_REQUEST['codcx']);
+  $paciente = sanitizeThis ($_REQUEST['paciente']);
 }
 else {
   $clue = "";
@@ -15,6 +17,9 @@ else {
   $instcx = "";
   $acr = "";
   $fin = "";
+  $remito = "";
+  $codcx = "";
+  $paciente = "";
 }
 ?>
 <h2>Panel de cirugías</h2>
@@ -51,7 +56,22 @@ else {
     <span class='left-margin'>Vendedor:</span> <input type="text" name="vendcx" id="vendcx" autocomplete="off" class="input-text" value="<?php echo $vendcx;?>" list='vendedores'>
   </div>
   <div class="form-line">
-    Periodo CX desde: <select name='mescxd' id='mescxd' class='input-text'>
+    Paciente: <input type="text" name="paciente" id="paciente" autofocus autocomplete="off" class="input-text" value="<?php echo $paciente;?>">
+    <span class='left-margin'>Cod. cirugía:</span> <input type="text" name="codcx" id="codcx" autofocus autocomplete="off" class="input-text" value="<?php echo $codcx;?>">
+  </div>
+  <div class="form-line">
+    Periodo CX desde: <select name='diacxd' id='diacxd' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['diacxd'] == 'NC') echo " selected"?>>NC</option>
+      <?php
+      for ($dcx = 1; $dcx < 32; $dcx++) {
+        $dcxt = ($dcx < 10) ? '0'.$dcx : $dcx;
+        echo "<option value='".$dcxt."'";
+        if ($_REQUEST['diacxd'] == $dcxt) echo " selected";
+        echo ">".$dcxt."</option>";
+      }
+      ?>
+  </select>
+    <select name='mescxd' id='mescxd' class='input-text'>
       <option value="NC"<?php if ($_REQUEST['mescxd'] == 'NC') echo " selected"?>>NC</option>
       <option value="01"<?php if ($_REQUEST['mescxd'] == '1') echo " selected"?>>Enero</option>
       <option value="02"<?php if ($_REQUEST['mescxd'] == '2') echo " selected"?>>Febrero</option>
@@ -76,7 +96,18 @@ else {
     }
     ?>
     </select>
-    <span class='left-margin'>hasta: </span><select name='mescxh' id='mescxh' class='input-text'>
+    <span class='left-margin'>hasta: </span><select name='diacxh' id='diacxh' class='input-text'>
+      <option value="NC"<?php if ($_REQUEST['diacxh'] == 'NC') echo " selected"?>>NC</option>
+      <?php
+      for ($dcx = 1; $dcx < 32; $dcx++) {
+        $dcxt = ($dcx < 10) ? '0'.$dcx : $dcx;
+        echo "<option value='".$dcxt."'";
+        if ($_REQUEST['diacxh'] == $dcxt) echo " selected";
+        echo ">".$dcxt."</option>";
+      }
+      ?>
+    </select>
+    <select name='mescxh' id='mescxh' class='input-text'>
       <option value="NC"<?php if ($_REQUEST['mescxh'] == 'NC') echo " selected"?>>NC</option>
       <option value="01"<?php if ($_REQUEST['mescxh'] == '1') echo " selected"?>>Enero</option>
       <option value="02"<?php if ($_REQUEST['mescxh'] == '2') echo " selected"?>>Febrero</option>
@@ -230,9 +261,13 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
     $instcx,
     $acr,
     $fin,
+    $paciente,
+    $codcx,
     $_REQUEST['estado'],
+    $_REQUEST['diacxd'],
     $_REQUEST['mescxd'],
     $_REQUEST['anocxd'],
+    $_REQUEST['diacxh'],
     $_REQUEST['mescxh'],
     $_REQUEST['anocxh'],
     $_REQUEST['meslqd'],
