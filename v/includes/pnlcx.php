@@ -240,7 +240,8 @@ else {
   </div>
   <div class="form-line">
     Acreedor: <input type="text" name="acr" id="acr" autocomplete="off" class="input-text" value="<?php echo $acr;?>"  list='medicos'>
-    <span class='left-margin'>Cliente:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>" list='clientes'>
+    <!--<span class='left-margin'>Cliente:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>" list='clientes'>-->
+    <span class='left-margin'>Cliente:</span> <input type="text" name="fin" id="fin" autocomplete="off" class="input-text" value="<?php echo $fin;?>">
     <span class='left-margin'>Mostrar:</span> <select name="estado" id="estado" class='input-text'>
       <!--<option value="0"<?php if ($_REQUEST['estado'] == '0') echo " selected"?>>TODAS</option>-->
       <option value="1"<?php if ($_REQUEST['estado'] == '1') echo " selected"?>>PENDIENTES</option>

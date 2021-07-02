@@ -187,7 +187,7 @@ function search_cx ($medico = '',
 	if ($acreedor != '') $q .= " AND med.medico LIKE '%".$acreedor."%'";
 	if ($paciente != '') $q .= " AND cx.nombre_paciente LIKE '%".$paciente."%'";
 	if ($codcx != '') $q .= " AND cx.nro_cirugia LIKE '%".$codcx."%'";
-	//if ($cliencx != '') $q .= " AND cli.cliente LIKE '%".$cliencx."%'";
+	//if ($financiador != '') $q .= " AND cli.cliente LIKE '%".$financiador."%'";
 
 	if ($diacxd != 'NC' && $mescxd != 'NC' && $anocxd != 'NC' && $diacxh != 'NC' && $mescxh != 'NC' && $anocxh != 'NC') {
 		// Leap year issue
