@@ -537,7 +537,7 @@ function detalle_remito ($id_remito) {
 				FROM remitos rem
 				INNER JOIN cirugias cx ON rem.id_remito = cx.id_remito
 				INNER JOIN medicos acr ON rem.id_acreedor = acr.id_medico_sys
-				INNER JOIN vendedores por ON rem.id_portador = por.id_vendedor_sys
+				LEFT JOIN vendedores por ON rem.id_portador = por.id_vendedor_sys
 				LEFT JOIN medicos med ON cx.cod_medico = med.id_medico
 				INNER JOIN clientes cli ON cx.id_cliente = cli.id_csv
 				WHERE rem.id_remito = $id_remito
