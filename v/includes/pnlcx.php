@@ -452,8 +452,11 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
         $elegibles++;
         $data = detalle_remito ($remi);
         
-        echo "<table class='results cx'>
-                <tr>
+        echo "<table class='results cx'>";
+        if ($_SESSION['basep']['uid'] == '1') {
+          echo "<tr><td colspan='5' style='color:#fff;background-color:red;'>REMI: ".$remi."</td></tr>";
+        }
+        echo "<tr>
                   <th class='goleft' colspan='4'>Remito N° ".$data[0]['id_remito']." (Prep: ".$data[0]['fecha_preparado_h']." - Liq: ".$data[0]['fecha_liquidado_h'].")</th>
                   <th class='goright' rowspan='3'>
                     <a href='default.php?page=pnlcx&sent=1&remito=".$data[0]['id_remito']."' class='purple-link'>VER REMITO</a><br><br>
