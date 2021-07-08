@@ -664,12 +664,16 @@ if (isset ($_REQUEST['sent']) && $remito == '') {
                       REMITO ".$remito['id_remito']." (".$remito['fecha_preparado_h'].") ACREEDOR: ".$remito['acreedor']." - RETIRA: ".$retira."
                     </th>
                     <th style='width:10rem;'>";
-                    echo "<input type='checkbox' id='chkb_".$remito['id_remito']."' name='chkb_".$remito['id_remito']."'>
-                    <label for='chkb_".$remito['id_remito']."'>
-                      <span></span>
-                      LIQUIDAR
-                    </label> ";
-                    $elegibles++;
+                    $bloqueado = is_blocked($remito['id_acreedor']);
+                    if (!$bloqueado) {
+                      echo "<input type='checkbox' id='chkb_".$remito['id_remito']."' name='chkb_".$remito['id_remito']."'>
+                      <label for='chkb_".$remito['id_remito']."'>
+                        <span></span>
+                        LIQUIDAR
+                      </label> ";
+                      $elegibles++;
+                    }
+                    else echo "<span class='blocked'>BLOQUEADO</span>";
                   echo "</th>
                   </tr>
                   <!--

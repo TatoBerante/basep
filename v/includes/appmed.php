@@ -1,8 +1,14 @@
 <?php
 require_once '../c/funcs/utilities.php';
 $medico = medico_by_id ($_REQUEST['idm']);
+$block_txt = ($medico['estado'] == '1') ? "bloquear" : "desbloquear";
 ?>
-<h2><?=$medico['medico'];?></h2>
+<h2>
+  <div class='header-medico'>
+    <?=$medico['medico'];?>
+    <span class='blocked'><a href='default.php?page=bloqmedconfirm&idm=<?=$_REQUEST['idm'];?>'><?=$block_txt;?> LIQUIDACIÓN</a></span>
+  </div>
+</h2>
 <h3>Saldo actual: $ <?=number_format($medico['saldo'], 2, ',', '.');?></h3>
 <h3>Pendiente: $ <?=number_format($medico['total_pendientes'], 2, ',', '.');?></h3>
 <h3>Preparado: $ <?=number_format($medico['total_preparados'], 2, ',', '.');?></h3><br>

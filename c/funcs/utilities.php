@@ -463,7 +463,7 @@ function search_remitos ($medico = '',
 				cx.nro_cirugia, med.medico as acreedor, cj.medico as cirujano, ven.vendedor as retira,
 				cx.descripcion as producto, cx.cantidad, cx.nombre_paciente as paciente, cx.institucion,
 				date_format(cx.fecha_cx, '%d-%m-%Y') AS fecha_cx_h, cx.monto_a_pagar,
-				cx.nombre_vendedor as vendedor, cli.cliente, cx.valor_total
+				cx.nombre_vendedor as vendedor, cli.cliente, cx.valor_total, rem.id_acreedor
 				FROM remitos rem
 				INNER JOIN medicos med ON rem.id_acreedor = med.id_medico_sys
 				LEFT JOIN vendedores ven ON rem.id_portador = ven.id_vendedor_sys 
@@ -586,6 +586,20 @@ function montos_cx($nro_cirugia) {
 		mysqli_close($mysqli);
 		
 		return $fila;
+	}
+}
+function is_blocked($id_medico) {
+	require_once "conn.php";
+	$mysqli = mysqli_conn();
+	$q = "SELECT estado FROM medicos WHERE id_medico_sys = ".$id_medico;
+	$r = mysqli_query($mysqli , $q);
+	if (!$r) echo "<p>Fallo al ejecutar la consulta: (".mysqli_errno($mysqli).") ".mysqli_error($mysqli)."</p><pre>".$q."</pre>";
+	else {
+		$fila = mysqli_fetch_assoc($r);
+		$is_blocked = ($fila['estado'] == '2') ? true : false;
+		mysqli_free_result($r);
+		mysqli_close($mysqli);
+		return $is_blocked;
 	}
 }
 ?>

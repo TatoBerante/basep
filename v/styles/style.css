@@ -233,6 +233,7 @@ form {
 }
 .buttons-warning {
   text-decoration: none;
+  text-align: center;
   /*border: 1px solid var(--accent-main-color);*/
   color: var(--light-main-color);
   background-color: var(--error-color);
@@ -567,4 +568,25 @@ h4 {
 .flex-cont {
   display: flex;
   justify-content: space-between;
+}
+
+/* Bloqueo de médicos */
+.blocked {
+  background-color: var(--error-color);
+  color: #ebebeb;
+  font-weight: bolder;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+}
+.blocked a {
+  color: var(--light-main-color);
+  text-decoration: none;
+}
+.header-medico {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.confirm-block {
+  margin-top: 15rem;
 }
